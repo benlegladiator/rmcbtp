@@ -44,9 +44,13 @@
     scene.background = new THREE.Color(0x0c213d); // Bleu architectural profond lumineux
     scene.fog = new THREE.FogExp2(0x0c213d, 0.018);
 
-    // 2. Caméra
+    // 2. Caméra (Dézoom proportionné sur mobile pour que l'immeuble tienne entièrement dans le cadre)
     camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(17, 13, 21);
+    if (width <= 768) {
+      camera.position.set(28, 22, 34);
+    } else {
+      camera.position.set(17, 13, 21);
+    }
 
     // 3. Renderer WebGL
     renderer = new THREE.WebGLRenderer({
@@ -586,6 +590,11 @@
     const width = container.clientWidth;
     const height = container.clientHeight;
     camera.aspect = width / height;
+    if (width <= 768) {
+      camera.position.set(28, 22, 34);
+    } else {
+      camera.position.set(17, 13, 21);
+    }
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
   }

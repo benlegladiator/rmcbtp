@@ -1244,6 +1244,15 @@ textarea.form-control {
   filter: drop-shadow(0 0 20px rgba(0, 180, 255, 0.65));
 }
 
+/* Sur mobile et tablette : masquer la structure 3D fil de fer pour laisser voir les photos et le texte */
+@media (max-width: 991px) {
+  #feeHero3DCanvas {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+}
+
 /* 2. Vidéo Cinématique Hero 4K */
 .hero-video-container {
   position: absolute;

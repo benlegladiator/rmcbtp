@@ -25,6 +25,9 @@
       const parent = canvas.parentElement;
       width = canvas.width = parent.clientWidth || window.innerWidth;
       height = canvas.height = parent.clientHeight || window.innerHeight;
+      if (width <= 991) {
+        ctx.clearRect(0, 0, width, height);
+      }
     }
     window.addEventListener('resize', resize);
     resize();
@@ -185,6 +188,12 @@
 
     function render() {
       ctx.clearRect(0, 0, width, height);
+
+      // Sur mobile et tablette : libérer l'écran pour que les photos et les textes soient 100% visibles
+      if (width <= 991) {
+        requestAnimationFrame(render);
+        return;
+      }
 
       // Rotation continue 360° fluide & cinématique (vitesse type turntable architectural)
       autoRotation += 0.0075;

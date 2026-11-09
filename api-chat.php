@@ -135,7 +135,7 @@ function callGeminiAI($apiKey, $userMessage, $history, $companyName, $directorNa
     $systemInstruction = "Tu es l'ingénieur-conseil virtuel de {$companyName} ({$address}).
 Histoire & Envergure de l'entreprise :
 - Créée en 2017 par ses cofondateurs (Chirac, Makair et Rodrigue).
-- Équipe d'ingénierie et bureau d'études dirigé sur le terrain par l'Ingénieur TOUKAM PATRICK.
+- Équipe d'ingénierie et bureau d'études dirigé sur le terrain par nos ingénieurs en génie civil et conducteurs de travaux certifiés.
 - Slogan officiel : 'Construire aujourd\'hui les solutions de demain.'
 - Bilan & Chiffres clés : Plus de 700 travaux réalisés au Cameroun, 52 travaux à l'international, réseau actif dans plus de 64 pays partenaires.
 - Pôles d'activités intégrés :
@@ -146,17 +146,18 @@ Téléphone & WhatsApp officiel : {$phone}.
 
 RÈGLES STRICTES DE RÉPONSE :
 1. RÉPONSES DIRECTES ET FINALES UNIQUEMENT : Ne JAMAIS afficher de réflexion interne, d'anglais, de brouillon ou d'étapes de rédaction. Réponds DIRECTEMENT en français impeccable au client.
-2. DONNER TOUJOURS UNE ESTIMATION CHIFFRÉE QUAND DEMANDÉ : Si le client demande un prix, une estimation ou un budget (ex: villa, 400m², dalle), donne TOUJOURS une fourchette réaliste en Francs CFA (FCFA) basée sur le marché camerounais :
+2. RECRUTEMENT / CANDIDATURE : Si l'utilisateur cherche du travail, un emploi, un stage ou souhaite postuler en tant qu'ingénieur, technicien ou ouvrier qualifié, accueille-le chaleureusement et invite-le à transmettre son CV et ses références directement sur WhatsApp ({$phone}) ou par email.
+3. DONNER TOUJOURS UNE ESTIMATION CHIFFRÉE QUAND DEMANDÉ : Si le client demande un prix, une estimation ou un budget (ex: villa, 400m², dalle), donne TOUJOURS une fourchette réaliste en Francs CFA (FCFA) basée sur le marché camerounais :
    - Gros œuvre seul : ~90 000 à 130 000 FCFA / m²
    - Clé en main standard : ~160 000 à 210 000 FCFA / m²
    - Haut standing (avec finitions SIMS Décor) : ~250 000 à 350 000 FCFA / m²
    Explique avec pédagogie ce que cela comprend (fondations, béton armé vibré, finitions).
-3. PAS DE RÉPONSES TRONQUÉES : Termine toujours tes phrases et tes paragraphes proprement.
-4. SOUPLESSE GÉOGRAPHIQUE : RMC BTP intervient à Douala, Yaoundé, Dschang, Bafoussam, Kribi, Garoua, Maroua et partout au Cameroun.
-5. RÈGLE CRUCIALE SUR LES COORDONNÉES ET CONTACTS :
-   - NE MENTIONNE AUCUN NOM DE PERSONNE (pas de 'M. Rodrigue DJOMO', etc.) NI LE TITRE DE DIRECTEUR GÉNÉRAL OU PDG. Dis simplement qu'un ingénieur va lui répondre.
+4. PAS DE RÉPONSES TRONQUÉES : Termine toujours tes phrases et tes paragraphes proprement.
+5. SOUPLESSE GÉOGRAPHIQUE : RMC BTP intervient à Douala, Yaoundé, Dschang, Bafoussam, Kribi, Garoua, Maroua et partout au Cameroun.
+6. RÈGLE CRUCIALE SUR LES NOMS ET COORDONNÉES :
+   - NE MENTIONNE AUCUN NOM PROPRE DE PERSONNE (pas de nom de famille ou prénom). Dis simplement 'l'ingénieur', 'notre ingénieur référent' ou 'la Direction Technique'.
    - NE DONNE PAS les numéros de téléphone ou de WhatsApp à chaque message.
-   - Fournis le numéro ({$phone}) UNIQUEMENT si le visiteur demande expressément le contact (ex: 'quel est votre contact', 'donne moi votre numéro', 'votre whatsapp', 'comment vous appeler'). Quand il le demande, dis simplement : 'Un ingénieur va vous répondre directement au {$phone} (appel et WhatsApp).' sans citer de nom ni de titre de directeur.
+   - Fournis le numéro ({$phone}) UNIQUEMENT si le visiteur demande expressément le contact (ex: 'quel est votre contact', 'donne moi votre numéro', 'votre whatsapp', 'comment vous appeler'). Quand il le demande, dis simplement : 'Un ingénieur va vous répondre directement au {$phone} (appel et WhatsApp).' sans citer aucun nom propre.
    - Ne conclus jamais par une invitation forcée à contacter WhatsApp. Conclus naturellement et simplement tes explications techniques en demandant par exemple si le visiteur a une précision sur son terrain, sa ville ou la surface souhaitée.";
 
     $payload = [
@@ -180,7 +181,7 @@ RÈGLES STRICTES DE RÉPONSE :
     ];
 
     $payloadJson = json_encode($payload);
-    $models = ['gemini-3.5-flash-lite', 'gemini-flash-lite-latest', 'gemini-3.8-flash'];
+    $models = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro', 'gemini-2.5-flash'];
 
     foreach ($models as $modelName) {
         $url = "https://generativelanguage.googleapis.com/v1beta/models/{$modelName}:generateContent?key=" . urlencode($apiKey);
@@ -268,8 +269,26 @@ function hasWord($text, array $words) {
 $reply = "";
 $suggestions = [];
 
+// 0. Recrutement / Emploi / Recherche de Travail / Stage / Candidature
+if (hasWord($cleanMsg, [
+    'travail', 'emploi', 'cherche travail', 'cherche du travail', 'cherche un travail', 
+    'cherche un emploi', 'cherche emploi', 'job', 'recrutement', 'recruter', 'recrutez', 
+    'embauche', 'embaucher', 'postuler', 'candidature', 'cv', 'stage', 'stagiaire', 
+    'apporter mon experience', 'rejoindre votre equipe', 'rejoindre l\'equipe', 
+    'rejoindre l\'entreprise', 'offre demploi', 'offre d\'emploi', 'cherche de travail', 
+    'recherche travail', 'recherche emploi', 'cherche un poste', 'recrutez-vous', 
+    'travailler avec vous', 'travailler chez vous', 'trouver du travail'
+])) {
+    $reply = "🤝 **Recrutement & Carrières chez " . htmlspecialchars($companyName) . " :**\n\nNous accueillons toujours avec grand intérêt les profils passionnés et compétents en génie civil, conduite de chantiers et métiers techniques du BTP (Ingénieurs, Conducteurs de travaux, Métreurs, Topographes et Techniciens).\n\nPour soumettre votre profil :\n• **Par WhatsApp :** Transmettez votre CV et portfolio directement au bureau technique au **" . htmlspecialchars($phonePrimary) . "**\n• **Par E-mail :** Envoyez votre CV et lettre de motivation à **" . htmlspecialchars($emailContact) . "**\n\nUn ingénieur étudiera votre dossier et vos références dans les meilleurs délais.";
+    $suggestions = [
+        ['label' => '📄 Transmettre mon CV sur WhatsApp', 'action' => 'contact_whatsapp'],
+        ['label' => '✉️ Poser une question au bureau technique', 'action' => 'contact_whatsapp'],
+        ['label' => '🏗️ Découvrir nos chantiers en cours', 'action' => 'quick_services']
+    ];
+}
+
 // 1. Diaspora & Suivi de chantier à distance
-if (hasWord($cleanMsg, ['diaspora', 'etranger', 'étranger', 'france', 'europe', 'canada', 'usa', 'etats-unis', 'belgique', 'angleterre', 'allemagne', 'distance', 'confiance', 'escroquerie', 'famille', 'deception'])) {
+elseif (hasWord($cleanMsg, ['diaspora', 'etranger', 'étranger', 'france', 'europe', 'canada', 'usa', 'etats-unis', 'belgique', 'angleterre', 'allemagne', 'distance', 'confiance', 'escroquerie', 'famille', 'deception'])) {
     $reply = "🌍 **Gestion de Chantier Spéciale Diaspora chez RMC BTP SARL :**\n\nConstruire au pays depuis l'étranger est un investissement précieux qui exige une confiance absolue. Pour vous garantir une sérénité totale, nous appliquons un protocole rigoureux :\n• **Contrat d'entreprise formel** et facturation transparente jalonnée par étapes validées.\n• **Rapports hebdomadaires en direct** : vidéos HD, photos détaillées et appels vidéo WhatsApp sur site.\n• **Paiements échelonnés** : vous ne débloquez les fonds qu'après constatation visuelle de l'achèvement de chaque phase (fondations, élévation, dalle, toiture, finitions SIMS Décor).\n• Zéro intermédiaire familial pour éviter tout détournement de matériaux.";
     $suggestions = [
         ['label' => '📄 Demander un contrat type & devis diaspora', 'action' => 'flow_devis'],
@@ -376,9 +395,9 @@ elseif (hasWord($cleanMsg, ['histoire', 'historique', 'fondateur', 'fondateurs',
     ];
 }
 
-// 12b. Équipe & Direction Technique (Ingénieur Toukam Patrick)
-elseif (hasWord($cleanMsg, ['equipe', 'équipe', 'staff', 'technique', 'ingenieur', 'ingénieur', 'toukam', 'patrick', 'bureau detude', 'bureau d\'étude'])) {
-    $reply = "👷 **Direction Technique & Bureau d'Études RMC BTP :**\n\nSur le terrain, nos calculs et nos chantiers sont encadrés par des professionnels certifiés sous la supervision de l'**Ingénieur TOUKAM PATRICK** (Ingénieur Suivi de Travaux & Génie Civil) :\n• Dimensionnement géotechnique des fondations et descentes de charges.\n• Respect absolu du béton armé dosé à 350 kg/m³ vibré et armatures haute adhérence.\n• Contrôle qualité continu et respect rigoureux des rétroplannings d'exécution.";
+// 12b. Équipe & Direction Technique
+elseif (hasWord($cleanMsg, ['equipe', 'équipe', 'staff', 'technique', 'ingenieur', 'ingénieur', 'bureau detude', 'bureau d\'étude'])) {
+    $reply = "👷 **Direction Technique & Bureau d'Études RMC BTP :**\n\nSur le terrain, nos calculs et nos chantiers sont encadrés par des professionnels certifiés sous la supervision de l'**Ingénieur** :\n• Dimensionnement géotechnique des fondations et descentes de charges.\n• Respect absolu du béton armé dosé à 350 kg/m³ vibré et armatures haute adhérence.\n• Contrôle qualité continu et respect rigoureux des rétroplannings d'exécution.";
     $suggestions = [
         ['label' => '📐 Confier l\'étude de mes plans', 'action' => 'flow_devis'],
         ['label' => '💬 Échanger avec l\'ingénieur sur WhatsApp', 'action' => 'contact_whatsapp']

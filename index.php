@@ -147,7 +147,7 @@ $ctaBg = getVisualInfo($homeVisuals, 'cta_bg', 'images/bg_1.jpg', 'center center
 									<span class="text-gradient-gold">& Cadence de Chantier Garantie</span>
 								</h1>
 								<p class="mb-5 text-white-50 lead" style="max-width: 780px; font-size: 1.15rem; line-height: 1.7;">
-									Sur le terrain, notre direction technique supervisée par l'Ingénieur Toukam Patrick veille au respect strict des rétro-plannings, à la qualité irréprochable des bétons et à la sécurité de vos équipes.
+									Sur le terrain, notre direction technique supervisée par l'Ingénieur veille au respect strict des rétro-plannings, à la qualité irréprochable des bétons et à la sécurité de vos équipes.
 								</p>
 								<div class="d-flex flex-wrap gap-3">
 									<a href="project.php" class="btn btn-gold-glow mr-3 mb-2">
