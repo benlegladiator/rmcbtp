@@ -578,7 +578,7 @@ $ctaBg = getVisualInfo($homeVisuals, 'cta_bg', 'images/bg_1.jpg', 'center center
 			<!-- Projet 1 -->
 			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
 				<div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; overflow: hidden; background: #ffffff; border: 1px solid #e2e8f0 !important; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-					<div style="height: 230px; background-image: url('images/wa0062-framed-16x9.jpg'); background-size: cover; background-position: center; position: relative;">
+					<div style="height: 230px; background: #0c2e60 url('images/wa0062-framed-16x9.jpg') no-repeat center center / cover; position: relative;">
 						<span class="badge badge-success px-3 py-2 font-weight-bold" style="position: absolute; top: 15px; left: 15px; font-size: 11px; border-radius: 50px; box-shadow: 0 4px 10px rgba(16,185,129,0.3);">
 							<i class="fa fa-check-circle mr-1"></i> 100% LIVRÉ & HABITÉ
 						</span>
@@ -604,7 +604,7 @@ $ctaBg = getVisualInfo($homeVisuals, 'cta_bg', 'images/bg_1.jpg', 'center center
 			<!-- Projet 2 -->
 			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
 				<div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; overflow: hidden; background: #ffffff; border: 1px solid #e2e8f0 !important; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-					<div style="height: 230px; background-image: url('images/IMG-20261015-WA0062.jpg'); background-size: cover; background-position: center; position: relative;">
+					<div style="height: 230px; background: #0c2e60 url('images/IMG-20261015-WA0062.jpg') no-repeat center center / cover; position: relative;">
 						<span class="badge badge-success px-3 py-2 font-weight-bold" style="position: absolute; top: 15px; left: 15px; font-size: 11px; border-radius: 50px; box-shadow: 0 4px 10px rgba(16,185,129,0.3);">
 							<i class="fa fa-check-circle mr-1"></i> 100% LIVRÉ & EXPLOITÉ
 						</span>
@@ -630,7 +630,7 @@ $ctaBg = getVisualInfo($homeVisuals, 'cta_bg', 'images/bg_1.jpg', 'center center
 			<!-- Projet 3 -->
 			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
 				<div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; overflow: hidden; background: #ffffff; border: 1px solid #e2e8f0 !important; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-					<div style="height: 230px; background-image: url('images/IMG-20261015-WA0073.jpg'); background-size: cover; background-position: center; position: relative;">
+					<div style="height: 230px; background: #0c2e60 url('images/IMG-20261015-WA0073.jpg') no-repeat center center / cover; position: relative;">
 						<span class="badge badge-warning text-dark px-3 py-2 font-weight-bold" style="position: absolute; top: 15px; left: 15px; font-size: 11px; border-radius: 50px;">
 							<i class="fa fa-shield mr-1"></i> OUVRAGE GARANTI 10 ANS
 						</span>
