@@ -246,3 +246,7 @@ function resolveImage($path, $fallback = 'images/bg_1.jpg') {
     }
     return $fallback;
 }
+
+// Module Gestionnaire de Visuels de Repère par Page & Section
+require_once __DIR__ . '/visuals_helper.php';
+

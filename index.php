@@ -25,6 +25,17 @@ $expYears = getSetting('stats_experience', '12');
 $totalProjects = getSetting('stats_projects', '165');
 $satisfaction = getSetting('stats_satisfaction', '99');
 $equipments = getSetting('stats_equipments', '48');
+
+// Visuels de repère configurables par section
+$homeVisuals = getPageVisuals($pdo, 'home');
+$hero1 = getVisualInfo($homeVisuals, 'hero_slide_1', 'images/_JMP6225.jpg', 'center center');
+$hero2 = getVisualInfo($homeVisuals, 'hero_slide_2', 'images/IMG-20261029-WA0099.jpg', 'center center');
+$hero3 = getVisualInfo($homeVisuals, 'hero_slide_3', 'images/IMG-20261029-WA0098.jpg', 'center center');
+$dgPortrait = getVisualInfo($homeVisuals, 'dg_portrait', 'images/fondateurs/rodrigue-djomo.jpg', 'center top');
+$baBefore = getVisualInfo($homeVisuals, 'ba_before', 'images/_JMP6244.jpg', 'center center');
+$baAfter = getVisualInfo($homeVisuals, 'ba_after', 'images/_JMP6225.jpg', 'center center');
+$counterBg = getVisualInfo($homeVisuals, 'counter_bg', 'images/bg_2.jpg', 'center center');
+$ctaBg = getVisualInfo($homeVisuals, 'cta_bg', 'images/bg_1.jpg', 'center center');
 ?>
 
 <!-- Alertes Flash -->
@@ -77,8 +88,8 @@ $equipments = getSetting('stats_equipments', '48');
 					</video>
 				</div>
 				<?php endif; ?>
-				<!-- Fond Image Haute Fidélité RMC BTP _JMP6225.jpg -->
-				<div class="kenburns-bg" style="background-image: url('images/_JMP6225.jpg');"></div>
+				<!-- Fond Image Haute Fidélité RMC BTP -->
+				<div class="kenburns-bg" style="background-image: url('<?= htmlspecialchars($hero1['url']) ?>'); background-position: <?= htmlspecialchars($hero1['focal']) ?> !important;"></div>
 				<div class="cinematic-overlay" style="background: radial-gradient(circle at 75% 35%, rgba(12, 46, 96, 0.2) 0%, rgba(4, 14, 30, 0.65) 85%), linear-gradient(90deg, rgba(4, 14, 30, 0.78) 0%, rgba(4, 14, 30, 0.45) 55%, rgba(4, 14, 30, 0.15) 100%);"></div>
 				<div class="container h-100" style="position: relative; z-index: 4;">
 					<div class="row no-gutters slider-text js-fullheight align-items-center">
@@ -119,7 +130,7 @@ $equipments = getSetting('stats_equipments', '48');
 		<!-- SLIDE 2 : Chantier Réel RMC BTP (Cadence & Gros Œuvre) -->
 		<div class="carousel-item">
 			<section class="hero-wrap js-fullheight kenburns-slide">
-				<div class="kenburns-bg" style="background-image: url('images/IMG-20261029-WA0099.jpg'); background-position: center;"></div>
+				<div class="kenburns-bg" style="background-image: url('<?= htmlspecialchars($hero2['url']) ?>'); background-position: <?= htmlspecialchars($hero2['focal']) ?> !important;"></div>
 				<div class="cinematic-overlay"></div>
 				<div class="container h-100">
 					<div class="row no-gutters slider-text js-fullheight align-items-center">
@@ -156,7 +167,7 @@ $equipments = getSetting('stats_equipments', '48');
 		<!-- SLIDE 3 : Finitions & Clés en main RMC BTP (SIMS Décor & Quincaillerie) -->
 		<div class="carousel-item">
 			<section class="hero-wrap js-fullheight kenburns-slide">
-				<div class="kenburns-bg" style="background-image: url('images/IMG-20261029-WA0098.jpg'); background-position: center;"></div>
+				<div class="kenburns-bg" style="background-image: url('<?= htmlspecialchars($hero3['url']) ?>'); background-position: <?= htmlspecialchars($hero3['focal']) ?> !important;"></div>
 				<div class="cinematic-overlay"></div>
 				<div class="container h-100">
 					<div class="row no-gutters slider-text js-fullheight align-items-center">
@@ -488,7 +499,7 @@ $equipments = getSetting('stats_equipments', '48');
 			<div class="col-md-6 ftco-animate">
 				<div class="dg-3d-card-wrapper position-relative" data-3d-tilt style="perspective: 1200px;">
 					<!-- Carte PDG avec Effet de Profondeur 3D et Cadre Architecte -->
-					<div class="img img-video d-flex align-items-end justify-content-center position-relative rounded shadow-lg overflow-hidden dg-3d-card" style="background-image: url('images/fondateurs/rodrigue-djomo.jpg'); min-height: 520px; background-size: cover; background-position: center top; border: 4px solid #fff; border-radius: 18px !important; box-shadow: 0 30px 60px rgba(12, 46, 96, 0.28) !important;">
+					<div class="img img-video d-flex align-items-end justify-content-center position-relative rounded shadow-lg overflow-hidden dg-3d-card" style="background-image: url('<?= htmlspecialchars($dgPortrait['url']) ?>'); min-height: 520px; background-size: cover; background-position: <?= htmlspecialchars($dgPortrait['focal']) ?>; border: 4px solid #fff; border-radius: 18px !important; box-shadow: 0 30px 60px rgba(12, 46, 96, 0.28) !important;">
 						<div class="overlay" style="position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(to top, rgba(4,14,30,0.95) 0%, rgba(4,14,30,0.3) 50%, rgba(0,0,0,0) 80%);"></div>
 						
 						<!-- Badge Flottant en relief 3D (Z-Index surélevé) -->
@@ -678,11 +689,11 @@ $equipments = getSetting('stats_equipments', '48');
 				<div class="interactive-ba-3d-frame p-2 p-md-3 rounded-xl" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(0, 180, 255, 0.35); box-shadow: 0 25px 60px rgba(0,0,0,0.5), inset 0 0 20px rgba(0, 180, 255, 0.08); border-radius: 20px; width: 100%;">
 					<div class="interactive-ba-wrapper" id="homeInteractiveBA" style="border-radius: 14px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); width: 100%; max-width: 100%;">
 						<!-- Image Après (Fond : Bâtiment RMC BTP Achevé) -->
-						<div class="ba-image-layer ba-after-layer" style="background-image: url('images/_JMP6225.jpg'); background-size: cover; background-position: center;"></div>
+						<div class="ba-image-layer ba-after-layer" style="background-image: url('<?= htmlspecialchars($baAfter['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($baAfter['focal']) ?>;"></div>
 						<span class="ba-tag ba-tag-after"><i class="fa fa-check-circle mr-1"></i> Ouvrage Livré Clé en Main</span>
 
 						<!-- Image Avant (Recouvrement : Chantier / Gros Œuvre) -->
-						<div class="ba-image-layer ba-before-layer" id="baBeforeLayer" style="background-image: url('images/_JMP6244.jpg'); background-size: cover; background-position: center;"></div>
+						<div class="ba-image-layer ba-before-layer" id="baBeforeLayer" style="background-image: url('<?= htmlspecialchars($baBefore['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($baBefore['focal']) ?>;"></div>
 						<span class="ba-tag ba-tag-before"><i class="fa fa-history mr-1"></i> Chantier en Cours / Gros Œuvre</span>
 
 						<!-- Poignée de Glissement -->
@@ -706,7 +717,7 @@ $equipments = getSetting('stats_equipments', '48');
 <!-- ========================================================================
      6. CHIFFRES CLÉS & ENVERGURE NATIONALE & INTERNATIONALE
      ======================================================================== -->
-<section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url('images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+<section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url('<?= htmlspecialchars($counterBg['url']) ?>'); background-position: <?= htmlspecialchars($counterBg['focal']) ?>;" data-stellar-background-ratio="0.5">
 	<div class="overlay" style="background: rgba(4, 14, 30, 0.88);"></div>
 	<div class="container">
 		<div class="row justify-content-center">

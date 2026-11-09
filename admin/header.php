@@ -89,6 +89,13 @@ $adminCurrentPage = basename($_SERVER['PHP_SELF'], '.php');
       </li>
 
       <li class="sidebar-item">
+        <a href="visuals.php" class="sidebar-link <?php echo ($adminCurrentPage === 'visuals') ? 'active' : ''; ?>">
+          <i class="fas fa-layer-group"></i>
+          <span>Visuels par Section</span>
+        </a>
+      </li>
+
+      <li class="sidebar-item">
         <a href="news.php" class="sidebar-link <?php echo ($adminCurrentPage === 'news') ? 'active' : ''; ?>">
           <i class="fas fa-newspaper"></i>
           <span>Actualités & Blog</span>
