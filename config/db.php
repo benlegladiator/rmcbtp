@@ -1,7 +1,10 @@
 <?php
 /**
  * Configuration Base de Données - RMC BTP SARL
- * Compatible Local XAMPP & Hébergement en ligne InfinityFree
+ * Compatible :
+ * 1. Production Officielle HOSTINGER (rmcbtpsarl.com)
+ * 2. Développement Local XAMPP (Windows)
+ * 3. Environnement de Test InfinityFree
  */
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -15,7 +18,7 @@ define('SITE_NAME', 'RMC BTP SARL');
 define('SITE_SLOGAN', 'Construire aujourd\'hui les solutions de demain');
 define('ADMIN_EMAIL', 'info@rmcbtp.com');
 
-// Détection automatique de l'environnement (Local XAMPP vs Hostinger Production vs InfinityFree)
+// Détection de l'environnement
 $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
 $is_local = (
     (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) &&
@@ -29,23 +32,26 @@ $is_infinityfree = (
     strpos($host, 'epizy.com') !== false
 );
 
+// -----------------------------------------------------------------------------
+// IDENTIFIANTS OFFICIELS DE CONNEXION
+// -----------------------------------------------------------------------------
 if (!defined('DB_HOST')) {
     if ($is_local) {
-        // 1. Configuration locale XAMPP
+        // 1. Environnement Local XAMPP
         define('DB_HOST', '127.0.0.1');
         define('DB_USER', 'root');
         define('DB_PASS', '');
         define('DB_NAME', 'rmcbtp_db');
         define('SITE_URL', 'http://localhost/rmcbtpsarl');
     } elseif ($is_infinityfree) {
-        // 2. Configuration InfinityFree (Test gratuit)
+        // 2. Environnement de Test InfinityFree
         define('DB_HOST', 'sql113.infinityfree.com');
         define('DB_USER', 'if0_39882531');
         define('DB_PASS', 'cmTJtR2Z2yq8MO');
         define('DB_NAME', 'if0_39882531_rmcbtp');
         define('SITE_URL', 'http://' . $host);
     } else {
-        // 3. Configuration Officielle Production HOSTINGER (rmcbtpsarl.com)
+        // 3. ENVIRONNEMENT DE PRODUCTION HOSTINGER (rmcbtpsarl.com)
         define('DB_HOST', 'localhost');
         define('DB_USER', 'u864783662_usr_YLmKYc9Z');
         define('DB_PASS', '5Xg^@9yATni');
@@ -54,77 +60,70 @@ if (!defined('DB_HOST')) {
     }
 }
 
-// Variables globales requises par les scanners et installeurs automatiques Hostinger
+// Variables requises par les scanners et installeurs automatiques Hostinger / cPanel
 $db_host = DB_HOST;
 $db_user = DB_USER;
 $db_pass = DB_PASS;
 $db_name = DB_NAME;
 
+/**
+ * Initialisation de la connexion PDO
+ */
 function getDBConnection() {
     static $pdo = null;
     if ($pdo !== null) {
         return $pdo;
     }
 
-    global $is_infinityfree, $is_local;
-
-    // Base de données cible
-    $possibleDbNames = $is_infinityfree 
-        ? [DB_NAME, 'if0_39882531_rmcbtp', 'if0_39882531_rmcbtp_db']
-        : [DB_NAME];
-
-    $connected = false;
-    foreach ($possibleDbNames as $dbname) {
-        try {
-            $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . $dbname . ";charset=utf8mb4", DB_USER, DB_PASS, [
+    try {
+        $pdo = new PDO(
+            "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+            DB_USER,
+            DB_PASS,
+            [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
-                PDO::ATTR_TIMEOUT => 4,
-            ]);
-            $connected = true;
-            break;
-        } catch (PDOException $e) {
-            continue;
-        }
-    }
-
-    if (!$connected) {
-        // Fallback automatique si la détection d'hôte a été inversée
+                PDO::ATTR_TIMEOUT => 5,
+            ]
+        );
+    } catch (PDOException $e) {
+        // Tentative de fallback si besoin
         try {
-            if ($is_online) {
-                $pdo = new PDO("mysql:host=127.0.0.1;dbname=rmcbtp_db;charset=utf8mb4", "root", "", [
+            $pdo = new PDO(
+                "mysql:host=localhost;dbname=" . DB_NAME . ";charset=utf8mb4",
+                DB_USER,
+                DB_PASS,
+                [
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                     PDO::ATTR_EMULATE_PREPARES => false,
-                    PDO::ATTR_TIMEOUT => 4,
-                ]);
-            } else {
-                $pdo = new PDO("mysql:host=sql113.infinityfree.com;dbname=if0_39882531_rmcbtp;charset=utf8mb4", "if0_39882531", "cmTJtR2Z2yq8MO", [
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                    PDO::ATTR_EMULATE_PREPARES => false,
-                    PDO::ATTR_TIMEOUT => 4,
-                ]);
-            }
+                    PDO::ATTR_TIMEOUT => 5,
+                ]
+            );
         } catch (PDOException $e2) {
-            die("Erreur de connexion à la base de données : " . $e2->getMessage());
+            die("Erreur critique de connexion à la base de données : " . $e2->getMessage());
         }
     }
 
-    // Synchroniser l'heure MySQL avec le fuseau horaire du Cameroun (UTC+1)
+    // Fuseau horaire MySQL Cameroun (UTC+1)
     try {
         $pdo->exec("SET time_zone = '+01:00'");
     } catch (Exception $e) {}
 
-    // Auto-installation si la base en ligne est encore vide
+    // Auto-installation si la base est encore vierge
     try {
         $check = $pdo->query("SHOW TABLES LIKE 'settings'");
         if (!$check->fetch()) {
             $dumpFile = __DIR__ . '/../rmcbtp_db_export.sql';
+            if (!file_exists($dumpFile)) {
+                $dumpFile = __DIR__ . '/../database.sql';
+            }
             if (file_exists($dumpFile)) {
                 $sql = file_get_contents($dumpFile);
-                $pdo->exec($sql);
+                if (!empty($sql)) {
+                    $pdo->exec($sql);
+                }
             }
         }
     } catch (Exception $e) {}
@@ -150,7 +149,7 @@ function getSetting($key, $default = '') {
 }
 
 /**
- * Fonction de récupération de tous les paramètres du site sous forme de tableau associatif
+ * Fonction de récupération de tous les paramètres du site
  */
 function getSiteSettings($pdo) {
     static $settings = null;
@@ -163,14 +162,12 @@ function getSiteSettings($pdo) {
         while ($row = $stmt->fetch()) {
             $settings[$row['setting_key']] = $row['setting_value'];
         }
-    } catch (Exception $e) {
-        // En cas d'erreur
-    }
+    } catch (Exception $e) {}
     return $settings;
 }
 
 /**
- * Fonction de nettoyage des entrées utilisateurs
+ * Nettoyage des entrées utilisateurs
  */
 function sanitize($data) {
     if (is_array($data)) {
@@ -200,7 +197,7 @@ function parseVideoEmbed($url) {
             'url' => $url,
             'embed_url' => $embedUrl,
             'thumb' => "https://img.youtube.com/vi/{$youtubeId}/hqdefault.jpg",
-            'embed_html' => '<iframe src="' . $embedUrl . '" title="Vidéo Chantier FEE BTP" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0; border-radius:8px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
+            'embed_html' => '<iframe src="' . $embedUrl . '" title="Vidéo Chantier BTP" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0; border-radius:8px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'
         ];
     }
 
@@ -225,7 +222,7 @@ function parseVideoEmbed($url) {
 }
 
 /**
- * Fonction de résolution d'image
+ * Résolution des chemins d'images
  */
 function resolveImage($path, $fallback = 'images/bg_1.jpg') {
     if (empty($path)) {
@@ -248,6 +245,7 @@ function resolveImage($path, $fallback = 'images/bg_1.jpg') {
     return $fallback;
 }
 
-// Module Gestionnaire de Visuels de Repère par Page & Section
-require_once __DIR__ . '/visuals_helper.php';
-
+// Module Gestionnaire de Visuels de Repère par Page & Section si présent
+if (file_exists(__DIR__ . '/visuals_helper.php')) {
+    require_once __DIR__ . '/visuals_helper.php';
+}
