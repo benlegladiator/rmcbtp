@@ -555,115 +555,140 @@ $ctaBg = getVisualInfo($homeVisuals, 'cta_bg', 'images/bg_1.jpg', 'center center
 </section>
 
 <!-- ========================================================================
-     4.1 DÉMONSTRATEUR LIVE CHANTIER TRACKER (ESPACE DIASPORA NEXT-GEN)
+     4.1 VOS PROJETS LIVRÉS CLÉS EN MAIN & SUIVI DIASPORA EN DIRECT
      ======================================================================== -->
-<section class="fee-tracker-section" id="diaspora-tracker">
+<section class="fee-tracker-section py-5" id="diaspora-tracker" style="background: #ffffff; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-10 ftco-animate">
 				<div class="d-inline-flex align-items-center gap-2 px-3 py-1 mb-3 rounded-pill" style="background: rgba(12, 46, 96, 0.08); border: 1.5px solid rgba(12, 46, 96, 0.25); color: #0c2e60; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">
-					<i class="fa fa-globe mr-1 text-primary"></i> TRANSPARENCE TOTALE & SUIVI DIASPORA
+					<i class="fa fa-trophy mr-1 text-primary"></i> RÉSULTATS CONCRETS & LIVRAISON CLÉS EN MAIN
 				</div>
-				<h2 class="font-weight-bold mb-3" style="font-size: 2.3rem; color: #0c2e60; letter-spacing: -0.02em;">
-					Suivez Votre Chantier au Pays Comme si Vous Y Étiez
+				<h2 class="font-weight-bold mb-3" style="font-size: 2.3rem; color: #0c2e60; letter-spacing: -0.01em;">
+					Des Chantiers Livrés dans les Délais, Zéro Stress à Distance
 				</h2>
 				<p class="text-muted lead mx-auto" style="max-width: 820px; font-size: 1.1rem; line-height: 1.7;">
-					Construire au Cameroun depuis l'étranger n'est plus une source d'inquiétude. Découvrez notre système de <strong>reporting hebdomadaire certifié</strong> avec jalons contractuels, éprouvettes béton et photos horodatées.
+					Construire au Cameroun depuis l'étranger n'a jamais été aussi serein. Découvrez nos <strong>derniers chantiers livrés clés en main</strong> avec procès-verbaux de réception, respect strict des budgets et reporting vidéo en direct.
 				</p>
-				<div class="d-flex justify-content-center flex-wrap gap-2 mt-3">
-					<button type="button" class="btn btn-primary btn-sm px-3 py-2 font-weight-bold" data-track-chantier="1">
-						<i class="fa fa-folder-open mr-1"></i> Dossier #1 : Villa Duplex Bastos / Odza (En cours)
-					</button>
-					<button type="button" class="btn btn-outline-secondary btn-sm px-3 py-2 font-weight-bold ml-2" data-track-chantier="2">
-						<i class="fa fa-check-circle mr-1"></i> Dossier #2 : Immeuble R+4 Douala (Livré 100%)
-					</button>
+			</div>
+		</div>
+
+		<!-- Grille des Résultats Livrés (Photos HD & Réalisations Concrètes) -->
+		<div class="row g-4 mb-5">
+			<!-- Projet 1 -->
+			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
+				<div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; overflow: hidden; background: #ffffff; border: 1px solid #e2e8f0 !important; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+					<div style="height: 230px; background-image: url('images/wa0062-framed-16x9.jpg'); background-size: cover; background-position: center; position: relative;">
+						<span class="badge badge-success px-3 py-2 font-weight-bold" style="position: absolute; top: 15px; left: 15px; font-size: 11px; border-radius: 50px; box-shadow: 0 4px 10px rgba(16,185,129,0.3);">
+							<i class="fa fa-check-circle mr-1"></i> 100% LIVRÉ & HABITÉ
+						</span>
+						<span class="badge badge-dark px-3 py-1" style="position: absolute; bottom: 15px; right: 15px; font-size: 11px; border-radius: 50px; background: rgba(12,46,96,0.85); color: #fff;">
+							<i class="fa fa-map-marker text-warning mr-1"></i> Bastos / Odza
+						</span>
+					</div>
+					<div class="card-body p-4 text-left">
+						<h5 class="font-weight-bold text-dark mb-2">Villa Duplex Contemporaine R+1</h5>
+						<p class="text-muted small mb-3">Maître d'Ouvrage : <strong>M. Jean-Paul B. (Bruxelles, Belgique)</strong></p>
+						<ul class="list-unstyled small mb-4 text-secondary" style="line-height: 2;">
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Délai tenu :</strong> Livrée clé en main en 7 mois</li>
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Budget maîtrisé :</strong> 0 surcoût imprévu</li>
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Suivi à distance :</strong> Rapports vidéo hebdomadaires WhatsApp</li>
+						</ul>
+						<a href="https://wa.me/237697398455?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20voir%20les%20vid%C3%A9os%20de%20la%20Villa%20Duplex." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
+							<i class="fab fa-whatsapp text-success mr-1"></i> Voir la Vidéo du Résultat
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Projet 2 -->
+			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
+				<div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; overflow: hidden; background: #ffffff; border: 1px solid #e2e8f0 !important; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+					<div style="height: 230px; background-image: url('images/IMG-20261015-WA0062.jpg'); background-size: cover; background-position: center; position: relative;">
+						<span class="badge badge-success px-3 py-2 font-weight-bold" style="position: absolute; top: 15px; left: 15px; font-size: 11px; border-radius: 50px; box-shadow: 0 4px 10px rgba(16,185,129,0.3);">
+							<i class="fa fa-check-circle mr-1"></i> 100% LIVRÉ & EXPLOITÉ
+						</span>
+						<span class="badge badge-dark px-3 py-1" style="position: absolute; bottom: 15px; right: 15px; font-size: 11px; border-radius: 50px; background: rgba(12,46,96,0.85); color: #fff;">
+							<i class="fa fa-map-marker text-warning mr-1"></i> Douala & Yaoundé
+						</span>
+					</div>
+					<div class="card-body p-4 text-left">
+						<h5 class="font-weight-bold text-dark mb-2">Immeuble Mixte Résidentiel & Commercial</h5>
+						<p class="text-muted small mb-3">Maître d'Ouvrage : <strong>Investisseur Privé (France)</strong></p>
+						<ul class="list-unstyled small mb-4 text-secondary" style="line-height: 2;">
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Résultat :</strong> Appartements de standing + commerces au RDC</li>
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Gros œuvre certifié :</strong> Béton armé 350 kg/m³ vibré</li>
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Finitions :</strong> Grès cérame poli et menuiserie alu</li>
+						</ul>
+						<a href="https://wa.me/237697398455?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20des%20infos%20sur%20vos%20immeubles%20locatifs." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
+							<i class="fab fa-whatsapp text-success mr-1"></i> Voir la Fiche Chantier
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Projet 3 -->
+			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
+				<div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; overflow: hidden; background: #ffffff; border: 1px solid #e2e8f0 !important; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+					<div style="height: 230px; background-image: url('images/IMG-20261015-WA0073.jpg'); background-size: cover; background-position: center; position: relative;">
+						<span class="badge badge-warning text-dark px-3 py-2 font-weight-bold" style="position: absolute; top: 15px; left: 15px; font-size: 11px; border-radius: 50px;">
+							<i class="fa fa-shield mr-1"></i> OUVRAGE GARANTI 10 ANS
+						</span>
+						<span class="badge badge-dark px-3 py-1" style="position: absolute; bottom: 15px; right: 15px; font-size: 11px; border-radius: 50px; background: rgba(12,46,96,0.85); color: #fff;">
+							<i class="fa fa-map-marker text-warning mr-1"></i> Ouest & Centre
+						</span>
+					</div>
+					<div class="card-body p-4 text-left">
+						<h5 class="font-weight-bold text-dark mb-2">Murs de Soutènement & Sécurisation</h5>
+						<p class="text-muted small mb-3">Maître d'Ouvrage : <strong>Projet Résidentiel Privé</strong></p>
+						<ul class="list-unstyled small mb-4 text-secondary" style="line-height: 2;">
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Résultat :</strong> Terrain en pente 100% stabilisé</li>
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Technique :</strong> Murs banchés et drainage anti-glissement</li>
+							<li><i class="fa fa-check text-success mr-2"></i> <strong>Flotte :</strong> Terrassement par nos propres engins lourds</li>
+						</ul>
+						<a href="https://wa.me/237697398455?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20s%C3%A9curiser%20un%20terrain%20en%20pente." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
+							<i class="fab fa-whatsapp text-success mr-1"></i> Demander une Expertise Sol
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="fee-tracker-card ftco-animate">
-			<!-- Header Dossier -->
-			<div class="fee-tracker-header" style="background: linear-gradient(135deg, #0c2e60 0%, #071933 100%);">
-				<div>
-					<div class="d-flex align-items-center flex-wrap gap-3 mb-2">
-						<span class="fee-tracker-live-pill">
-							<span class="fee-header-live-dot mr-1"></span> Suivi Chantier en Direct
-						</span>
-						<span class="badge badge-warning text-dark font-weight-bold px-3 py-1" id="feeTrackRef">
-							Dossier : RMC-YDE-2026-08
-						</span>
-					</div>
-					<h3 class="text-white font-weight-bold mb-1" id="feeTrackTitle">Villa Duplex Contemporaine R+1</h3>
-					<small class="text-white-50">
-						<i class="fa fa-map-marker text-warning mr-1"></i> <span id="feeTrackLocation">Yaoundé, Quartier Bastos</span>
-						&bull; Maître d'Ouvrage : <strong class="text-white" id="feeTrackClient">M. BASSOCK Jean-Paul (Bruxelles, Belgique)</strong>
-					</small>
-				</div>
-				<div class="d-flex flex-wrap gap-2">
-					<button type="button" class="btn btn-warning text-dark font-weight-bold px-3 py-2" id="feeBtnDownloadTrackPdf">
-						<i class="fa fa-file-pdf mr-1"></i> Télécharger le Rapport Officiel (PDF)
-					</button>
-					<a href="https://wa.me/237697398455?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20des%20renseignements%20sur%20le%20suivi%20de%20chantier%20pour%20la%20diaspora." class="btn btn-outline-light font-weight-bold px-3 py-2" target="_blank" rel="noopener">
-						<i class="fab fa-whatsapp text-success mr-1"></i> Contacter la Direction Technique
-					</a>
-				</div>
-			</div>
-
-			<!-- Jauge de Progression Générale -->
-			<div class="fee-tracker-progress-wrap">
-				<div class="d-flex justify-content-between align-items-center mb-2">
-					<span class="font-weight-bold text-dark" style="font-size: 15px;">
-						Avancement Global des Travaux :
-					</span>
-					<span class="font-weight-bold text-primary" style="font-size: 20px;" id="feeTrackPercent">78%</span>
-				</div>
-				<div class="fee-tracker-meter">
-					<div class="fee-tracker-meter-fill" id="feeTrackProgressBar" style="width: 78%; background: linear-gradient(90deg, #0c2e60, #d97706);"></div>
-				</div>
-				<div class="d-flex justify-content-between text-muted small mt-2">
-					<span>Démarrage : 10 Mai 2026</span>
-					<span>Direction Technique : <strong class="text-dark" id="feeTrackConducteur">Ing. Patrick TOUKAM</strong></span>
-					<span>Livraison contractuelle : <strong class="text-dark" id="feeTrackDelivery">20 Décembre 2026</strong></span>
-				</div>
-
-				<!-- Timeline des 5 Jalons -->
-				<div class="fee-tracker-timeline" id="feeTrackStepsWrap">
-					<!-- Rempli dynamiquement par JS -->
-				</div>
-			</div>
-
-			<!-- Métriques Matériaux & Photos Terrain Horodatées -->
-			<div class="fee-tracker-body">
-				<div class="row mb-4">
-					<div class="col-md-6 mb-3 mb-md-0">
-						<div class="fee-tracker-metric-box h-100 text-left p-3">
-							<div class="d-flex align-items-center mb-2">
-								<i class="fa fa-flask text-warning mr-2" style="font-size: 20px;"></i>
-								<h6 class="font-weight-bold mb-0 text-dark">Résistance & Éprouvettes Béton</h6>
-							</div>
-							<p class="small text-muted mb-0" id="feeTrackConcrete">
-								Dosage 350 kg/m³ vibré &bull; Ciment CPJ 42.5 &bull; Éprouvettes validées à 28j (29.2 MPa)
-							</p>
+		<!-- Bannière des 3 Engagements Clés en Main (Résultats Garantis) -->
+		<div class="p-4 p-md-5 rounded-4 shadow-sm text-left" style="background: linear-gradient(135deg, #0c2e60 0%, #071933 100%); border-radius: 24px; color: #ffffff;">
+			<div class="row align-items-center">
+				<div class="col-lg-4 mb-3 mb-lg-0 border-right-md border-secondary">
+					<div class="d-flex align-items-start gap-3">
+						<div class="rounded-circle p-3 mr-3" style="background: rgba(0, 210, 255, 0.15); color: #00d2ff; font-size: 22px;">
+							<i class="fab fa-whatsapp"></i>
 						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="fee-tracker-metric-box h-100 text-left p-3">
-							<div class="d-flex align-items-center mb-2">
-								<i class="fa fa-shield text-danger mr-2" style="font-size: 20px;"></i>
-								<h6 class="font-weight-bold mb-0 text-dark">Contrôle Armatures & Sécurité HSE</h6>
-							</div>
-							<p class="small text-muted mb-0" id="feeTrackSteel">
-								Acier Haute Adhérence FeE500 (SIMS Quincaillerie) &bull; Zéro incident de chantier
-							</p>
+						<div>
+							<h6 class="font-weight-bold text-white mb-1">Vidéos Chaque Vendredi</h6>
+							<p class="text-white-50 small mb-0">Rapport vidéo HD & photos drone sur votre téléphone. Vous suivez tout en direct.</p>
 						</div>
 					</div>
 				</div>
-
-				<h5 class="font-weight-bold text-dark mb-3">
-					<i class="fa fa-camera mr-2" style="color: #0c2e60;"></i> Dernières Inspections Photographiques de la Direction Technique
-				</h5>
-				<div class="row" id="feeTrackPhotosWrap">
-					<!-- Photos chargées dynamiquement par JS -->
+				<div class="col-lg-4 mb-3 mb-lg-0 border-right-md border-secondary">
+					<div class="d-flex align-items-start gap-3">
+						<div class="rounded-circle p-3 mr-3" style="background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 22px;">
+							<i class="fa fa-shield"></i>
+						</div>
+						<div>
+							<h6 class="font-weight-bold text-white mb-1">Paiement par Tranches</h6>
+							<p class="text-white-50 small mb-0">Vous ne réglez qu'après vérification vidéo de chaque étape réellement exécutée.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="d-flex align-items-start gap-3">
+						<div class="rounded-circle p-3 mr-3" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; font-size: 22px;">
+							<i class="fa fa-key"></i>
+						</div>
+						<div>
+							<h6 class="font-weight-bold text-white mb-1">Remise des Clés Certifiée</h6>
+							<p class="text-white-50 small mb-0">Contrat ferme, procès-verbal de parfait achèvement et garantie décennale.</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -911,249 +936,159 @@ $ctaBg = getVisualInfo($homeVisuals, 'cta_bg', 'images/bg_1.jpg', 'center center
 </section>
 
 <!-- ========================================================================
-     8. CONFIGURATEUR DE PROJET ÉTAPE PAR ÉTAPE (WIZARD ESTIMATIF & DEVIS PDF)
+     8. SIMULATEUR EXPRESS CLÉS EN MAIN (RÉSULTAT CHIFFRÉ IMMÉDIAT EN 1 CLIC)
      ======================================================================== -->
 <section class="fee-wizard-section py-5" id="simulateur-section" style="background: #ffffff; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
 	<div class="container">
 		<div class="row justify-content-center text-center mb-5">
 			<div class="col-lg-10 ftco-animate">
 				<div class="d-inline-flex align-items-center gap-2 px-3 py-1 mb-3 rounded-pill" style="background: rgba(12, 46, 96, 0.08); border: 1.5px solid rgba(12, 46, 96, 0.25); color: #0c2e60; font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">
-					<i class="fa fa-sliders mr-1 text-warning"></i> CONFIGURATEUR D'INGÉNIERIE & ÉTUDE DE PRIX EXPRESS
+					<i class="fa fa-calculator mr-1 text-warning"></i> ESTIMATEUR EXPRESS CLÉS EN MAIN
 				</div>
-				<h2 class="font-weight-bold mb-3" style="font-size: 2.3rem; color: #0c2e60; letter-spacing: -0.02em;">
-					Configurez Votre Projet & Obtenez Votre Devis Immédiat
+				<h2 class="font-weight-bold mb-3" style="font-size: 2.3rem; color: #0c2e60; letter-spacing: -0.01em;">
+					Calculez Votre Projet & Visualisez le Résultat Immédiatement
 				</h2>
 				<p class="text-muted lead mx-auto" style="max-width: 820px; font-size: 1.1rem; line-height: 1.7;">
-					Un algorithme précis calibré sur les mercuriales officielles et les cours des matériaux au Cameroun. Téléchargez votre fiche estimative en PDF ou partagez-la directement sur WhatsApp avec nos métreurs RMC BTP.
+					Ajustez le type d'ouvrage et la superficie souhaitée : le <strong>budget clés en main</strong> et le <strong>délai de réalisation</strong> s'affichent instantanément en temps réel.
 				</p>
 			</div>
 		</div>
 
-		<div class="fee-wizard-wrap ftco-animate">
-			<!-- Onglets de navigation du Wizard -->
-			<div class="fee-wizard-nav">
-				<div class="fee-wizard-tab active" data-step-target="1">
-					<span class="fee-wizard-tab-number">1</span>
-					<span>1. Type d'Ouvrage</span>
-				</div>
-				<div class="fee-wizard-tab" data-step-target="2">
-					<span class="fee-wizard-tab-number">2</span>
-					<span>2. Standing & Finitions</span>
-				</div>
-				<div class="fee-wizard-tab" data-step-target="3">
-					<span class="fee-wizard-tab-number">3</span>
-					<span>3. Relief & Terrain</span>
-				</div>
-				<div class="fee-wizard-tab" data-step-target="4">
-					<span class="fee-wizard-tab-number">4</span>
-					<span>4. Surface & Options</span>
-				</div>
-			</div>
-
-			<div class="fee-wizard-content">
-				<!-- ÉTAPE 1 : TYPE D'OUVRAGE -->
-				<div class="fee-wizard-step active" id="feewizStep1">
-					<h4 class="font-weight-bold text-dark mb-2">Quel type d'ouvrage souhaitez-vous réaliser ?</h4>
-					<p class="text-muted small mb-4">Sélectionnez la catégorie principale pour charger les ratios de ferraillage et de gros œuvre adaptés.</p>
-					
-					<div class="fee-wizard-grid">
-						<div class="fee-wizard-card selected" data-wiz-type="villa">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-home"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Villa / Résidence</h6>
-							<small class="text-muted">Plain-pied ou duplex contemporain avec baies vitrées</small>
-						</div>
-						<div class="fee-wizard-card" data-wiz-type="building">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-building"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Immeuble R+2 à R+4</h6>
-							<small class="text-muted">Appartements locatifs, commerces et bureaux de standing</small>
-						</div>
-						<div class="fee-wizard-card" data-wiz-type="retaining">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-layer-group"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Soutènement & VRD</h6>
-							<small class="text-muted">Murs banchés anti-glissement, voirie et pavage lourd</small>
-						</div>
-						<div class="fee-wizard-card" data-wiz-type="industrial">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-industry"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Hangar / Entrepôt</h6>
-							<small class="text-muted">Charpente métallique, radier industriel et stockage</small>
-						</div>
-					</div>
-
-					<div class="d-flex justify-content-end mt-4">
-						<button type="button" class="btn btn-primary px-4 py-2 font-weight-bold" data-wiz-next>
-							Continuer vers le Standing <i class="fa fa-arrow-right ml-2"></i>
-						</button>
-					</div>
-				</div>
-
-				<!-- ÉTAPE 2 : NIVEAU DE STANDING -->
-				<div class="fee-wizard-step" id="feewizStep2">
-					<h4 class="font-weight-bold text-dark mb-2">Choisissez votre niveau de finition</h4>
-					<p class="text-muted small mb-4">Le niveau de standing détermine la provenance des équipements, sanitaires, carrelages et menuiseries (via SIMS Quincaillerie & SIMS Décor).</p>
-					
-					<div class="fee-wizard-grid">
-						<div class="fee-wizard-card" data-wiz-standing="standard">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-check-circle"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Éco-Rigueur</h6>
-							<small class="text-muted">Gros œuvre certifié 350kg/m³, carrelage soigné et menuiseries aluminium</small>
-						</div>
-						<div class="fee-wizard-card selected" data-wiz-standing="comfort">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-star"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Grand Standing</h6>
-							<small class="text-muted">Grès cérame grand format, faux-plafonds staff SIMS Décor et spots LED</small>
-						</div>
-						<div class="fee-wizard-card" data-wiz-standing="prestige">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-crown"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Prestige Diaspora</h6>
-							<small class="text-muted">Sanitaires italiens, marbrerie d'exception, domotique et baies vitrées panoramiques</small>
-						</div>
-					</div>
-
-					<div class="d-flex justify-content-between mt-4">
-						<button type="button" class="btn btn-outline-secondary px-4 py-2 font-weight-bold" data-wiz-prev>
-							<i class="fa fa-arrow-left mr-2"></i> Retour
-						</button>
-						<button type="button" class="btn btn-primary px-4 py-2 font-weight-bold" data-wiz-next>
-							Continuer vers le Terrain <i class="fa fa-arrow-right ml-2"></i>
-						</button>
-					</div>
-				</div>
-
-				<!-- ÉTAPE 3 : RELIEF & TOPOGRAPHIE -->
-				<div class="fee-wizard-step" id="feewizStep3">
-					<h4 class="font-weight-bold text-dark mb-2">Quelle est la configuration de votre terrain ?</h4>
-					<p class="text-muted small mb-4">La topographie du sol influence directement l'ampleur des terrassements et le type de fondations.</p>
-					
-					<div class="fee-wizard-grid">
-						<div class="fee-wizard-card selected" data-wiz-terrain="flat">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-square"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Terrain Plat Normal</h6>
-							<small class="text-muted">Fouilles courantes et semelles superficielles classiques</small>
-						</div>
-						<div class="fee-wizard-card" data-wiz-terrain="slope">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-mountain"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Terrain en Pente Forte</h6>
-							<small class="text-muted">Terrassement en redans, murs de soutènement et drains obligatoires</small>
-						</div>
-						<div class="fee-wizard-card" data-wiz-terrain="wetland">
-							<span class="fee-wizard-card-check"><i class="fa fa-check"></i></span>
-							<div class="fee-wizard-card-icon"><i class="fa fa-tint"></i></div>
-							<h6 class="font-weight-bold text-dark mb-1">Sol Meuble / Bas-Fond</h6>
-							<small class="text-muted">Radier généralisé renforcé et cuvelage anti-remontées d'humidité</small>
-						</div>
-					</div>
-
-					<div class="d-flex justify-content-between mt-4">
-						<button type="button" class="btn btn-outline-secondary px-4 py-2 font-weight-bold" data-wiz-prev>
-							<i class="fa fa-arrow-left mr-2"></i> Retour
-						</button>
-						<button type="button" class="btn btn-primary px-4 py-2 font-weight-bold" data-wiz-next>
-							Continuer vers la Surface <i class="fa fa-arrow-right ml-2"></i>
-						</button>
-					</div>
-				</div>
-
-				<!-- ÉTAPE 4 : SURFACE, OPTIONS & RÉSULTAT FINAL -->
-				<div class="fee-wizard-step" id="feewizStep4">
-					<div class="row align-items-center">
-						<div class="col-lg-6 mb-4 mb-lg-0">
-							<h4 class="font-weight-bold text-dark mb-3">Superficie & Packs Additionnels</h4>
-							
-							<div class="form-group mb-4">
-								<div class="d-flex justify-content-between align-items-center mb-2">
-									<label class="font-weight-bold text-dark small mb-0">Superficie couverte estimée :</label>
-									<span class="badge badge-warning text-dark font-weight-bold px-3 py-1" style="font-size: 15px;" id="feewizSurfaceVal">200 m²</span>
-								</div>
-								<input type="range" min="50" max="1200" step="10" value="200" class="form-control-range" id="feewizSurfaceRange">
-								<div class="d-flex justify-content-between text-muted small mt-1">
-									<span>50 m²</span>
-									<span>600 m²</span>
-									<span>1 200 m²</span>
-								</div>
-							</div>
-
-							<label class="font-weight-bold text-dark small mb-2">Options Clés en Main Recommandées :</label>
-							<div class="border rounded p-3 mb-2" style="background: #f8fafc;">
-								<div class="custom-control custom-checkbox mb-2">
-									<input type="checkbox" class="custom-control-input" id="feewizOpt_forage">
-									<label class="custom-control-label font-weight-bold text-dark small" for="feewizOpt_forage">
-										Forage d'eau potable autonome (+ château d'eau & pompe)
-									</label>
-								</div>
-								<div class="custom-control custom-checkbox mb-2">
-									<input type="checkbox" class="custom-control-input" id="feewizOpt_fence">
-									<label class="custom-control-label font-weight-bold text-dark small" for="feewizOpt_fence">
-										Clôture périphérique maçonnée avec portail motorisé
-									</label>
-								</div>
-								<div class="custom-control custom-checkbox">
-									<input type="checkbox" class="custom-control-input" id="feewizOpt_solar">
-									<label class="custom-control-label font-weight-bold text-dark small" for="feewizOpt_solar">
-										Centrale Solaire hybride autonome (Batteries Lithium)
-									</label>
-								</div>
+		<div class="p-4 p-lg-5 rounded-4 shadow-sm" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 24px;">
+			<div class="row align-items-center">
+				<!-- Colonne Gauche : Paramètres Visuels Simples -->
+				<div class="col-lg-7 pr-lg-5 mb-4 mb-lg-0 text-left">
+					<!-- 1. Type d'Ouvrage -->
+					<label class="font-weight-bold text-dark small text-uppercase mb-2 d-block" style="letter-spacing: 1px;">
+						1. Choisissez Votre Ouvrage :
+					</label>
+					<div class="row g-2 mb-4">
+						<div class="col-6 col-sm-3 mb-2">
+							<div class="fee-wizard-card selected p-3 text-center h-100" data-wiz-type="villa" style="cursor: pointer; border-radius: 14px;">
+								<i class="fa fa-home text-warning mb-2" style="font-size: 24px;"></i>
+								<div class="font-weight-bold text-dark" style="font-size: 13px;">Villa Duplex</div>
+								<small class="text-muted d-block" style="font-size: 11px;">Résidentiel</small>
 							</div>
 						</div>
-
-						<div class="col-lg-6">
-							<!-- Panneau Sommaire & Devis Immédiat -->
-							<div class="fee-wizard-summary-box" style="background: linear-gradient(145deg, #0c2e60 0%, #071933 100%);">
-								<small class="text-uppercase font-weight-bold text-warning" style="letter-spacing: 1px;">
-									Fourchette Estimative Globale Clés en Main :
-								</small>
-								<div class="fee-wizard-price-big my-2" id="feewizPriceFcfa">
-									35 000 000 - 45 000 000 FCFA
-								</div>
-								<div class="fee-wizard-price-eur mb-3" id="feewizPriceEur">
-									(~ 53 000 € à 68 000 €)
-								</div>
-
-								<div class="border-top border-secondary pt-3 mb-3">
-									<div class="row text-center text-white-50 small">
-										<div class="col-3 border-right border-secondary">
-											<strong class="d-block text-white" id="feewizDuration">5 Mois</strong>
-											<span>Délai</span>
-										</div>
-										<div class="col-3 border-right border-secondary">
-											<strong class="d-block text-white" id="feewizCement">~ 1300 Sacs</strong>
-											<span>Ciment</span>
-										</div>
-										<div class="col-3 border-right border-secondary">
-											<strong class="d-block text-white" id="feewizSteel">~ 9 T</strong>
-											<span>Acier HA</span>
-										</div>
-										<div class="col-3">
-											<strong class="d-block text-white" id="feewizConcrete">~ 130 m³</strong>
-											<span>Béton B25</span>
-										</div>
-									</div>
-								</div>
-
-								<div class="d-flex flex-wrap gap-2">
-									<button type="button" class="btn btn-warning text-dark font-weight-bold btn-block py-3 mb-2" id="feewizBtnPdf">
-										<i class="fa fa-file-pdf mr-2"></i> Télécharger cette Fiche Estimative (PDF)
-									</button>
-									<a href="#" class="btn btn-success btn-block font-weight-bold py-3" id="feewizBtnWhatsapp" target="_blank" rel="noopener">
-										<i class="fab fa-whatsapp mr-2 font-weight-bold" style="font-size: 18px;"></i> Transmettre au Bureau d'Études sur WhatsApp
-									</a>
-								</div>
+						<div class="col-6 col-sm-3 mb-2">
+							<div class="fee-wizard-card p-3 text-center h-100" data-wiz-type="building" style="cursor: pointer; border-radius: 14px;">
+								<i class="fa fa-building text-warning mb-2" style="font-size: 24px;"></i>
+								<div class="font-weight-bold text-dark" style="font-size: 13px;">Immeuble R+2/3</div>
+								<small class="text-muted d-block" style="font-size: 11px;">Locatif</small>
+							</div>
+						</div>
+						<div class="col-6 col-sm-3 mb-2">
+							<div class="fee-wizard-card p-3 text-center h-100" data-wiz-type="retaining" style="cursor: pointer; border-radius: 14px;">
+								<i class="fa fa-shield text-warning mb-2" style="font-size: 24px;"></i>
+								<div class="font-weight-bold text-dark" style="font-size: 13px;">Soutènement</div>
+								<small class="text-muted d-block" style="font-size: 11px;">Anti-glissement</small>
+							</div>
+						</div>
+						<div class="col-6 col-sm-3 mb-2">
+							<div class="fee-wizard-card p-3 text-center h-100" data-wiz-type="industrial" style="cursor: pointer; border-radius: 14px;">
+								<i class="fa fa-industry text-warning mb-2" style="font-size: 24px;"></i>
+								<div class="font-weight-bold text-dark" style="font-size: 13px;">Hangar</div>
+								<small class="text-muted d-block" style="font-size: 11px;">Entrepôt métal</small>
 							</div>
 						</div>
 					</div>
 
-					<div class="d-flex justify-content-start mt-4">
-						<button type="button" class="btn btn-outline-secondary px-4 py-2 font-weight-bold" data-wiz-prev>
-							<i class="fa fa-arrow-left mr-2"></i> Modifier les paramètres
-						</button>
+					<!-- 2. Superficie -->
+					<div class="mb-4">
+						<div class="d-flex justify-content-between align-items-center mb-2">
+							<label class="font-weight-bold text-dark small text-uppercase mb-0" style="letter-spacing: 1px;">
+								2. Superficie Estimée :
+							</label>
+							<span class="badge badge-warning text-dark font-weight-bold px-3 py-1" style="font-size: 15px;" id="feewizSurfaceVal">200 m²</span>
+						</div>
+						<input type="range" min="60" max="800" step="10" value="200" class="form-control-range" id="feewizSurfaceRange">
+						<div class="d-flex justify-content-between text-muted small mt-1" style="font-size: 11px;">
+							<span>60 m² (Villa standard)</span>
+							<span>300 m² (Grand duplex)</span>
+							<span>800 m² (Immeuble / Hangar)</span>
+						</div>
+					</div>
+
+					<!-- 3. Standing / Finition -->
+					<label class="font-weight-bold text-dark small text-uppercase mb-2 d-block" style="letter-spacing: 1px;">
+						3. Niveau de Finition Souhaité :
+					</label>
+					<div class="row g-2 mb-3">
+						<div class="col-4">
+							<div class="fee-wizard-card p-2 text-center h-100" data-wiz-standing="standard" style="cursor: pointer; border-radius: 12px;">
+								<div class="font-weight-bold text-dark" style="font-size: 12px;">Éco-Rigueur</div>
+								<small class="text-muted d-block" style="font-size: 10px;">Gros œuvre + base</small>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="fee-wizard-card selected p-2 text-center h-100" data-wiz-standing="comfort" style="cursor: pointer; border-radius: 12px;">
+								<div class="font-weight-bold text-dark" style="font-size: 12px;">Grand Confort</div>
+								<small class="text-muted d-block" style="font-size: 10px;">Clés en main moderne</small>
+							</div>
+						</div>
+						<div class="col-4">
+							<div class="fee-wizard-card p-2 text-center h-100" data-wiz-standing="prestige" style="cursor: pointer; border-radius: 12px;">
+								<div class="font-weight-bold text-dark" style="font-size: 12px;">Prestige VIP</div>
+								<small class="text-muted d-block" style="font-size: 10px;">Finition luxe diaspora</small>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Colonne Droite : RÉSULTAT IMMÉDIAT EN TEMPS RÉEL -->
+				<div class="col-lg-5">
+					<div class="fee-wizard-summary-box text-left p-4 p-md-4 shadow-lg" style="background: linear-gradient(145deg, #0c2e60 0%, #071933 100%); border-radius: 20px; border: 1px solid #1e3a5f;">
+						<div class="d-flex align-items-center justify-content-between mb-2">
+							<span class="badge badge-warning text-dark font-weight-bold px-3 py-1" style="font-size: 11px; border-radius: 50px;">
+								<i class="fa fa-flash mr-1"></i> RÉSULTAT CHIFFRÉ EN TEMPS RÉEL
+							</span>
+							<span class="text-white-50 small"><i class="fa fa-calendar-check-o mr-1"></i> Clés en main</span>
+						</div>
+
+						<small class="text-uppercase font-weight-bold text-white-50 d-block mt-2" style="font-size: 11px; letter-spacing: 1px;">
+							Fourchette Estimative Totale :
+						</small>
+						<div class="fee-wizard-price-big my-2 font-weight-bold text-warning" id="feewizPriceFcfa" style="font-size: 26px; line-height: 1.2;">
+							35 000 000 - 45 000 000 FCFA
+						</div>
+						<div class="fee-wizard-price-eur mb-3 text-white-50" id="feewizPriceEur" style="font-size: 14px;">
+							(~ 53 000 € à 68 000 €)
+						</div>
+
+						<!-- Délais & Prestations Incluses -->
+						<div class="border-top border-secondary pt-3 mb-3">
+							<div class="row text-center text-white-50 small mb-3">
+								<div class="col-4 border-right border-secondary">
+									<strong class="d-block text-white" id="feewizDuration" style="font-size: 16px;">5 Mois</strong>
+									<span style="font-size: 11px;">Délai Garanti</span>
+								</div>
+								<div class="col-4 border-right border-secondary">
+									<strong class="d-block text-white" id="feewizCement" style="font-size: 16px;">~ 1300 Sacs</strong>
+									<span style="font-size: 11px;">Ciment Normé</span>
+								</div>
+								<div class="col-4">
+									<strong class="d-block text-white" id="feewizSteel" style="font-size: 16px;">~ 9 T</strong>
+									<span style="font-size: 11px;">Acier FeE500</span>
+								</div>
+							</div>
+
+							<ul class="list-unstyled text-white-50 small mb-0" style="line-height: 1.8; font-size: 11.5px;">
+								<li><i class="fa fa-check text-success mr-2"></i> Étude de sol & dimensionnement des structures</li>
+								<li><i class="fa fa-check text-success mr-2"></i> Gros œuvre, plomberie, électricité & finitions</li>
+								<li><i class="fa fa-check text-success mr-2"></i> Rapport vidéo chaque vendredi sur WhatsApp</li>
+								<li><i class="fa fa-check text-success mr-2"></i> Remise des clés & garantie décennale certifiée</li>
+							</ul>
+						</div>
+
+						<!-- Boutons d'Action 1 Clic -->
+						<div class="d-grid gap-2">
+							<a href="#" class="btn btn-success btn-block font-weight-bold py-3 mb-2" id="feewizBtnWhatsapp" target="_blank" rel="noopener" style="border-radius: 14px; font-size: 14px; box-shadow: 0 4px 15px rgba(16,185,129,0.3);">
+								<i class="fab fa-whatsapp mr-2" style="font-size: 18px;"></i> Recevoir ce Devis sur WhatsApp
+							</a>
+							<button type="button" class="btn btn-outline-light btn-block font-weight-bold py-2" id="feewizBtnPdf" style="border-radius: 12px; font-size: 13px;">
+								<i class="fa fa-file-pdf mr-2 text-warning"></i> Télécharger la Fiche Récapitulative PDF
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
