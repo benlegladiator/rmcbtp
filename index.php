@@ -294,36 +294,79 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 				<div class="fee-bim-grid-overlay"></div>
 				<canvas id="feeBim3DCanvas"></canvas>
 
+				<!-- Hotspots 3D Info-Bulles Flottantes -->
+				<div id="feeBimHotspotsLayer" class="fee-bim-hotspots-layer"></div>
+
+				<!-- Panneau Fiche Technique du Hotspot actif -->
+				<div id="feeBimHotspotCard" class="fee-bim-hotspot-card d-none">
+					<button type="button" class="fee-bim-card-close" id="feeBimCardClose">&times;</button>
+					<div class="fee-bim-card-badge" id="feeBimCardBadge">FONDATIONS</div>
+					<h4 class="fee-bim-card-title" id="feeBimCardTitle">Semelles Isolées & Radier Hydrofuge</h4>
+					<p class="fee-bim-card-desc" id="feeBimCardDesc">Calculées aux Eurocodes 2 avec béton armé dosé à 350 kg/m³ vibré et armatures FeE500 anti-sismiques.</p>
+					<div class="fee-bim-card-meta" id="feeBimCardMeta">
+						<span><i class="fa fa-shield text-success mr-1"></i> Garantie Décennale</span>
+						<span><i class="fa fa-check text-primary mr-1"></i> Contrôle Bureau Véritas</span>
+					</div>
+				</div>
+
 				<!-- HUD flottant d'ingénierie -->
 				<div class="fee-bim-hud d-none d-md-block">
 					<div class="fee-bim-hud-title">
 						<span class="fee-bim-hud-badge"></span>
-						<span>Maquette BIM R+2 Structurale</span>
+						<span>Studio BIM R+2 Interactif</span>
 					</div>
 					<div class="fee-bim-hud-specs">
 						&bull; Calcul : <span>Eurocodes 2 & BAEL</span><br>
 						&bull; Béton armé : <span>Dosage 350 kg/m³</span><br>
-						&bull; Armatures : <span>Acier FeE500 HA</span><br>
-						&bull; Baies & Portes : <span id="feeBimDoorLabel">Fermées</span>
+						&bull; Ambiance : <span id="feeBimSunLabel">☀️ Plein Jour</span><br>
+						&bull; Finition : <span id="feeBimFinishLabel">Blanc Pur & Teck</span><br>
+						&bull; Ouvertures : <span id="feeBimDoorLabel">Fermées</span>
 					</div>
 				</div>
 
-				<!-- Barre d'outils de contrôle 3D -->
+				<!-- Bouton Plein Écran & Gyroscope (Top Right) -->
+				<div class="fee-bim-top-controls">
+					<button type="button" class="fee-bim-tool-pill" id="feeBtnBimDimensions" title="Afficher les cotes architecturales & silhouette humaine">
+						<i class="fa fa-ruler-combined"></i> <span class="d-none d-sm-inline">Cotation & Échelle</span>
+					</button>
+					<button type="button" class="fee-bim-tool-pill" id="feeBtnBimFullscreen" title="Plein écran immersif">
+						<i class="fa fa-expand"></i>
+					</button>
+				</div>
+
+				<!-- Panneau Bas : Sélecteur de Finitions Façades -->
+				<div class="fee-bim-palette-bar">
+					<span class="fee-palette-label d-none d-md-inline"><i class="fa fa-palette mr-1"></i> Finitions :</span>
+					<button type="button" class="fee-palette-dot active" data-finish="teck-white" title="Enduit Minéral Blanc Pur & Teck Noble"></button>
+					<button type="button" class="fee-palette-dot" data-finish="stone-gold" title="Pierre Naturelle Grise & Menuiseries Anthracite"></button>
+					<button type="button" class="fee-palette-dot" data-finish="concrete-bronze" title="Béton Ciré Contemporain & Vitrages Bronze"></button>
+				</div>
+
+				<!-- Barre d'outils de contrôle 3D Principale -->
 				<div class="fee-bim-toolbar">
+					<!-- Rendu & Matériaux -->
 					<button type="button" class="fee-bim-btn active" data-bim-mode="prestige" title="Rendu architectural fini">
-						<i class="fa fa-eye"></i> <span class="d-none d-sm-inline">Rendu Réaliste</span>
+						<i class="fa fa-eye"></i> <span class="d-none d-lg-inline">Réaliste</span>
 					</button>
 					<button type="button" class="fee-bim-btn" data-bim-mode="blueprint" title="Structure filaire d'ingénierie">
-						<i class="fa fa-drafting-compass"></i> <span class="d-none d-sm-inline">Filaire Blueprint</span>
+						<i class="fa fa-drafting-compass"></i> <span class="d-none d-lg-inline">Blueprint</span>
 					</button>
 					<button type="button" class="fee-bim-btn" data-bim-mode="concrete" title="Béton brut et armatures">
-						<i class="fa fa-cubes"></i> <span class="d-none d-sm-inline">Structure Béton</span>
+						<i class="fa fa-cubes"></i> <span class="d-none d-lg-inline">Béton</span>
 					</button>
+
+					<!-- Actions Dynamiques -->
 					<button type="button" class="fee-bim-btn" id="feeBtnBimOpenDoors" title="Ouvrir / Fermer les baies vitrées et portes">
-						<i class="fa fa-door-open"></i> <span>Ouvrir les Baies</span>
+						<i class="fa fa-door-open"></i> <span>Baies</span>
 					</button>
 					<button type="button" class="fee-bim-btn" id="feeBtnBimExplode" title="Décomposer les étages">
-						<i class="fa fa-layer-group"></i> <span>Vue Écorchée</span>
+						<i class="fa fa-layer-group"></i> <span>Écorché</span>
+					</button>
+					<button type="button" class="fee-bim-btn" id="feeBtnBimSun" title="Cycle Solaire : Jour / Crépuscule / Nuit">
+						<i class="fa fa-sun"></i> <span class="d-none d-sm-inline" id="feeBtnBimSunText">Jour</span>
+					</button>
+					<button type="button" class="fee-bim-btn" id="feeBtnBimHotspots" title="Afficher/Masquer les points d'intérêt techniques">
+						<i class="fa fa-info-circle"></i> <span class="d-none d-sm-inline">Infos BTP</span>
 					</button>
 					<button type="button" class="fee-bim-btn active" id="feeBtnBimRotate" title="Activer/Pause rotation">
 						<i class="fa fa-repeat"></i>
@@ -337,7 +380,7 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 
 		<div class="text-center mt-4">
 			<span class="small" style="color: #64748b;">
-				<i class="fa fa-mouse-pointer mr-1 text-warning"></i> Cliquez et glissez pour tourner à 360° &bull; Molette pour zoomer &bull; Cliquez sur <strong>« Vue Écorchée »</strong> pour séparer les dalles
+				<i class="fa fa-mouse-pointer mr-1 text-primary"></i> <strong>360° Interactif</strong> : Cliquez-glissez pour tourner &bull; Molette pour zoomer &bull; Testez la <strong>Vue Écorchée</strong>, l'ambiance <strong>Jour/Nuit</strong> et cliquez sur les <strong>Pastilles BTP</strong> pour inspecter chaque lot technique.
 			</span>
 		</div>
 	</div>
