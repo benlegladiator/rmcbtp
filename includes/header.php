@@ -154,11 +154,11 @@ $currentFile = basename($_SERVER['PHP_SELF']);
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-lg-8 col-md-7 d-flex align-items-center flex-wrap">
-					<span class="mr-3 mr-xl-4 font-weight-medium">
+					<span class="mr-3 mr-xl-4 font-weight-medium text-dark">
 						<i class="fa fa-map-marker mr-1" style="color: #f97316;"></i> <?= htmlspecialchars($address) ?>
 					</span>
 					<span class="d-none d-sm-inline mr-3 mr-xl-4">
-						<i class="fa fa-envelope mr-1" style="color: #f97316;"></i> <a href="mailto:<?= htmlspecialchars($emailContact) ?>" class="text-white font-weight-medium"><?= htmlspecialchars($emailContact) ?></a>
+						<i class="fa fa-envelope mr-1" style="color: #f97316;"></i> <a href="mailto:<?= htmlspecialchars($emailContact) ?>" class="text-dark font-weight-medium"><?= htmlspecialchars($emailContact) ?></a>
 					</span>
 					<span class="live-status-pill d-none d-xl-inline-flex">
 						<span class="live-dot-green"></span>
@@ -166,7 +166,7 @@ $currentFile = basename($_SERVER['PHP_SELF']);
 					</span>
 				</div>
 				<div class="col-lg-4 col-md-5 d-flex align-items-center justify-content-md-end justify-content-between mt-1 mt-md-0">
-					<span class="mr-3 small text-white-50 font-weight-bold d-none d-md-inline">
+					<span class="mr-3 small text-muted font-weight-bold d-none d-md-inline">
 						<i class="fa fa-shield mr-1" style="color: #10b981;"></i> Agréé MINTP / BTP
 					</span>
 					<a href="admin/login.php" class="header-admin-pill" title="Espace Administrateur Sécurisé">

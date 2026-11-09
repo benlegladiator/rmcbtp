@@ -136,22 +136,22 @@ textarea.form-control {
    HEADER PRESTIGE : STYLE CLAIR & ÉPURÉ HAUT DE GAMME
    ========================================================================= */
 .header-top-clean {
-  background: #040e1e;
-  border-bottom: 1px solid rgba(0, 114, 255, 0.2);
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
   font-size: 13px;
-  color: #cbd5e1;
+  color: #475569;
   padding: 8px 0;
   letter-spacing: 0.2px;
 }
 
 .header-top-clean a {
-  color: #cbd5e1;
+  color: #1e293b;
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .header-top-clean a:hover {
-  color: #0072ff;
+  color: #ea580c;
 }
 
 .header-admin-pill {
@@ -159,9 +159,9 @@ textarea.form-control {
   font-weight: 700;
   padding: 4px 12px;
   border-radius: 50px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #f8fafc !important;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e293b !important;
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
@@ -169,20 +169,24 @@ textarea.form-control {
 }
 
 .header-admin-pill:hover {
-  background: #0072ff;
-  border-color: #0072ff;
+  background: #ea580c;
+  border-color: #ea580c;
   color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
 }
 
 .live-status-pill {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
   border-radius: 50px;
   padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+}
   font-size: 12px;
   font-weight: 600;
   color: #e2e8f0;
@@ -335,19 +339,19 @@ textarea.form-control {
   filter: drop-shadow(0 2px 6px rgba(0, 114, 255, 0.5));
 }
 
-/* État Actif : Dégradé Roi Bleu Nuit / Saphir avec Reflet Doré */
+/* État Actif : Dégradé Chaleureux Orange BTP Prestige */
 .nav-link-clean.active {
   color: #ffffff !important;
-  background: linear-gradient(135deg, #0c2e60 0%, #1e40af 60%, #2563eb 100%) !important;
-  border-color: rgba(12, 46, 96, 0.2);
-  box-shadow: 0 8px 22px rgba(12, 46, 96, 0.35), 0 0 12px rgba(0, 114, 255, 0.25);
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%) !important;
+  border-color: rgba(234, 88, 12, 0.4);
+  box-shadow: 0 8px 22px rgba(234, 88, 12, 0.35);
   transform: scale(1.02);
 }
 
 .nav-link-clean.active::before {
   width: 80%;
   height: 3px;
-  background: linear-gradient(90deg, #0072ff 0%, #ffffff 100%);
+  background: linear-gradient(90deg, #ea580c 0%, #ffffff 100%);
   opacity: 1;
 }
 
