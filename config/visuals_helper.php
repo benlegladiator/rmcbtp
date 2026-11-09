@@ -92,6 +92,40 @@ function initPageVisualsTable($pdo) {
                 'focal_point' => 'center top',
                 'sort_order' => 50
             ],
+            // --- Section B.2 : Résultats Concrets Livrés (Showcase Diaspora) ---
+            [
+                'page_slug' => 'home',
+                'section_key' => 'showcase_card_1',
+                'section_name' => "Section B.2 : Résultats Concrets Livrés (Clés en Main)",
+                'title' => "Projet Livré 1 : Villa Duplex Contemporaine R+1 (Bastos/Odza)",
+                'description' => "Photo de la villa livrée clé en main en 7 mois avec finitions complètes.",
+                'image_url' => 'images/wa0062-framed-16x9.jpg',
+                'default_url' => 'images/wa0062-framed-16x9.jpg',
+                'focal_point' => 'center center',
+                'sort_order' => 52
+            ],
+            [
+                'page_slug' => 'home',
+                'section_key' => 'showcase_card_2',
+                'section_name' => "Section B.2 : Résultats Concrets Livrés (Clés en Main)",
+                'title' => "Projet Livré 2 : Immeuble Mixte Résidentiel & Commercial",
+                'description' => "Photo de l'immeuble d'appartements et commerces livré pour investisseur.",
+                'image_url' => 'images/IMG-20261015-WA0062.jpg',
+                'default_url' => 'images/IMG-20261015-WA0062.jpg',
+                'focal_point' => 'center center',
+                'sort_order' => 54
+            ],
+            [
+                'page_slug' => 'home',
+                'section_key' => 'showcase_card_3',
+                'section_name' => "Section B.2 : Résultats Concrets Livrés (Clés en Main)",
+                'title' => "Projet Livré 3 : Murs de Soutènement & Sécurisation",
+                'description' => "Photo de l'ouvrage de soutènement banché garanti 10 ans sur terrain difficile.",
+                'image_url' => 'images/IMG-20261015-WA0073.jpg',
+                'default_url' => 'images/IMG-20261015-WA0073.jpg',
+                'focal_point' => 'center center',
+                'sort_order' => 56
+            ],
             [
                 'page_slug' => 'home',
                 'section_key' => 'about_photo',
@@ -222,13 +256,6 @@ function initPageVisualsTable($pdo) {
                 'sort_order' => 410
             ]
         ];
-
-        // Optimisation haute performance : si des visuels existent déjà, éviter les requêtes redondantes
-        $checkExists = $pdo->query("SELECT 1 FROM page_visuals LIMIT 1");
-        if ($checkExists && $checkExists->fetch()) {
-            $initialized = true;
-            return;
-        }
 
         $stmt = $pdo->prepare("INSERT IGNORE INTO page_visuals 
             (page_slug, section_key, section_name, title, description, image_url, default_url, focal_point, sort_order) 

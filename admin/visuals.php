@@ -3,18 +3,29 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$adminTitle = "Gestionnaire de Visuels de Repère par Section";
-require_once __DIR__ . '/header.php';
+require_once __DIR__ . '/auth_check.php';
+require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../config/visuals_helper.php';
+
+$pdo = getDBConnection();
+$siteSettings = getSiteSettings($pdo);
 
 $success = '';
 $error = '';
+
+if (isset($_GET['saved']) && $_GET['saved'] == '1') {
+    $success = "Le visuel a été mis à jour avec succès et s'affiche maintenant sur le site en direct.";
+} elseif (isset($_GET['reset']) && $_GET['reset'] == '1') {
+    $success = "Le visuel a été réinitialisé à son image d'origine avec succès.";
+}
 
 try {
     initPageVisualsTable($pdo);
 } catch (Throwable $e) {
     $error = "Erreur d'initialisation de la table des visuels : " . $e->getMessage();
 }
+
+$filterPage = $_GET['page_slug'] ?? 'all';
 
 // Traitement de la mise à jour d'un visuel
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
@@ -37,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
                     $focalPoint = 'center top';
                     $stmtUp = $pdo->prepare("UPDATE page_visuals SET image_url = ?, focal_point = ? WHERE id = ?");
                     $stmtUp->execute([$newImageUrl, $focalPoint, $visualId]);
-                    $success = "Le visuel « " . htmlspecialchars((string)$current['title']) . " » a été réinitialisé à son image d'origine.";
+                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&reset=1");
+                    exit;
                 } else {
                     // Si téléversement d'un nouveau fichier image
                     if (isset($_FILES['visual_file']) && $_FILES['visual_file']['error'] !== UPLOAD_ERR_NO_FILE) {
@@ -74,7 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
                         $finalTitle = !empty($title) ? $title : $current['title'];
                         $stmtUp = $pdo->prepare("UPDATE page_visuals SET image_url = ?, focal_point = ?, title = ? WHERE id = ?");
                         $stmtUp->execute([$newImageUrl, $focalPoint, $finalTitle, $visualId]);
-                        $success = "Le visuel « " . htmlspecialchars((string)$finalTitle) . " » a été mis à jour avec succès sur le site en direct.";
+                        header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                        exit;
                     }
                 }
             } else {
@@ -85,6 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
         }
     }
 }
+
+$adminTitle = "Gestionnaire de Visuels de Repère par Section";
+require_once __DIR__ . '/header.php';
 
 // Filtre par page active
 $filterPage = $_GET['page_slug'] ?? 'all';
@@ -127,7 +143,7 @@ $pageLabels = [
   <div class="page-header d-flex flex-wrap align-items-center justify-content-between mb-4">
     <div>
       <h1 class="page-title mb-1" style="font-size: 1.7rem; font-weight: 800; color: #0c2e60;">
-        <i class="fas fa-layer-group text-warning mr-2"></i> Visuels de Repère par Page & Section
+        <i class="fas fa-layer-group text-primary mr-2"></i> Visuels de Repère par Page & Section
       </h1>
       <p class="text-muted mb-0 small">
         Identifiez et remplacez les photos clés de chaque section sans toucher au code HTML. Les modifications s'affichent instantanément en direct sur le site.
@@ -200,7 +216,7 @@ $pageLabels = [
           <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ffffff;">
             <div class="card-header bg-light border-0 py-3 d-flex align-items-center justify-content-between" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
               <h5 class="mb-0 font-weight-bold" style="font-size: 15px; color: #0c2e60;">
-                <i class="fas fa-map-pin text-warning mr-2"></i> <?php echo htmlspecialchars((string)$sectionName); ?>
+                <i class="fas fa-map-pin text-primary mr-2"></i> <?php echo htmlspecialchars((string)$sectionName); ?>
               </h5>
               <span class="badge badge-secondary badge-pill"><?php echo count($items); ?> image(s)</span>
             </div>
@@ -237,7 +253,7 @@ $pageLabels = [
                         </div>
 
                         <div class="position-absolute" style="bottom: 10px; right: 10px;">
-                          <span class="badge badge-warning px-2 py-1 shadow font-weight-bold" style="font-size: 10.5px;">
+                          <span class="badge badge-primary px-2 py-1 shadow font-weight-bold" style="font-size: 10.5px; background: #0c2e60; border: 1px solid rgba(255,255,255,0.2);">
                             Cadrage : <?php echo htmlspecialchars((string)$focal); ?>
                           </span>
                         </div>

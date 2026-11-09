@@ -186,21 +186,26 @@
     function render() {
       ctx.clearRect(0, 0, width, height);
 
-      // Adaptation responsive progressive : rétrécit nettement sur mobile sans dominer le texte
+      // Adaptation responsive progressive : rétrécit nettement sur mobile comme demandé par l'utilisateur
       let responsiveScale = 1.0;
       let mobileAlpha = 0.95;
+      let lineMultiplier = 1.0;
       if (width <= 480) {
-        responsiveScale = 0.28; // Réduction drastique pour mobile portrait
-        mobileAlpha = 0.22;     // Effet filigrane discret derrière la typographie
+        responsiveScale = 0.12; // Rétrécissement très net sur mobile (compact et lisible)
+        mobileAlpha = 0.38;
+        lineMultiplier = 0.45;
       } else if (width <= 640) {
-        responsiveScale = 0.34;
-        mobileAlpha = 0.26;
+        responsiveScale = 0.16;
+        mobileAlpha = 0.48;
+        lineMultiplier = 0.55;
       } else if (width <= 768) {
-        responsiveScale = 0.42;
-        mobileAlpha = 0.35;
+        responsiveScale = 0.22;
+        mobileAlpha = 0.58;
+        lineMultiplier = 0.65;
       } else if (width <= 991) {
-        responsiveScale = 0.58;
-        mobileAlpha = 0.50;
+        responsiveScale = 0.35;
+        mobileAlpha = 0.70;
+        lineMultiplier = 0.80;
       }
 
       // Rotation continue 360° fluide & cinématique (vitesse type turntable architectural)
@@ -217,9 +222,9 @@
       const cosY = Math.cos(angleY + 0.18); // Légère contre-plongée majestueuse
       const sinY = Math.sin(angleY + 0.18);
 
-      // Centrage équilibré selon la taille d'écran (légèrement abaissé sur mobile pour dégager le titre principal)
+      // Centrage équilibré selon la taille d'écran (ajusté sur mobile)
       const cx = width > 992 ? width * 0.74 : width * 0.50;
-      const cy = width > 992 ? height * 0.50 : (width <= 640 ? height * 0.46 : height * 0.48);
+      const cy = width > 992 ? height * 0.50 : (width <= 640 ? height * 0.50 : height * 0.48);
       const fov = 750;
 
       // Opacité adaptée sur mobile pour laisser respirer les textes et photos
@@ -245,7 +250,7 @@
       }
 
       // --- A. RADIER GÉNÉRAL & GRILLE GÉOTECHNIQUE AU SOL (FONDATIONS CLAIRES ET VISIBLES) ---
-      ctx.lineWidth = 1.6;
+      ctx.lineWidth = 1.6 * lineMultiplier;
       ctx.strokeStyle = 'rgba(0, 180, 255, 0.35)'; // Grille au sol bleu cyan technologique RMC BTP
       for (let g = 0; g < gridLines.length; g++) {
         const pt1 = projectPoint(gridLines[g][0].x, gridLines[g][0].y, gridLines[g][0].z);
@@ -275,7 +280,7 @@
         ctx.fillStyle = 'rgba(0, 114, 255, 0.25)';
         ctx.fill();
         ctx.strokeStyle = 'rgba(0, 210, 255, 0.9)';
-        ctx.lineWidth = 2.4;
+        ctx.lineWidth = 2.4 * lineMultiplier;
         ctx.stroke();
       }
 
@@ -298,22 +303,22 @@
 
         if (type === 'spire') {
           ctx.strokeStyle = '#00f0ff'; // Flèche cyan éclatante
-          ctx.lineWidth = 3.4;
+          ctx.lineWidth = 3.4 * lineMultiplier;
         } else if (type === 'column') {
           ctx.strokeStyle = '#0084ff'; // Colonnes porteuses bleu royal vibrant RMC
-          ctx.lineWidth = 3.0;
+          ctx.lineWidth = 3.0 * lineMultiplier;
         } else if (type === 'brace') {
           ctx.strokeStyle = 'rgba(0, 210, 255, 0.75)'; // Treillis de renfort BTP cyan
-          ctx.lineWidth = 1.8;
+          ctx.lineWidth = 1.8 * lineMultiplier;
         } else if (type === 'core-column' || type === 'core-ring') {
           ctx.strokeStyle = '#ffffff'; // Cœur béton armé blanc haute luminosité
-          ctx.lineWidth = 2.2;
+          ctx.lineWidth = 2.2 * lineMultiplier;
         } else if (type === 'radial') {
           ctx.strokeStyle = 'rgba(180, 220, 255, 0.45)';
-          ctx.lineWidth = 1.5;
+          ctx.lineWidth = 1.5 * lineMultiplier;
         } else {
           ctx.strokeStyle = '#0055cc'; // Dalles d'étages bleu de référence RMC BTP
-          ctx.lineWidth = 2.2;
+          ctx.lineWidth = 2.2 * lineMultiplier;
         }
         ctx.stroke();
       }
