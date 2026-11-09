@@ -521,7 +521,7 @@
         // Mise à jour de l'indicateur HUD
         if (hudDoorLabel) {
           hudDoorLabel.textContent = areDoorsOpen ? 'Grandes Ouvertes (Pivot & Rails)' : 'Fermées';
-          hudDoorLabel.style.color = areDoorsOpen ? '#22c55e' : '#ea580c';
+          hudDoorLabel.style.color = areDoorsOpen ? '#10b981' : '#f59e0b';
         }
 
         // Éclairage intérieur et orientation face caméra pour vue directe

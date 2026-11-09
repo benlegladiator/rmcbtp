@@ -152,7 +152,7 @@
           <h6 class="fee-map-popup-title">${proj.title}</h6>
           <div class="fee-map-popup-meta">
             <i class="fa fa-map-marker text-danger mr-1"></i> ${proj.city} (Cameroun)
-            &bull; <strong style="color: #ea580c;">${proj.status}</strong>
+            &bull; <strong style="color: #1a56db;">${proj.status}</strong>
           </div>
           <p style="font-size: 11.5px; color: #475569; margin-bottom: 8px; line-height: 1.4;">${proj.desc}</p>
           <div style="background: #f8fafc; padding: 6px 10px; border-radius: 6px; font-size: 11px; margin-bottom: 10px;">

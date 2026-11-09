@@ -25,9 +25,6 @@
       const parent = canvas.parentElement;
       width = canvas.width = parent.clientWidth || window.innerWidth;
       height = canvas.height = parent.clientHeight || window.innerHeight;
-      if (width <= 991) {
-        ctx.clearRect(0, 0, width, height);
-      }
     }
     window.addEventListener('resize', resize);
     resize();
@@ -189,11 +186,8 @@
     function render() {
       ctx.clearRect(0, 0, width, height);
 
-      // Sur mobile et tablette : libérer l'écran pour que les photos et les textes soient 100% visibles
-      if (width <= 991) {
-        requestAnimationFrame(render);
-        return;
-      }
+      // Adaptation responsive progressive : rétrécit harmonieusement sans disparaître
+      const responsiveScale = width <= 480 ? 0.40 : (width <= 768 ? 0.55 : (width <= 991 ? 0.72 : 1.0));
 
       // Rotation continue 360° fluide & cinématique (vitesse type turntable architectural)
       autoRotation += 0.0075;
@@ -209,17 +203,24 @@
       const cosY = Math.cos(angleY + 0.18); // Légère contre-plongée majestueuse
       const sinY = Math.sin(angleY + 0.18);
 
-      // Centrage équilibré : Flèche en haut et fondations en bas visibles en entier dans le cadre
-      const cx = width > 992 ? width * 0.74 : width * 0.5;
-      const cy = height * 0.50;
+      // Centrage équilibré selon la taille d'écran
+      const cx = width > 992 ? width * 0.74 : (width > 600 ? width * 0.50 : width * 0.50);
+      const cy = width > 992 ? height * 0.50 : (width > 600 ? height * 0.52 : height * 0.54);
       const fov = 750;
 
-      // Fonction de projection 3D
+      // Opacité adaptée sur mobile pour laisser respirer les textes et photos
+      const prevAlpha = ctx.globalAlpha;
+      ctx.globalAlpha = width <= 576 ? 0.42 : (width <= 991 ? 0.60 : 1.0);
+
+      // Fonction de projection 3D mise à l'échelle responsive
       function projectPoint(x, y, z) {
-        let x1 = x * cosX - z * sinX;
-        let z1 = z * cosX + x * sinX;
-        let y1 = y * cosY - z1 * sinY;
-        let z2 = z1 * cosY + y * sinY + 750;
+        const sx = x * responsiveScale;
+        const sy = y * responsiveScale;
+        const sz = z * responsiveScale;
+        let x1 = sx * cosX - sz * sinX;
+        let z1 = sz * cosX + sx * sinX;
+        let y1 = sy * cosY - z1 * sinY;
+        let z2 = z1 * cosY + sy * sinY + 750;
         const scale = fov / Math.max(100, z2);
         return {
           px: cx + x1 * scale,
@@ -352,6 +353,7 @@
         ctx.fill();
       }
 
+      ctx.globalAlpha = prevAlpha;
       requestAnimationFrame(render);
     }
 

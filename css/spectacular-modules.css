@@ -120,17 +120,17 @@
 }
 
 .fee-bim-btn:hover {
-  background: rgba(234, 88, 12, 0.25);
-  border-color: #ea580c;
+  background: rgba(0, 114, 255, 0.25);
+  border-color: #0072ff;
   color: #fff;
   transform: translateY(-2px);
 }
 
 .fee-bim-btn.active {
-  background: linear-gradient(135deg, #ea580c, #c2410c);
-  border-color: #f97316;
+  background: linear-gradient(135deg, #0c2e60, #1a56db);
+  border-color: #00d2ff;
   color: #fff;
-  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.45);
+  box-shadow: 0 4px 15px rgba(12, 46, 96, 0.45);
 }
 
 /* Bouton spécial Action Ouvertures */
@@ -200,7 +200,7 @@
 }
 
 .fee-bim-hud-specs span {
-  color: #ea580c;
+  color: #00d2ff;
   font-weight: 700;
 }
 
@@ -264,10 +264,10 @@
 
 .fee-tracker-meter-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ea580c 0%, #f59e0b 100%);
+  background: linear-gradient(90deg, #0c2e60 0%, #00d2ff 100%);
   border-radius: 10px;
   transition: width 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 2px 10px rgba(234, 88, 12, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 114, 255, 0.4);
 }
 
 /* Timeline des étapes du chantier */
@@ -293,9 +293,9 @@
 }
 
 .fee-tracker-step.in-progress {
-  border-color: #ea580c;
-  background: #fff7ed;
-  box-shadow: 0 4px 18px rgba(234, 88, 12, 0.12);
+  border-color: #1a56db;
+  background: #eff6ff;
+  box-shadow: 0 4px 18px rgba(26, 86, 219, 0.12);
 }
 
 .fee-tracker-step.pending {
@@ -321,14 +321,14 @@
 }
 
 .fee-tracker-step.in-progress .fee-tracker-step-badge {
-  background: #ea580c;
+  background: #1a56db;
   color: #fff;
   animation: pulseStep 1.8s infinite;
 }
 
 @keyframes pulseStep {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.6); }
-  50% { box-shadow: 0 0 0 8px rgba(234, 88, 12, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26, 86, 219, 0.6); }
+  50% { box-shadow: 0 0 0 8px rgba(26, 86, 219, 0); }
 }
 
 .fee-tracker-step.pending .fee-tracker-step-badge {
@@ -452,8 +452,8 @@
 }
 
 .fee-map-filter-btn.active[data-city="Dschang"] {
-  background: #ea580c;
-  border-color: #ea580c;
+  background: #0c2e60;
+  border-color: #0c2e60;
 }
 
 #feeCamerounMap {
@@ -467,9 +467,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #f97316, #ea580c);
+  background: linear-gradient(135deg, #0072ff, #0c2e60);
   border: 3px solid #ffffff;
-  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 114, 255, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -490,7 +490,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 2px solid #ea580c;
+  border: 2px solid #00d2ff;
   animation: markerRipple 2s infinite;
 }
 
@@ -593,9 +593,9 @@
 }
 
 .fee-wizard-tab.active {
-  color: #ea580c;
+  color: #0c2e60;
   background: #ffffff;
-  border-bottom-color: #ea580c;
+  border-bottom-color: #1a56db;
 }
 
 .fee-wizard-tab.completed {
@@ -616,7 +616,7 @@
 }
 
 .fee-wizard-tab.active .fee-wizard-tab-number {
-  background: #ea580c;
+  background: #1a56db;
   color: #ffffff;
 }
 
@@ -663,15 +663,15 @@
 }
 
 .fee-wizard-card:hover {
-  border-color: #fdba74;
+  border-color: #93c5fd;
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(234, 88, 12, 0.08);
+  box-shadow: 0 10px 25px rgba(26, 86, 219, 0.08);
 }
 
 .fee-wizard-card.selected {
-  border-color: #ea580c;
-  background: #fff7ed;
-  box-shadow: 0 10px 30px rgba(234, 88, 12, 0.15);
+  border-color: #1a56db;
+  background: #eff6ff;
+  box-shadow: 0 10px 30px rgba(26, 86, 219, 0.15);
 }
 
 .fee-wizard-card-icon {
@@ -679,7 +679,7 @@
   height: 58px;
   border-radius: 16px;
   background: #f8fafc;
-  color: #0f172a;
+  color: #0c2e60;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -689,7 +689,7 @@
 }
 
 .fee-wizard-card.selected .fee-wizard-card-icon {
-  background: #ea580c;
+  background: #1a56db;
   color: #ffffff;
 }
 
@@ -700,7 +700,7 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #ea580c;
+  background: #1a56db;
   color: #fff;
   display: none;
   align-items: center;
@@ -714,17 +714,17 @@
 
 /* Résultat estimatif dynamique */
 .fee-wizard-summary-box {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(135deg, #0c2e60 0%, #071933 100%);
   border-radius: 20px;
   padding: 30px;
   color: #ffffff;
-  box-shadow: 0 15px 40px rgba(15, 23, 42, 0.2);
+  box-shadow: 0 15px 40px rgba(12, 46, 96, 0.2);
 }
 
 .fee-wizard-price-big {
   font-size: 2.3rem;
   font-weight: 800;
-  color: #fb923c;
+  color: #f59e0b;
   line-height: 1.15;
 }
 
@@ -743,13 +743,13 @@
   left: 0;
   width: 32px;
   height: 32px;
-  border: 1.5px solid rgba(234, 88, 12, 0.7);
+  border: 1.5px solid rgba(0, 114, 255, 0.7);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
   transform: translate(-50%, -50%);
   transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
-  box-shadow: 0 0 12px rgba(234, 88, 12, 0.25);
+  box-shadow: 0 0 12px rgba(0, 114, 255, 0.25);
   display: none;
 }
 
@@ -759,7 +759,7 @@
   left: 0;
   width: 6px;
   height: 6px;
-  background-color: #ea580c;
+  background-color: #00d2ff;
   border-radius: 50%;
   pointer-events: none;
   z-index: 100000;
