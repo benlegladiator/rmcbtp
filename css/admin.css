@@ -1,6 +1,6 @@
 /* ==========================================================================
-   FREE BTP SARL - Style Espace d'Administration Moderne & Intuitif
-   Thème : Bleu Clair Azur (#0284c7) & Orange BTP (#f97316)
+   RMC BTP SARL - Style Espace d'Administration Moderne & Intuitif
+   Thème : Bleu Marine & Azur BTP (#075985, #0284c7, #38bdf8)
    Conçu pour une expérience utilisateur simple, fluide et rapide.
    ========================================================================== */
 
@@ -11,9 +11,9 @@
   --admin-primary: #0284c7;           /* Bleu clair principal */
   --admin-primary-dark: #0369a1;      /* Bleu foncé contrasté */
   --admin-primary-light: #e0f2fe;     /* Ciel très doux */
-  --admin-accent: #f97316;            /* Orange éclatant BTP */
-  --admin-accent-hover: #ea580c;      /* Orange foncé */
-  --admin-accent-light: #fff7ed;      /* Fond orangé doux */
+  --admin-accent: #0284c7;            /* Bleu de référence RMC BTP */
+  --admin-accent-hover: #0369a1;      /* Bleu foncé */
+  --admin-accent-light: #e0f2fe;      /* Fond azur doux */
   --admin-bg: #f8fafc;                /* Fond général ultra-propre et doux */
   --admin-card: #ffffff;              /* Fond des cartes blanc pur */
   --admin-border: #e2e8f0;            /* Bordure subtile et élégante */
@@ -930,22 +930,131 @@ textarea.form-control {
 }
 
 /* --------------------------------------------------------------------------
+   Mobile Sidebar Backdrop & Toggle Controls
+   -------------------------------------------------------------------------- */
+.admin-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 14, 30, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.admin-sidebar-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar-header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-close-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 14px;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(239, 68, 68, 0.85);
+  border-color: rgba(239, 68, 68, 1);
+  transform: rotate(90deg);
+}
+
+.header-left-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-sidebar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: #ffffff;
+  border: 1px solid var(--admin-border);
+  border-radius: var(--radius-md);
+  color: var(--admin-primary);
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.admin-sidebar-toggle:hover,
+.admin-sidebar-toggle:active {
+  background: var(--admin-primary);
+  color: #ffffff;
+  border-color: var(--admin-primary);
+}
+
+/* --------------------------------------------------------------------------
    Responsive & Adaptation Mobile
    -------------------------------------------------------------------------- */
 @media (max-width: 992px) {
+  .admin-sidebar-toggle {
+    display: inline-flex !important;
+  }
+  .sidebar-close-btn {
+    display: inline-flex !important;
+  }
   .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 290px;
+    max-width: 86vw;
+    height: 100vh;
+    z-index: 999;
     transform: translateX(-100%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: none;
+    overflow-y: auto;
   }
   .admin-sidebar.open {
     transform: translateX(0);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.65);
+  }
+  body.sidebar-locked {
+    overflow: hidden;
   }
   .admin-main {
-    margin-left: 0;
+    margin-left: 0 !important;
+    width: 100% !important;
   }
   .admin-header {
-    padding: 0 20px;
+    padding: 0 16px;
+    height: 64px;
+  }
+  .header-title h2 {
+    font-size: 1.05rem;
+  }
+  .header-pill {
+    display: none;
+  }
+  .header-date {
+    display: none;
   }
   .admin-content {
-    padding: 20px;
+    padding: 16px;
   }
 }

@@ -28,15 +28,23 @@ $adminCurrentPage = basename($_SERVER['PHP_SELF'], '.php');
 <body>
 
 <div class="admin-layout">
+  <!-- Voile d'obscurcissement pour mobile (Backdrop) -->
+  <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
   <!-- Barre Latérale (Sidebar) -->
-  <aside class="admin-sidebar">
-    <a href="index.php" class="sidebar-brand">
-      <img src="../images/logo-white.png" alt="RMC BTP SARL" style="height: 48px; width: auto; object-fit: contain; margin-right: 12px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));">
-      <div>
-        <h3>RMC BTP SARL</h3>
-        <p>Administration Yaoundé</p>
-      </div>
-    </a>
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-header-wrapper">
+      <a href="index.php" class="sidebar-brand">
+        <img src="../images/logo-white.png" alt="RMC BTP SARL" style="height: 48px; width: auto; object-fit: contain; margin-right: 12px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));">
+        <div>
+          <h3>RMC BTP SARL</h3>
+          <p>Administration Yaoundé</p>
+        </div>
+      </a>
+      <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
 
     <ul class="sidebar-menu">
       <li class="sidebar-item">
@@ -138,9 +146,14 @@ $adminCurrentPage = basename($_SERVER['PHP_SELF'], '.php');
   <!-- Zone Principale (Main) -->
   <main class="admin-main">
     <header class="admin-header">
-      <div class="header-title">
-        <h2><?php echo isset($adminTitle) ? htmlspecialchars($adminTitle) : 'Tableau de Bord'; ?></h2>
-        <span class="header-pill"><i class="fas fa-shield-alt"></i> Espace Sécurisé</span>
+      <div class="header-left-group">
+        <button type="button" class="admin-sidebar-toggle" id="adminSidebarToggle" aria-label="Ouvrir le menu de navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-title">
+          <h2><?php echo isset($adminTitle) ? htmlspecialchars($adminTitle) : 'Tableau de Bord'; ?></h2>
+          <span class="header-pill"><i class="fas fa-shield-alt"></i> Espace Sécurisé</span>
+        </div>
       </div>
       <div class="header-actions">
         <div class="header-date">
