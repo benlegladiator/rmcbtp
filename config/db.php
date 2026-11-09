@@ -15,49 +15,50 @@ define('SITE_NAME', 'RMC BTP SARL');
 define('SITE_SLOGAN', 'Construire aujourd\'hui les solutions de demain');
 define('ADMIN_EMAIL', 'info@rmcbtp.com');
 
-// Détection automatique de l'environnement (Local XAMPP vs Hostinger / InfinityFree / Production)
+// Détection automatique de l'environnement (Local XAMPP vs Hostinger Production vs InfinityFree)
 $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
 $is_local = (
-    strpos($host, 'localhost') !== false ||
-    strpos($host, '127.0.0.1') !== false ||
-    (PHP_OS_FAMILY === 'Windows' && file_exists('C:/xampp'))
+    (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) &&
+    PHP_OS_FAMILY === 'Windows' && file_exists('C:/xampp')
 );
 
-// Fichier de configuration spécifique à la production / Hostinger si présent
-$prodConfig = __DIR__ . '/db_production.php';
-if (file_exists($prodConfig)) {
-    require_once $prodConfig;
-}
+$is_infinityfree = (
+    strpos($host, 'infinityfree') !== false ||
+    strpos($host, 'free.nf') !== false ||
+    strpos($host, 'gt.tc') !== false ||
+    strpos($host, 'epizy.com') !== false
+);
 
 if (!defined('DB_HOST')) {
-    if (!$is_local) {
-        // Environnement En Ligne (Hostinger, cPanel ou InfinityFree)
-        $is_hostinger = (file_exists('/home/') || strpos($host, 'hostinger') !== false || getenv('HOSTINGER_ENV'));
-        
-        if ($is_hostinger || getenv('DB_HOST')) {
-            // Configuration standard Hostinger / Serveur Dédié
-            define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-            define('DB_USER', getenv('DB_USER') ?: 'u_rmcbtp');
-            define('DB_PASS', getenv('DB_PASS') ?: '');
-            define('DB_NAME', getenv('DB_NAME') ?: 'rmcbtp_db');
-            define('SITE_URL', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . $host);
-        } else {
-            // Configuration InfinityFree historique
-            define('DB_HOST', 'sql113.infinityfree.com');
-            define('DB_USER', 'if0_39882531');
-            define('DB_PASS', 'cmTJtR2Z2yq8MO');
-            define('DB_NAME', getenv('DB_NAME') ?: 'if0_39882531_rmcbtp');
-            define('SITE_URL', 'http://' . ($_SERVER['HTTP_HOST'] ?? 'rmcbtp.free.nf'));
-        }
-    } else {
-        // Configuration locale (XAMPP) - 127.0.0.1 force TCP et évite l'erreur de socket [2002]
+    if ($is_local) {
+        // 1. Configuration locale XAMPP
         define('DB_HOST', '127.0.0.1');
         define('DB_USER', 'root');
         define('DB_PASS', '');
         define('DB_NAME', 'rmcbtp_db');
         define('SITE_URL', 'http://localhost/rmcbtpsarl');
+    } elseif ($is_infinityfree) {
+        // 2. Configuration InfinityFree (Test gratuit)
+        define('DB_HOST', 'sql113.infinityfree.com');
+        define('DB_USER', 'if0_39882531');
+        define('DB_PASS', 'cmTJtR2Z2yq8MO');
+        define('DB_NAME', 'if0_39882531_rmcbtp');
+        define('SITE_URL', 'http://' . $host);
+    } else {
+        // 3. Configuration Officielle Production HOSTINGER (rmcbtpsarl.com)
+        define('DB_HOST', 'localhost');
+        define('DB_USER', 'u864783662_usr_YLmKYc9Z');
+        define('DB_PASS', '5Xg^@9yATni');
+        define('DB_NAME', 'u864783662_db_YLmKYc9Z');
+        define('SITE_URL', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . $host);
     }
 }
+
+// Variables globales requises par les scanners et installeurs automatiques Hostinger
+$db_host = DB_HOST;
+$db_user = DB_USER;
+$db_pass = DB_PASS;
+$db_name = DB_NAME;
 
 function getDBConnection() {
     static $pdo = null;
@@ -65,11 +66,11 @@ function getDBConnection() {
         return $pdo;
     }
 
-    global $is_online;
+    global $is_infinityfree, $is_local;
 
-    // Tentative de connexion avec la base principale et variantes possibles sur InfinityFree
-    $possibleDbNames = $is_online 
-        ? [DB_NAME, 'if0_39882531_rmcbtp', 'if0_39882531_rmcbtp_db', 'if0_39882531_rmc']
+    // Base de données cible
+    $possibleDbNames = $is_infinityfree 
+        ? [DB_NAME, 'if0_39882531_rmcbtp', 'if0_39882531_rmcbtp_db']
         : [DB_NAME];
 
     $connected = false;
