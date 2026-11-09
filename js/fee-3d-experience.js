@@ -186,8 +186,22 @@
     function render() {
       ctx.clearRect(0, 0, width, height);
 
-      // Adaptation responsive progressive : rétrécit harmonieusement sans disparaître
-      const responsiveScale = width <= 480 ? 0.40 : (width <= 768 ? 0.55 : (width <= 991 ? 0.72 : 1.0));
+      // Adaptation responsive progressive : rétrécit nettement sur mobile sans dominer le texte
+      let responsiveScale = 1.0;
+      let mobileAlpha = 0.95;
+      if (width <= 480) {
+        responsiveScale = 0.28; // Réduction drastique pour mobile portrait
+        mobileAlpha = 0.22;     // Effet filigrane discret derrière la typographie
+      } else if (width <= 640) {
+        responsiveScale = 0.34;
+        mobileAlpha = 0.26;
+      } else if (width <= 768) {
+        responsiveScale = 0.42;
+        mobileAlpha = 0.35;
+      } else if (width <= 991) {
+        responsiveScale = 0.58;
+        mobileAlpha = 0.50;
+      }
 
       // Rotation continue 360° fluide & cinématique (vitesse type turntable architectural)
       autoRotation += 0.0075;
@@ -203,14 +217,14 @@
       const cosY = Math.cos(angleY + 0.18); // Légère contre-plongée majestueuse
       const sinY = Math.sin(angleY + 0.18);
 
-      // Centrage équilibré selon la taille d'écran
-      const cx = width > 992 ? width * 0.74 : (width > 600 ? width * 0.50 : width * 0.50);
-      const cy = width > 992 ? height * 0.50 : (width > 600 ? height * 0.52 : height * 0.54);
+      // Centrage équilibré selon la taille d'écran (légèrement abaissé sur mobile pour dégager le titre principal)
+      const cx = width > 992 ? width * 0.74 : width * 0.50;
+      const cy = width > 992 ? height * 0.50 : (width <= 640 ? height * 0.46 : height * 0.48);
       const fov = 750;
 
       // Opacité adaptée sur mobile pour laisser respirer les textes et photos
       const prevAlpha = ctx.globalAlpha;
-      ctx.globalAlpha = width <= 576 ? 0.42 : (width <= 991 ? 0.60 : 1.0);
+      ctx.globalAlpha = mobileAlpha;
 
       // Fonction de projection 3D mise à l'échelle responsive
       function projectPoint(x, y, z) {

@@ -206,8 +206,8 @@ $developerCredit = getSetting('developer_credit', 'M. NDONGMO TEJIONA BEN ARTHUR
 	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-	<!-- Moteur 3D Interactif & Expérience Visuelle RMC BTP SARL -->
-	<script src="js/fee-3d-experience.js"></script>
+	<!-- Moteur 3D Interactif & Expérience Visuelle RMC BTP SARL (Cache Busting forcé) -->
+	<script src="js/fee-3d-experience.js?v=<?= time() ?>"></script>
 	<!-- Modules Spectaculaires RMC BTP SARL (Cache Busting forcé) -->
 	<script src="js/fee-architect-cursor.js?v=<?= time() ?>"></script>
 	<script src="js/fee-bim-3d.js?v=<?= time() ?>"></script>
