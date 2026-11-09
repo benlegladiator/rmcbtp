@@ -277,14 +277,72 @@ if (hasWord($cleanMsg, [
     'apporter mon experience', 'rejoindre votre equipe', 'rejoindre l\'equipe', 
     'rejoindre l\'entreprise', 'offre demploi', 'offre d\'emploi', 'cherche de travail', 
     'recherche travail', 'recherche emploi', 'cherche un poste', 'recrutez-vous', 
-    'travailler avec vous', 'travailler chez vous', 'trouver du travail'
+    'travailler avec vous', 'travailler chez vous', 'trouver du travail', 'boulot'
 ])) {
-    $reply = "🤝 **Recrutement & Carrières chez " . htmlspecialchars($companyName) . " :**\n\nNous accueillons toujours avec grand intérêt les profils passionnés et compétents en génie civil, conduite de chantiers et métiers techniques du BTP (Ingénieurs, Conducteurs de travaux, Métreurs, Topographes et Techniciens).\n\nPour soumettre votre profil :\n• **Par WhatsApp :** Transmettez votre CV et portfolio directement au bureau technique au **" . htmlspecialchars($phonePrimary) . "**\n• **Par E-mail :** Envoyez votre CV et lettre de motivation à **" . htmlspecialchars($emailContact) . "**\n\nUn ingénieur étudiera votre dossier et vos références dans les meilleurs délais.";
-    $suggestions = [
-        ['label' => '📄 Transmettre mon CV sur WhatsApp', 'action' => 'contact_whatsapp'],
-        ['label' => '✉️ Poser une question au bureau technique', 'action' => 'contact_whatsapp'],
-        ['label' => '🏗️ Découvrir nos chantiers en cours', 'action' => 'quick_services']
-    ];
+    // Détecter si la mention de diplôme ou génie civil est sous forme négative ("pas de...", "sans...", "aucune...")
+    $hasNegatedQualifications = preg_match('/(?:pas\s+de|sans|aucun|aucune|pas\s+fait|jamais\s+fait|non\s+qualifi[eé]|sans\s+formation)\s+(?:qualification|dipl[oô]me|exp[eé]rience|formation|comp[eé]tence)?\s*(?:en|de)?\s*(?:g[eé]nie\s+civil|btp|b[aâ]timent|ing[eé]nierie)?/iu', $cleanMsg);
+
+    // 0.A - Profil terrain, débutant, manœuvre, sans qualification académique en génie civil
+    $isNoQualificationOrOuvrier = $hasNegatedQualifications || hasWord($cleanMsg, [
+        'pas de qualification', 'sans qualification', 'aucune qualification', 'pas de diplome', 
+        'sans diplome', 'aucun diplome', 'pas d\'experience', 'sans experience', 'debutant', 
+        'débutant', 'manoeuvre', 'manœuvre', 'aide', 'aide-chantier', 'aide macon', 'aide maçon', 
+        'ouvrier', 'sur le tas', 'apprendre', 'volontaire', 'journalier', 'manutention', 
+        'bras valide', 'chauffeur', 'gardien', 'ferrailleur', 'macon', 'maçon', 'carreleur'
+    ]);
+
+    // 0.B - Profil technique diplômé / Cadre d'ingénierie (uniquement s'il n'a pas affirmé ne pas l'être)
+    $isTechnicalCadre = !$hasNegatedQualifications && hasWord($cleanMsg, [
+        'ingenieur', 'ingénieur', 'genie civil', 'génie civil', 'conducteur de travaux', 
+        'metreur', 'métreur', 'topographe', 'architecte', 'technicien superieur', 
+        'bts btp', 'dut', 'licence pro', 'master btp', 'calcul de structure', 'autocad'
+    ]);
+
+    if ($isNoQualificationOrOuvrier && !$isTechnicalCadre) {
+        $reply = "💪 **Opportunités de Terrain & Équipes Chantier chez " . htmlspecialchars($companyName) . " :**\n\n"
+               . "Sur nos chantiers, la rigueur de terrain, le courage et la discipline sont tout aussi essentiels que les diplômes universitaires ! Nous recrutons régulièrement des **manœuvres, aides-maçons, agents de manutention et jeunes motivés** désireux d'apprendre les métiers du bâtiment sur le terrain.\n\n"
+               . "Ce qui compte avant tout pour nos équipes :\n"
+               . "• **La ponctualité et le respect des consignes de sécurité** (port des EPI sur site).\n"
+               . "• **L'honnêteté et l'esprit d'équipe**.\n"
+               . "• **La volonté d'apprendre** aux côtés de nos maîtres-bâtisseurs.\n\n"
+               . "📲 **Comment postuler directement :**\n"
+               . "Envoyez simplement un message court ou une note vocale sur WhatsApp au **" . htmlspecialchars($phonePrimary) . "** en précisant :\n"
+               . "1. Votre Nom et Prénom\n"
+               . "2. Votre ville et quartier de résidence (ex: Yaoundé / Douala)\n"
+               . "3. Votre disponibilité (immédiate ou partielle) et toute tâche manuelle déjà pratiquée.";
+        $suggestions = [
+            ['label' => '💬 Écrire au responsable de chantier sur WhatsApp', 'action' => 'contact_whatsapp'],
+            ['label' => '📍 Localiser nos chantiers actuels', 'action' => 'quick_services'],
+            ['label' => '🏗️ Découvrir nos projets réalisés', 'action' => 'quick_services']
+        ];
+    } elseif ($isTechnicalCadre) {
+        $reply = "📐 **Recrutement Cadres Techniques & Ingénierie chez " . htmlspecialchars($companyName) . " :**\n\n"
+               . "Notre bureau d'études et notre direction technique accueillent avec grand intérêt les profils d'excellence en génie civil et conduite de projets (Ingénieurs BTP, Conducteurs de travaux, Métreurs, Projeteurs et Topographes).\n\n"
+               . "📋 **Dossier de candidature attendu :**\n"
+               . "• CV à jour détaillant vos chantiers supervisés et ouvrages réalisés\n"
+               . "• Logiciels maîtrisés (AutoCAD, Robot Structural Analysis, Arche, MS Project, etc.)\n"
+               . "• Références vérifiables\n\n"
+               . "Transmettez votre dossier directement :\n"
+               . "• **Par WhatsApp :** au bureau technique au **" . htmlspecialchars($phonePrimary) . "**\n"
+               . "• **Par E-mail :** à **" . htmlspecialchars($emailContact) . "**";
+        $suggestions = [
+            ['label' => '📄 Transmettre mon CV sur WhatsApp', 'action' => 'contact_whatsapp'],
+            ['label' => '✉️ Envoyer mon dossier par e-mail', 'action' => 'contact_whatsapp'],
+            ['label' => '🏗️ Consulter nos réalisations d\'ingénierie', 'action' => 'quick_services']
+        ];
+    } else {
+        $reply = "🤝 **Recrutement & Carrières chez " . htmlspecialchars($companyName) . " :**\n\n"
+               . "Nous recrutons à la fois sur le terrain et au bureau technique :\n\n"
+               . "1. **Équipes de terrain & Chantiers :** Manœuvres, aides-maçons, coffreurs, ferrailleurs, chauffeurs et profils volontaires motivés (formation pratique sur site).\n"
+               . "2. **Cadres & Techniciens BTP :** Ingénieurs génie civil, conducteurs de travaux, métreurs et topographes avec références.\n\n"
+               . "📲 **Pour postuler :**\n"
+               . "Contactez directement notre bureau par WhatsApp au **" . htmlspecialchars($phonePrimary) . "** ou par email à **" . htmlspecialchars($emailContact) . "** en indiquant le poste visé et votre disponibilité.";
+        $suggestions = [
+            ['label' => '💬 Postuler directement sur WhatsApp', 'action' => 'contact_whatsapp'],
+            ['label' => '📄 Transmettre mon CV', 'action' => 'contact_whatsapp'],
+            ['label' => '🏗️ Découvrir nos chantiers en cours', 'action' => 'quick_services']
+        ];
+    }
 }
 
 // 1. Diaspora & Suivi de chantier à distance

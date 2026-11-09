@@ -223,6 +223,13 @@ function initPageVisualsTable($pdo) {
             ]
         ];
 
+        // Optimisation haute performance : si des visuels existent déjà, éviter les requêtes redondantes
+        $checkExists = $pdo->query("SELECT 1 FROM page_visuals LIMIT 1");
+        if ($checkExists && $checkExists->fetch()) {
+            $initialized = true;
+            return;
+        }
+
         $stmt = $pdo->prepare("INSERT IGNORE INTO page_visuals 
             (page_slug, section_key, section_name, title, description, image_url, default_url, focal_point, sort_order) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");

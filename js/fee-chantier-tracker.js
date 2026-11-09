@@ -12,7 +12,7 @@
       title: "Villa Duplex Contemporaine R+1",
       location: "Yaoundé, Quartier Bastos / Odza",
       client: "M. BASSOCK Jean-Paul (Diaspora - Bruxelles, Belgique)",
-      conducteur: "Ing. Patrick TOUKAM (Directeur Technique RMC BTP)",
+      conducteur: "Direction Technique RMC BTP SARL",
       progress: 78,
       startDate: "10 Mai 2026",
       estDelivery: "20 Décembre 2026",
@@ -54,11 +54,6 @@
         { url: "images/_JMP6259.jpg", title: "Façade achevée et finitions de grand standing", date: "Réception Finale" },
         { url: "images/_JMP6244.jpg", title: "Vue d'ensemble de l'ouvrage livré", date: "Visite Maître d'Ouvrage" },
         { url: "images/_JMP6286.jpg", title: "Détail aménagements intérieurs SIMS Décor", date: "Livraison Clés" }
-      ]
-    }
-  };
-        { url: "images/IMG-20261015-WA0120.jpg", title: "Supervision technique finale des équipes", date: "Audit Qualité" },
-        { url: "images/wa0062-framed-16x9.jpg", title: "Aménagement des abords et accès pavés", date: "Livraison" }
       ]
     }
   };
@@ -153,7 +148,7 @@
         <div>
           <h2 style="margin: 0; color: #0c2e60; font-size: 24px; font-weight: bold; letter-spacing: -0.5px;">RMC BTP SARL</h2>
           <p style="margin: 3px 0 0; color: #d97706; font-size: 12px; font-weight: bold; text-transform: uppercase;">Construire aujourd'hui les solutions de demain • Yaoundé & Douala</p>
-          <p style="margin: 2px 0 0; color: #64748b; font-size: 11px;">Bâtiment & Génie Civil • Direction Générale : M. Rodrigue DJOMO & Ing. Patrick TOUKAM</p>
+          <p style="margin: 2px 0 0; color: #64748b; font-size: 11px;">Bâtiment & Génie Civil • Direction Générale & Bureau Technique</p>
         </div>
         <div style="text-align: right;">
           <div style="background: #0c2e60; color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; display: inline-block;">
@@ -218,7 +213,7 @@
         </div>
         <div style="text-align: center; border: 1px dashed #cbd5e1; padding: 15px 25px; border-radius: 8px;">
           <p style="margin: 0 0 5px; font-size: 12px; font-weight: bold; color: #0c2e60;">Visa Direction Générale RMC BTP</p>
-          <p style="margin: 0; font-size: 11px; color: #d97706; font-weight: bold;">M. Rodrigue DJOMO & Ing. Patrick TOUKAM</p>
+          <p style="margin: 0; font-size: 11px; color: #d97706; font-weight: bold;">Direction Générale & Bureau Technique</p>
           <small style="color: #94a3b8; font-size: 10px;">[Signature Numérique & Cachet BTP]</small>
         </div>
       </div>

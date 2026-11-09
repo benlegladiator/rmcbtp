@@ -215,14 +215,19 @@ $pageLabels = [
                         <?php 
                           $imgRaw = (string)($item['image_url'] ?? '');
                           $imgSrc = '../' . $imgRaw;
-                          if (empty($imgRaw) || !file_exists(__DIR__ . '/../' . $imgRaw)) {
+                          $fullPath = __DIR__ . '/../' . $imgRaw;
+                          if (empty($imgRaw) || !file_exists($fullPath)) {
                               $imgSrc = '../images/bg_1.jpg';
+                              $fullPath = __DIR__ . '/../images/bg_1.jpg';
                           }
+                          $imgVersion = file_exists($fullPath) ? filemtime($fullPath) : (!empty($item['updated_at']) ? strtotime($item['updated_at']) : 1);
                           $focal = !empty($item['focal_point']) ? $item['focal_point'] : 'center top';
                         ?>
-                        <img src="<?php echo htmlspecialchars((string)$imgSrc); ?>?v=<?php echo time(); ?>" 
+                        <img src="<?php echo htmlspecialchars((string)$imgSrc); ?>?v=<?php echo $imgVersion; ?>" 
                              alt="<?php echo htmlspecialchars((string)($item['title'] ?? 'Visuel')); ?>"
                              id="preview_img_<?php echo $item['id']; ?>"
+                             loading="lazy"
+                             decoding="async"
                              style="width: 100%; height: 100%; object-fit: cover; object-position: <?php echo htmlspecialchars((string)$focal); ?>;">
                         
                         <div class="position-absolute" style="top: 10px; left: 10px;">
