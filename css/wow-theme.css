@@ -1,0 +1,1414 @@
+/* ==========================================================================
+   FEE BTP SARL - PACK PRESTIGE BLANC PUR & ARCHITECTURAL (STYLE LEADER BTP)
+   ========================================================================== */
+
+:root {
+  --font-heading: 'Syne', -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  
+  --c-dark-navy: #0c2e60;
+  --c-midnight: #0a192f;
+  --c-amber-gold: #0066cc;
+  --c-amber-glow: rgba(0, 102, 204, 0.4);
+  --c-blue-electric: #00d2ff;
+  --c-blue-glow: rgba(0, 210, 255, 0.45);
+  
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 50px;
+  
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #f8fafc;
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, .brand-title {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   MISE EN PAGE ÉLARGIE & AÉRÉE (FIN DU TASSEMENT CENTRAL / RESPIRATION MODERNE)
+   ========================================================================== */
+.container {
+  width: 100% !important;
+  padding-right: 20px !important;
+  padding-left: 20px !important;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1340px !important;
+    padding-right: 28px !important;
+    padding-left: 28px !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1520px !important;
+    padding-right: 36px !important;
+    padding-left: 36px !important;
+  }
+}
+
+@media (min-width: 1680px) {
+  .container {
+    max-width: 1680px !important;
+    padding-right: 48px !important;
+    padding-left: 48px !important;
+  }
+}
+
+/* Header & Navbar en pleine envergure moderne */
+.header-top-clean .container,
+.navbar-clean-white .container {
+  width: 95% !important;
+  max-width: 1680px !important;
+}
+
+/* Hero Carousel en grande envergure */
+#heroHomeCarousel .container {
+  width: 94% !important;
+  max-width: 1650px !important;
+}
+
+/* Arrondis harmonieux */
+.card, 
+.card-wow-service, 
+.project-entry, 
+.blog-entry, 
+.testimony-wrap,
+.simulator-box,
+.interactive-ba-wrapper {
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+}
+
+.btn, 
+.btn-primary, 
+.btn-outline-primary, 
+.btn-gold-glow, 
+.btn-glass-outline, 
+.btn-custom {
+  border-radius: var(--radius-pill) !important;
+}
+
+.badge, 
+.badge-btp, 
+.badge-prestige, 
+.badge-primary, 
+.badge-warning, 
+.badge-success-btp {
+  border-radius: var(--radius-pill) !important;
+}
+
+.form-control, 
+.form-control-file, 
+select.form-control, 
+textarea.form-control {
+  border-radius: var(--radius-sm) !important;
+  border: 1px solid #cbd5e1;
+  padding: 12px 16px;
+}
+
+.modal-content {
+  border-radius: var(--radius-xl) !important;
+  overflow: hidden;
+  border: 1px solid rgba(0, 114, 255, 0.25);
+}
+
+.img, 
+.img-video, 
+.project-img, 
+.about-image {
+  border-radius: var(--radius-lg) !important;
+}
+
+/* ==========================================================================
+   HEADER PRESTIGE : STYLE CLAIR & ÉPURÉ HAUT DE GAMME
+   ========================================================================= */
+.header-top-clean {
+  background: #040e1e;
+  border-bottom: 1px solid rgba(0, 114, 255, 0.2);
+  font-size: 13px;
+  color: #cbd5e1;
+  padding: 8px 0;
+  letter-spacing: 0.2px;
+}
+
+.header-top-clean a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.header-top-clean a:hover {
+  color: #0072ff;
+}
+
+.header-admin-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f8fafc !important;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none !important;
+}
+
+.header-admin-pill:hover {
+  background: #0072ff;
+  border-color: #0072ff;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.4);
+}
+
+.live-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.live-dot-green {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+/* Navbar avec Dégradé Architectural Lumineux BTP */
+.navbar-clean-white {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 40%, #fff7ed 80%, #ffedd5 100%) !important;
+  box-shadow: 0 10px 30px rgba(12, 46, 96, 0.08);
+  padding: 10px 0 !important;
+  border-bottom: 2px solid rgba(0, 114, 255, 0.35);
+  position: relative;
+}
+
+.navbar-clean-white::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #0c2e60 0%, #0072ff 50%, #00d2ff 100%);
+  z-index: 10;
+}
+
+.brand-icon-square {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0c2e60 0%, #1e40af 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0072ff;
+  font-size: 24px;
+  box-shadow: 0 6px 16px rgba(12, 46, 96, 0.2);
+}
+
+.brand-logo-img {
+  height: 96px;
+  width: auto;
+  max-width: 300px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 10px rgba(12, 46, 96, 0.09));
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 991.98px) {
+  .brand-logo-img {
+    height: 72px;
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .brand-logo-img {
+    height: 60px;
+    max-width: 180px;
+  }
+}
+
+.brand-logo-img:hover {
+  transform: scale(1.03);
+}
+
+.brand-title-clean {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 900;
+  color: #0c2e60;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.brand-subtitle-clean {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  color: #0072ff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: block;
+  margin-top: 3px;
+}
+
+.nav-link-clean {
+  font-family: var(--font-body) !important;
+  font-weight: 700 !important;
+  font-size: 14.5px !important;
+  color: #0c2e60 !important;
+  padding: 9px 16px !important;
+  border-radius: 50px;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.2px;
+}
+
+/* Soulignement / Barre de dégradé lumineuse animée sous le lien */
+.nav-link-clean::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #0072ff 0%, #0048b3 100%);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.nav-icon-dynamic {
+  font-size: 14.5px;
+  color: #0072ff;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Survol Waouh : Dégradé chaud + Zoom + Élévation 3D + Glow */
+.nav-link-clean:hover {
+  color: #0c2e60 !important;
+  background: linear-gradient(135deg, rgba(0, 114, 255, 0.14) 0%, rgba(0, 210, 255, 0.22) 100%);
+  border-color: rgba(0, 114, 255, 0.35);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 8px 20px -4px rgba(0, 114, 255, 0.3);
+}
+
+.nav-link-clean:hover::before {
+  width: 70%;
+  opacity: 1;
+}
+
+.nav-link-clean:hover .nav-icon-dynamic {
+  color: #0048b3;
+  transform: scale(1.35) rotate(-10deg);
+  filter: drop-shadow(0 2px 6px rgba(0, 114, 255, 0.5));
+}
+
+/* État Actif : Dégradé Roi Bleu Nuit / Saphir avec Reflet Doré */
+.nav-link-clean.active {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #0c2e60 0%, #1e40af 60%, #2563eb 100%) !important;
+  border-color: rgba(12, 46, 96, 0.2);
+  box-shadow: 0 8px 22px rgba(12, 46, 96, 0.35), 0 0 12px rgba(0, 114, 255, 0.25);
+  transform: scale(1.02);
+}
+
+.nav-link-clean.active::before {
+  width: 80%;
+  height: 3px;
+  background: linear-gradient(90deg, #0072ff 0%, #ffffff 100%);
+  opacity: 1;
+}
+
+.nav-link-clean.active .nav-icon-dynamic {
+  color: #fbbf24 !important;
+  transform: scale(1.15);
+  filter: drop-shadow(0 2px 8px rgba(0, 210, 255, 0.6));
+}
+
+.nav-link-clean.active:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 12px 28px rgba(12, 46, 96, 0.45), 0 0 16px rgba(0, 114, 255, 0.4);
+}
+
+/* Cartouche Ingénieur Permanent avec Dégradé Chaud & Radar Pulse */
+.call-card-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 18px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
+  border: 1px solid rgba(0, 114, 255, 0.35);
+  text-decoration: none !important;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 4px 14px rgba(0, 114, 255, 0.12);
+}
+
+.call-card-nav:hover {
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border-color: #0072ff;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 25px rgba(0, 114, 255, 0.28);
+}
+
+.call-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0072ff 0%, #0048b3 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: 0 3px 10px rgba(0, 114, 255, 0.35);
+}
+
+.call-radar-ping {
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #0072ff;
+  opacity: 0.85;
+  animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes radarPing {
+  0% { transform: scale(0.9); opacity: 0.95; }
+  75%, 100% { transform: scale(1.6); opacity: 0; }
+}
+
+.live-status-dot-sm {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  display: inline-block;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.call-card-text {
+  line-height: 1.2;
+}
+
+.call-card-text small {
+  display: block;
+  font-size: 10px;
+  color: #0048b3;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.call-card-text strong {
+  color: #0c2e60;
+  font-size: 13.5px;
+  letter-spacing: 0.2px;
+  font-weight: 800;
+  transition: color 0.2s;
+}
+
+.call-card-nav:hover .call-card-text strong {
+  color: #0048b3;
+}
+
+/* Bouton Devis Express avec halo et brillance Shimmer */
+.btn-devis-express-glow {
+  background: linear-gradient(135deg, #0072ff 0%, #0048b3 100%);
+  border-radius: 50px;
+  box-shadow: 0 6px 18px rgba(0, 114, 255, 0.4);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-devis-express-glow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+  transform: rotate(25deg);
+  animation: devisShimmer 3.5s infinite;
+}
+
+@keyframes devisShimmer {
+  0% { left: -60%; }
+  30% { left: 140%; }
+  100% { left: 140%; }
+}
+
+.btn-devis-express-glow:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(0, 114, 255, 0.55);
+  color: #ffffff !important;
+}
+
+.call-card-text {
+  line-height: 1.2;
+}
+
+.call-card-text small {
+  display: block;
+  font-size: 10px;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.call-card-text strong {
+  font-size: 13px;
+  color: #0c2e60;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   AUTRES STYLES WAOUH
+   ========================================================================== */
+.hero-wrap.kenburns-slide {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-wrap.kenburns-slide .kenburns-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center top;
+  transform: scale(1);
+  animation: kenBurnsZoom 10s ease-out infinite alternate;
+  z-index: 1;
+}
+
+@keyframes kenBurnsZoom {
+  0% { transform: scale(1.0); }
+  100% { transform: scale(1.12); }
+}
+
+.hero-wrap .cinematic-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Voile lumineux & contrasté : éclaircissement sur les photos de personnes et renforcement de la lisibilité du texte */
+  background: linear-gradient(90deg, rgba(4, 14, 30, 0.78) 0%, rgba(12, 46, 96, 0.52) 50%, rgba(4, 14, 30, 0.28) 100%),
+              linear-gradient(180deg, rgba(4, 14, 30, 0.35) 0%, rgba(4, 14, 30, 0.65) 100%);
+  z-index: 2;
+}
+
+.hero-wrap .container {
+  position: relative;
+  z-index: 3;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #ffffff 15%, #60a5fa 55%, #00d2ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.btn-gold-glow {
+  background: linear-gradient(135deg, #0072ff 0%, #00388d 100%);
+  color: #fff !important;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px 26px;
+  box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
+  transition: var(--transition-smooth);
+}
+
+.btn-gold-glow:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #0088ff 0%, #0044b3 100%);
+  box-shadow: 0 10px 25px rgba(0, 114, 255, 0.6);
+  color: #fff !important;
+}
+
+.btn-glass-outline {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff !important;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  padding: 12px 26px;
+  backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+}
+
+.btn-glass-outline:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+  transform: translateY(-2px);
+  color: #fff !important;
+}
+
+/* Marquee Infini */
+.marquee-container {
+  background: #0c2e60;
+  border-top: 1px solid rgba(0, 114, 255, 0.3);
+  border-bottom: 1px solid rgba(0, 114, 255, 0.3);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 16px 0;
+  position: relative;
+  z-index: 20;
+}
+
+.marquee-content {
+  display: inline-flex;
+  animation: scrollMarquee 26s linear infinite;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #e2e8f0;
+  padding: 0 30px;
+}
+
+.marquee-item i {
+  color: #0072ff;
+  font-size: 16px;
+}
+
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Piliers & Sections Piliers */
+.pillars-section {
+  position: relative;
+  padding: 85px 0 65px 0;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+  overflow: hidden;
+}
+
+/* ========================================================================
+   RMC BTP SARL : THÈME ÉCOSYSTÈME 360° (BLEU SAPHIR CORPORATE & OR SOLAIRE)
+   ======================================================================== */
+.rmc-ecosystem-section {
+  position: relative;
+  padding: 95px 0 75px 0;
+  background: radial-gradient(circle at 15% 20%, rgba(12, 46, 96, 0.03) 0%, transparent 40%),
+              radial-gradient(circle at 85% 80%, rgba(217, 119, 6, 0.04) 0%, transparent 40%),
+              linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+  overflow: hidden;
+}
+
+.rmc-ecosystem-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(12, 46, 96, 0.08) 0%, rgba(217, 119, 6, 0.12) 100%);
+  color: #0c2e60;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  box-shadow: 0 4px 15px rgba(12, 46, 96, 0.05);
+}
+
+.rmc-ecosystem-title {
+  font-size: 2.35rem;
+  font-weight: 850;
+  color: #0c2e60;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.rmc-ecosystem-subtitle {
+  font-size: 1.08rem;
+  color: #64748b;
+  max-width: 780px;
+  margin: 0 auto 35px auto;
+  line-height: 1.75;
+}
+
+/* Carte RMC Hub Synergie */
+.rmc-hub-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 44px 34px 36px 34px;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 20px 45px -12px rgba(12, 46, 96, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  min-height: 590px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.rmc-hub-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #0c2e60, #d97706);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.rmc-hub-card:hover::before {
+  opacity: 1;
+}
+
+.rmc-hub-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(217, 119, 6, 0.45);
+  box-shadow: 0 30px 65px -12px rgba(12, 46, 96, 0.16), 0 0 25px rgba(217, 119, 6, 0.12);
+}
+
+.rmc-hub-card.hub-featured {
+  border: 2px solid #0c2e60;
+  background: linear-gradient(180deg, #ffffff 0%, #f9fbfe 100%);
+  box-shadow: 0 25px 60px -10px rgba(12, 46, 96, 0.18);
+}
+
+.rmc-hub-card.hub-featured::before {
+  opacity: 1;
+  background: linear-gradient(90deg, #d97706, #00d2ff, #0c2e60);
+  height: 6px;
+}
+
+.rmc-hub-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.rmc-hub-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0c2e60 0%, #1e4287 100%);
+  color: #fbbf24;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 12px 26px rgba(12, 46, 96, 0.22);
+  transition: all 0.35s ease;
+}
+
+.rmc-hub-card:hover .rmc-hub-icon {
+  transform: scale(1.08) rotate(3deg);
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  color: #ffffff;
+  box-shadow: 0 14px 30px rgba(217, 119, 6, 0.4);
+}
+
+.rmc-hub-badge {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  background: rgba(12, 46, 96, 0.07);
+  color: #0c2e60;
+  border: 1px solid rgba(12, 46, 96, 0.12);
+}
+
+.rmc-hub-card.hub-featured .rmc-hub-badge {
+  background: rgba(217, 119, 6, 0.12);
+  color: #b45309;
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+.rmc-hub-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0c2e60;
+  margin-bottom: 14px;
+  line-height: 1.35;
+}
+
+.rmc-hub-desc {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+
+.rmc-hub-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rmc-hub-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.rmc-hub-item i {
+  color: #d97706;
+  font-size: 15px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.rmc-hub-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0c2e60;
+  margin-top: auto;
+  transition: all 0.3s ease;
+}
+
+.rmc-hub-card:hover .rmc-hub-footer {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+/* En-tête de Section Piliers */
+.pillar-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(12, 46, 96, 0.08);
+  color: #0c2e60;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 16px;
+  border: 1px solid rgba(12, 46, 96, 0.12);
+}
+
+.pillar-section-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #0c2e60;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.pillar-section-subtitle {
+  font-size: 1.05rem;
+  color: #64748b;
+  max-width: 740px;
+  margin: 0 auto 30px auto;
+  line-height: 1.7;
+}
+
+/* Cartes Piliers Architecturales Hautes & Élancées */
+.pillar-card {
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 54px 38px 44px 38px;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 18px 45px -12px rgba(12, 46, 96, 0.09);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  min-height: 640px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* Numéro Géant en Filigrane Architectural */
+.pillar-number {
+  position: absolute;
+  top: 15px;
+  right: 24px;
+  font-family: var(--font-heading);
+  font-size: 96px;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(12, 46, 96, 0.04);
+  user-select: none;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+.pillar-card:hover .pillar-number {
+  color: rgba(0, 114, 255, 0.09);
+  transform: translateY(-6px) scale(1.06);
+}
+
+.pillar-card:hover {
+  transform: translateY(-12px);
+  border-color: rgba(0, 114, 255, 0.45);
+  box-shadow: 0 28px 65px -10px rgba(12, 46, 96, 0.16), 0 0 25px rgba(0, 114, 255, 0.12);
+}
+
+/* Carte Centrale surélevée (Effet Podium Prestige) */
+.pillar-card.highlight {
+  border: 2px solid #0072ff;
+  min-height: 670px;
+  box-shadow: 0 25px 60px -10px rgba(0, 114, 255, 0.24);
+  background: linear-gradient(180deg, #ffffff 0%, #fffcf8 100%);
+}
+
+@media (min-width: 992px) {
+  .pillar-col-highlight {
+    margin-top: -16px;
+    margin-bottom: 16px;
+  }
+}
+
+.pillar-tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  background: rgba(12, 46, 96, 0.07);
+  color: #0c2e60;
+  transition: all 0.3s ease;
+}
+
+.pillar-card:hover .pillar-tag {
+  background: rgba(0, 114, 255, 0.15);
+  color: #0048b3;
+}
+
+.pillar-icon-box {
+  width: 74px;
+  height: 74px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #0c2e60 0%, #1e4287 100%);
+  color: #0072ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 12px 28px rgba(12, 46, 96, 0.24);
+  transition: all 0.35s ease;
+}
+
+.pillar-card:hover .pillar-icon-box {
+  background: linear-gradient(135deg, #0072ff 0%, #0048b3 100%);
+  color: #ffffff;
+  transform: scale(1.08) rotate(4deg);
+  box-shadow: 0 14px 32px rgba(0, 114, 255, 0.42);
+}
+
+.pillar-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0c2e60;
+  margin-top: 26px;
+  margin-bottom: 18px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.pillar-desc {
+  color: #64748b;
+  font-size: 0.96rem;
+  line-height: 1.8;
+  margin-bottom: 26px;
+}
+
+/* Liste de points de contrôle (Checklist d'Ingénierie) */
+.pillar-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pillar-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.45;
+}
+
+.pillar-feature-item i {
+  color: #22c55e;
+  margin-top: 2px;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Cartouche Inférieur (Pied de Carte) */
+.pillar-footer-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0c2e60;
+  margin-top: auto;
+  transition: all 0.3s ease;
+}
+
+.pillar-card:hover .pillar-footer-badge {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #0048b3;
+}
+
+.pillar-footer-badge i {
+  font-size: 14px;
+}
+
+/* Slider Avant / Après */
+.interactive-ba-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+  user-select: none;
+  background: #000;
+}
+
+@media (min-width: 992px) {
+  .interactive-ba-wrapper {
+    height: 580px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .interactive-ba-wrapper {
+    height: 680px;
+  }
+}
+
+@media (min-width: 1680px) {
+  .interactive-ba-wrapper {
+    height: 740px;
+  }
+}
+
+.ba-image-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.ba-after-layer {
+  z-index: 1;
+}
+
+.ba-before-layer {
+  z-index: 2;
+  width: 50%;
+  overflow: hidden;
+  border-right: 4px solid #0072ff;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+  transition: width 0.05s ease-out;
+}
+
+.ba-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #0072ff;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(0, 114, 255, 0.8), 0 0 0 4px rgba(255, 255, 255, 0.9);
+  z-index: 10;
+  cursor: ew-resize;
+  pointer-events: none;
+  font-size: 18px;
+}
+
+.ba-range-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 20;
+  margin: 0;
+}
+
+.ba-tag {
+  position: absolute;
+  top: 20px;
+  padding: 7px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  z-index: 5;
+  backdrop-filter: blur(8px);
+}
+
+.ba-tag-before {
+  left: 20px;
+  background: rgba(220, 38, 38, 0.9);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.ba-tag-after {
+  right: 20px;
+  background: rgba(16, 185, 129, 0.9);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Simulateur */
+.simulator-box {
+  background: linear-gradient(145deg, #0c2e60 0%, #040e1e 100%);
+  border: 1px solid rgba(0, 114, 255, 0.3);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  color: #fff;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.sim-slider-wrap input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+.sim-slider-wrap input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #0072ff;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 114, 255, 0.8);
+  border: 3px solid #fff;
+}
+
+.sim-price-display {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 114, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  text-align: center;
+}
+
+/* Services */
+.card-wow-service {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  position: relative;
+}
+
+.card-wow-service:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px -12px rgba(12, 46, 96, 0.2);
+  border-color: #0072ff;
+}
+
+.card-wow-service:hover .service-icon-box {
+  background: #0072ff;
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 10px 25px rgba(0, 114, 255, 0.4);
+}
+
+.service-icon-box {
+  transition: var(--transition-smooth);
+}
+
+/* ==========================================================================
+   EXPÉRIENCE 3D INTERACTIVE & VIDÉO HAUTE DÉFINITION BTP
+   ========================================================================== */
+
+/* 1. Canvas 3D Hero Wireframe */
+#feeHero3DCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 0 20px rgba(0, 180, 255, 0.65));
+}
+
+/* 2. Vidéo Cinématique Hero 4K */
+.hero-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-video-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+  filter: contrast(1.1) brightness(0.92);
+}
+
+.hero-video-badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 114, 255, 0.2);
+  border: 1px solid rgba(0, 114, 255, 0.6);
+  color: #ffedd5;
+  backdrop-filter: blur(8px);
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.live-pulse-indicator {
+  width: 8px;
+  height: 8px;
+  background: #0072ff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #0072ff;
+  animation: pulseLiveDot 1.5s infinite;
+}
+
+@keyframes pulseLiveDot {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 3. Moteur 3D Tilt Physique sur les cartes */
+.pillar-card,
+.card-wow-service,
+.project-card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease-out;
+  will-change: transform;
+}
+
+.pillar-card:hover,
+.card-wow-service:hover {
+  box-shadow: 0 30px 60px -15px rgba(12, 46, 96, 0.25), 0 0 25px rgba(0, 114, 255, 0.2) !important;
+}
+
+/* Reflet Spéculaire (Lumière dynamique) */
+.fee-3d-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 5;
+  mix-blend-mode: overlay;
+}
+
+/* Éléments en relief à l'intérieur des cartes (Z-Index 3D) */
+.pillar-icon-box,
+.pillar-number,
+.pillar-footer-badge {
+  transform: translateZ(30px);
+}
+
+.pillar-title {
+  transform: translateZ(22px);
+}
+
+.pillar-desc,
+.pillar-features {
+  transform: translateZ(15px);
+}
+
+/* WhatsApp Radar */
+.whatsapp-float-btn {
+  border-radius: var(--radius-pill) !important;
+  animation: radarPulse 3s infinite;
+}
+
+@keyframes radarPulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  70% { box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* ==========================================================================
+   SUPPRESSION DÉFINITIVE DU PRÉCHARGEUR BLOQUANT (AFFICHAGE INSTANTANÉ)
+   ========================================================================== */
+#ftco-loader {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ==========================================================================
+   OPTIMISATIONS RESPONSIVES MOBILES ET TABLETTES (iOS & Android Ultra-Fluide)
+   ========================================================================== */
+@media (max-width: 767.98px) {
+  /* Typographie Hero sur smartphone */
+  .hero-wrap h1 {
+    font-size: 1.85rem !important;
+    line-height: 1.25 !important;
+  }
+  .hero-wrap p.lead {
+    font-size: 1rem !important;
+  }
+
+  /* Avant / Après sur mobile : hauteur ergonomique sans défilement excessif */
+  .interactive-ba-wrapper {
+    height: 320px !important;
+    border-radius: 14px !important;
+  }
+  .ba-tag {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+  .ba-handle {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+  }
+
+  /* Alignement des cartes DG et équipe */
+  .dg-3d-card, .about-image {
+    min-height: 380px !important;
+  }
+
+  /* Bouton WhatsApp et Chatbot sur petit écran */
+  .whatsapp-float-btn {
+    bottom: 18px !important;
+    left: 14px !important;
+    padding: 10px 16px !important;
+    font-size: 12px !important;
+  }
+  #smartChatWidget {
+    bottom: 80px !important;
+  }
+
+  /* Empêcher tout débordement horizontal */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .interactive-ba-wrapper {
+    height: 420px !important;
+  }
+}

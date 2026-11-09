@@ -1,0 +1,64 @@
+# GUIDE D'INSTALLATION & DE DÉPLOIEMENT RAPIDE
+## TEMPLATE BTP & GÉNIE CIVIL NEXT-GEN (AVEC 3D, VIDÉO 4K & IA CHAT)
+
+Ce package contient l'ensemble du site web prêt à être déployé pour une nouvelle entreprise ou un nouveau client.
+
+---
+
+### 1. DÉCOMPRESSION DU PROJET
+1. Copiez l'archive `TEMPLATE_BTP_FULL_PROJECT.zip` dans votre nouveau dossier web :
+   Exemple : `c:\xampp\htdocs\mon_autre_site\`
+2. Décompressez l'archive à cet endroit.
+
+---
+
+### 2. BASE DE DONNÉES MYSQL
+1. Ouvrez phpMyAdmin (`http://localhost/phpmyadmin/`) ou votre console MySQL.
+2. Créez une nouvelle base de données (ex: `nouveau_btp_db` avec l'encodage `utf8mb4_unicode_ci`).
+3. Importez le fichier inclus : **`database_backup.sql`**.
+
+---
+
+### 3. CONFIGURATION RAPIDE (1 FICHIER À MODIFIER)
+Ouvrez le fichier **`config/db.php`** et modifiez les paramètres suivants :
+```php
+define('SITE_NAME', 'NOM DE LA NOUVELLE ENTREPRISE');
+define('SITE_SLOGAN', 'Votre slogan ici');
+define('SITE_URL', 'http://localhost/mon_autre_site');
+define('ADMIN_EMAIL', 'contact@votre-entreprise.com');
+
+// Connexion Base de Données
+define('DB_HOST', '127.0.0.1');
+define('DB_PORT', '3306');
+define('DB_NAME', 'nouveau_btp_db'); // Le nom de votre nouvelle BDD
+define('DB_USER', 'root');
+define('DB_PASS', '');
+```
+
+---
+
+### 4. PERSONNALISATION DES VISUELS
+- **Logo** : Remplacez simplement `images/logo.png` et `images/logo-white.png` par le logo de votre nouveau client (dimensions idéales : ~800x600 px en fond transparent).
+- **Vidéo d'arrière-plan 4K (Optionnelle)** : Déposez une vidéo dans `videos/chantier-btp-4k.mp4`.
+- **Photos des chantiers & Équipe** :
+  - Placez vos photos dans `images/` ou gérez-les directement depuis le panneau d'administration.
+
+---
+
+### 5. ACCÈS AU PANNEAU D'ADMINISTRATION
+- **URL** : `http://localhost/mon_autre_site/admin/login.php`
+- **Identifiants par défaut** :
+  - **Email** : `admin@feebtp-sarl.com`
+  - **Mot de passe** : `Admin@2026!`
+  *(Vous pouvez modifier le mot de passe et l'email directement dans Profil Administrateur).*
+
+---
+
+### 6. FONCTIONNALITÉS INCLUSES DANS CE PACKAGE
+- Moteur 3D Blueprint interactif au Hero (HTML5 Canvas 60 FPS)
+- Effet 3D Tilt physique avec reflets lumineux sur les cartes & services
+- Widget comparatif interactif "Avant / Après" avec poignée de glissement
+- Simulateur de devis BTP en direct avec calcul de coût estimatif
+- Concierge de messagerie intelligent / IA Chat BTP (`includes/smart-chat.php` & `api-chat.php`)
+- Intégration WhatsApp flottant en direct
+- Gestion complète via Back-office Admin (Projets, Articles, Services, Témoignages, Messages, Paramètres généraux)

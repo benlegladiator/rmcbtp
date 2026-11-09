@@ -1,0 +1,16 @@
+# Configuration de production locale/serveur
+config/db_production.php
+
+# Fichiers système & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Fichiers temporaires
+*.log
+scratch/
+
+feebtpsarl/
+*.zip
+*.sql
