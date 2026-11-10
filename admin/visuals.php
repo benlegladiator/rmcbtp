@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_visual'])) {
     }
 }
 
-// 3. Traitement de la mise à jour d'un visuel existant
+// 3. Traitement de la mise à jour d'un visuel existant (page_visuals)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
     $visualId = (int)($_POST['visual_id'] ?? 0);
     $focalPoint = trim((string)($_POST['focal_point'] ?? 'center top'));
@@ -171,6 +171,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
     }
 }
 
+// 4. Traitement de la mise à jour directe d'un Service de l'Accueil (Section F)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_service_visual'])) {
+    $serviceId = (int)($_POST['service_id'] ?? 0);
+    if ($serviceId > 0 && isset($_FILES['service_file']) && $_FILES['service_file']['error'] === UPLOAD_ERR_OK) {
+        $upDir = __DIR__ . '/../uploads/services/';
+        if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
+        $ext = strtolower(pathinfo($_FILES['service_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
+            $destName = 'srv_' . $serviceId . '_' . time() . '.' . $ext;
+            if (move_uploaded_file($_FILES['service_file']['tmp_name'], $upDir . $destName)) {
+                $pdo->prepare("UPDATE services SET image = ? WHERE id = ?")->execute(['uploads/services/' . $destName, $serviceId]);
+                header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                exit;
+            }
+        }
+    }
+}
+
+// 5. Traitement de la mise à jour directe d'un Projet du Portfolio (Section G)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_visual'])) {
+    $projectId = (int)($_POST['project_id'] ?? 0);
+    if ($projectId > 0 && isset($_FILES['project_file']) && $_FILES['project_file']['error'] === UPLOAD_ERR_OK) {
+        $upDir = __DIR__ . '/../uploads/projects/';
+        if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
+        $ext = strtolower(pathinfo($_FILES['project_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
+            $destName = 'proj_' . $projectId . '_' . time() . '.' . $ext;
+            if (move_uploaded_file($_FILES['project_file']['tmp_name'], $upDir . $destName)) {
+                $pdo->prepare("UPDATE projects SET main_image = ? WHERE id = ?")->execute(['uploads/projects/' . $destName, $projectId]);
+                header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                exit;
+            }
+        }
+    }
+}
+
+// 6. Traitement de la mise à jour directe d'un Article du Blog (Section H)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_article_visual'])) {
+    $articleId = (int)($_POST['article_id'] ?? 0);
+    if ($articleId > 0 && isset($_FILES['article_file']) && $_FILES['article_file']['error'] === UPLOAD_ERR_OK) {
+        $upDir = __DIR__ . '/../uploads/articles/';
+        if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
+        $ext = strtolower(pathinfo($_FILES['article_file']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
+            $destName = 'art_' . $articleId . '_' . time() . '.' . $ext;
+            if (move_uploaded_file($_FILES['article_file']['tmp_name'], $upDir . $destName)) {
+                $pdo->prepare("UPDATE articles SET image = ? WHERE id = ?")->execute(['uploads/articles/' . $destName, $articleId]);
+                header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                exit;
+            }
+        }
+    }
+}
+
 $adminTitle = "Gestionnaire de Visuels de Repère par Section";
 require_once __DIR__ . '/header.php';
 
@@ -190,6 +244,16 @@ try {
 } catch (Throwable $e) {
     $error = "Impossible de charger les visuels : " . $e->getMessage();
 }
+
+// Récupérer les éléments dynamiques affichés sur l'accueil
+$homeServices = [];
+$homeProjects = [];
+$homeArticles = [];
+try {
+    $homeServices = $pdo->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sort_order ASC, id ASC LIMIT 6")->fetchAll(PDO::FETCH_ASSOC);
+    $homeProjects = $pdo->query("SELECT * FROM projects WHERE is_featured = 1 ORDER BY id DESC LIMIT 6")->fetchAll(PDO::FETCH_ASSOC);
+    $homeArticles = $pdo->query("SELECT * FROM articles WHERE is_published = 1 ORDER BY id DESC LIMIT 3")->fetchAll(PDO::FETCH_ASSOC);
+} catch (Throwable $e) {}
 
 // Regrouper par page et par section pour l'affichage
 $grouped = [];
@@ -219,6 +283,9 @@ try {
     while ($r = $cStmt->fetch(PDO::FETCH_ASSOC)) {
         $counts[$r['page_slug']] = (int)$r['cnt'];
     }
+    // Ajouter les cartes dynamiques de l'accueil
+    $homeDynCount = count($homeServices) + count($homeProjects) + count($homeArticles);
+    $counts['home'] = ($counts['home'] ?? 0) + $homeDynCount;
     $totalCount = array_sum($counts);
 } catch (Throwable $e) {
     $totalCount = count($visuals);
@@ -232,7 +299,7 @@ try {
         <i class="fas fa-layer-group text-primary mr-2"></i> Visuels de Repère par Page & Section
       </h1>
       <p class="text-muted mb-0 small">
-        Gérez 100% des images, logos, bannières et portraits du site. Toute modification est immédiatement active sur le site en direct.
+        Gérez 100% des images visibles sur le site : bannières, sliders, portraits, cartes de services, chantiers à la une et articles.
       </p>
     </div>
     <div class="mt-2 mt-md-0 d-flex flex-wrap gap-2">
@@ -240,10 +307,10 @@ try {
         <i class="fas fa-sync-alt mr-1"></i> Synchroniser Tous les Visuels
       </a>
       <button type="button" class="btn btn-primary btn-sm font-weight-bold shadow-sm" data-toggle="collapse" data-target="#collapseNewVisual" aria-expanded="false" aria-controls="collapseNewVisual">
-        <i class="fas fa-plus-circle mr-1"></i> Ajouter un Nouveau Visuel
+        <i class="fas fa-plus-circle mr-1"></i> Ajouter un Nouveau Visuel Libre
       </button>
       <a href="../index.php" target="_blank" class="btn btn-outline-secondary btn-sm font-weight-bold">
-        <i class="fas fa-external-link-alt mr-1"></i> Voir le Site
+        <i class="fas fa-external-link-alt mr-1"></i> Voir le Site en Direct
       </a>
     </div>
   </div>
@@ -345,7 +412,7 @@ try {
     </div>
   </div>
 
-  <!-- Barre d'onglets de filtrage par page avec compteurs -->
+  <!-- Barre d'onglets de filtrage par page avec compteurs complets -->
   <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ffffff;">
     <div class="card-body p-2">
       <div class="d-flex flex-wrap gap-2">
@@ -356,7 +423,7 @@ try {
              class="btn btn-sm <?php echo ($filterPage === $slug) ? 'btn-primary font-weight-bold' : 'btn-light text-dark'; ?>"
              style="border-radius: 8px; margin: 3px;">
             <?php echo $label; ?>
-            <span class="badge badge-<?php echo ($filterPage === $slug) ? 'light text-primary' : 'secondary'; ?> ml-1">
+            <span class="badge badge-<?php echo ($filterPage === $slug) ? 'light text-primary' : 'secondary'; ?> ml-1 font-weight-bold">
               <?php echo $badgeCount; ?>
             </span>
           </a>
@@ -365,19 +432,8 @@ try {
     </div>
   </div>
 
-  <!-- Liste des sections et cartes visuelles -->
-  <?php if (empty($grouped)): ?>
-    <div class="card border-0 shadow-sm p-5 text-center" style="border-radius: 12px; background: #ffffff;">
-      <i class="fas fa-images fa-3x text-muted mb-3"></i>
-      <h5 class="text-muted font-weight-bold">Aucun visuel enregistré pour ce filtre.</h5>
-      <p class="text-muted small">Cliquez sur « Synchroniser Tous les Visuels » pour initialiser les emplacements automatiquement.</p>
-      <div>
-        <a href="visuals.php?page_slug=all&sync=1" class="btn btn-primary btn-sm font-weight-bold">
-          <i class="fas fa-sync-alt mr-1"></i> Synchroniser Maintenant
-        </a>
-      </div>
-    </div>
-  <?php else: ?>
+  <!-- 1. AFFICHAGE DES SECTIONS DE REPÈRE (page_visuals) -->
+  <?php if (!empty($grouped)): ?>
     <?php foreach ($grouped as $pSlug => $sections): ?>
       <div class="mb-5">
         <div class="d-flex align-items-center mb-3 pb-2 border-bottom">
@@ -388,7 +444,8 @@ try {
             <?php 
               $count = 0;
               foreach ($sections as $sList) $count += count($sList);
-              echo $count . " visuel(s) configurable(s) sur cette page";
+              if ($pSlug === 'home') $count += $homeDynCount;
+              echo $count . " visuel(s) configurable(s) au total sur cette page";
             ?>
           </span>
         </div>
@@ -508,6 +565,211 @@ try {
         <?php endforeach; ?>
       </div>
     <?php endforeach; ?>
+  <?php endif; ?>
+
+  <!-- 2. AFFICHAGE DES SECTIONS DYNAMIQUES DE L'ACCUEIL (Services, Portfolio & Actualités) -->
+  <?php if ($filterPage === 'home' || $filterPage === 'all'): ?>
+    
+    <!-- SECTION F : SERVICES & SPÉCIALISATIONS TECHNIQUES SUR L'ACCUEIL -->
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ffffff;">
+      <div class="card-header bg-light border-0 py-3 d-flex align-items-center justify-content-between" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+        <div>
+          <h5 class="mb-0 font-weight-bold" style="font-size: 15px; color: #0c2e60;">
+            <i class="fas fa-cogs text-primary mr-2"></i> Section F : Services & Spécialisations Techniques (Cartes Accueil)
+          </h5>
+          <small class="text-muted">Modifiez directement la photo affichée sur la carte de chaque métier BTP sur la page d'accueil.</small>
+        </div>
+        <span class="badge badge-secondary badge-pill"><?php echo count($homeServices); ?> service(s)</span>
+      </div>
+
+      <div class="card-body p-3 p-md-4">
+        <div class="row">
+          <?php 
+          $sIdx = 1;
+          foreach ($homeServices as $srv): 
+            $sImg = resolveImage($srv['image'] ?? '', 'images/services-' . $sIdx . '.jpg');
+          ?>
+            <div class="col-lg-6 col-xl-4 mb-4">
+              <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                <div class="position-relative" style="height: 180px; background: #0c2e60; overflow: hidden;">
+                  <img src="../<?php echo htmlspecialchars($sImg); ?>?v=<?php echo time(); ?>" 
+                       alt="<?php echo htmlspecialchars($srv['title']); ?>"
+                       id="preview_srv_<?php echo $srv['id']; ?>"
+                       style="width: 100%; height: 100%; object-fit: cover;">
+                  <div class="position-absolute" style="top: 10px; left: 10px;">
+                    <span class="badge badge-primary px-2 py-1 shadow">
+                      <i class="fa <?php echo htmlspecialchars($srv['icon'] ?? 'fa-wrench'); ?> mr-1"></i> Service #<?php echo $srv['id']; ?>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-body p-3 d-flex flex-column justify-content-between">
+                  <h6 class="font-weight-bold text-dark mb-2"><?php echo htmlspecialchars($srv['title']); ?></h6>
+                  <p class="text-muted small mb-3" style="font-size: 12px; line-height: 1.4;">
+                    <?php echo htmlspecialchars($srv['short_desc'] ?? ''); ?>
+                  </p>
+
+                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="update_service_visual" value="1">
+                    <input type="hidden" name="service_id" value="<?php echo (int)$srv['id']; ?>">
+
+                    <div class="form-group mb-2">
+                      <label class="small font-weight-bold text-primary mb-1">
+                        <i class="fas fa-camera mr-1"></i> Remplacer la photo
+                      </label>
+                      <input type="file" name="service_file" class="form-control-file border p-1 rounded small" accept="image/*" required 
+                             onchange="previewVisual(this, 'preview_srv_<?php echo $srv['id']; ?>')">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-sm btn-block font-weight-bold mt-2">
+                      <i class="fas fa-save mr-1"></i> Enregistrer la Photo
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <?php 
+            $sIdx++;
+          endforeach; 
+          ?>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION G : CHANTIERS & PORTFOLIO MIS EN AVANT SUR L'ACCUEIL -->
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ffffff;">
+      <div class="card-header bg-light border-0 py-3 d-flex align-items-center justify-content-between" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+        <div>
+          <h5 class="mb-0 font-weight-bold" style="font-size: 15px; color: #0c2e60;">
+            <i class="fas fa-hard-hat text-warning mr-2"></i> Section G : Portfolio de Chantiers Mis en Avant (Galerie Accueil)
+          </h5>
+          <small class="text-muted">Modifiez la photo principale des projets qui apparaissent dans la galerie de la page d'accueil.</small>
+        </div>
+        <span class="badge badge-secondary badge-pill"><?php echo count($homeProjects); ?> projet(s)</span>
+      </div>
+
+      <div class="card-body p-3 p-md-4">
+        <div class="row">
+          <?php 
+          $pIdx = 1;
+          foreach ($homeProjects as $proj): 
+            $pImg = resolveImage($proj['main_image'] ?? '', 'images/project-' . $pIdx . '.jpg');
+          ?>
+            <div class="col-lg-6 col-xl-4 mb-4">
+              <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                <div class="position-relative" style="height: 180px; background: #0c2e60; overflow: hidden;">
+                  <img src="../<?php echo htmlspecialchars($pImg); ?>?v=<?php echo time(); ?>" 
+                       alt="<?php echo htmlspecialchars($proj['title']); ?>"
+                       id="preview_proj_<?php echo $proj['id']; ?>"
+                       style="width: 100%; height: 100%; object-fit: cover;">
+                  <div class="position-absolute" style="top: 10px; left: 10px;">
+                    <span class="badge badge-warning text-dark font-weight-bold px-2 py-1 shadow">
+                      <?php echo htmlspecialchars($proj['category'] ?? 'Chantier'); ?>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-body p-3 d-flex flex-column justify-content-between">
+                  <h6 class="font-weight-bold text-dark mb-1"><?php echo htmlspecialchars($proj['title']); ?></h6>
+                  <p class="text-muted small mb-3" style="font-size: 12px;">
+                    <i class="fas fa-map-marker-alt text-danger mr-1"></i> <?php echo htmlspecialchars($proj['location'] ?? 'Yaoundé'); ?>
+                  </p>
+
+                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="update_project_visual" value="1">
+                    <input type="hidden" name="project_id" value="<?php echo (int)$proj['id']; ?>">
+
+                    <div class="form-group mb-2">
+                      <label class="small font-weight-bold text-primary mb-1">
+                        <i class="fas fa-camera mr-1"></i> Remplacer la photo
+                      </label>
+                      <input type="file" name="project_file" class="form-control-file border p-1 rounded small" accept="image/*" required 
+                             onchange="previewVisual(this, 'preview_proj_<?php echo $proj['id']; ?>')">
+                    </div>
+
+                    <button type="submit" class="btn btn-warning btn-sm btn-block font-weight-bold text-dark mt-2">
+                      <i class="fas fa-save mr-1"></i> Enregistrer la Photo
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <?php 
+            $pIdx++;
+          endforeach; 
+          ?>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION H : ACTUALITÉS & ARTICLES RÉCENTS SUR L'ACCUEIL -->
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ffffff;">
+      <div class="card-header bg-light border-0 py-3 d-flex align-items-center justify-content-between" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+        <div>
+          <h5 class="mb-0 font-weight-bold" style="font-size: 15px; color: #0c2e60;">
+            <i class="fas fa-newspaper text-info mr-2"></i> Section H : Actualités & Blog Récent (Cartes Accueil)
+          </h5>
+          <small class="text-muted">Modifiez la photo d'illustration des 3 derniers articles de veille technique affichés sur l'accueil.</small>
+        </div>
+        <span class="badge badge-secondary badge-pill"><?php echo count($homeArticles); ?> article(s)</span>
+      </div>
+
+      <div class="card-body p-3 p-md-4">
+        <div class="row">
+          <?php 
+          $aIdx = 1;
+          foreach ($homeArticles as $art): 
+            $aImg = resolveImage($art['image'] ?? '', 'images/image_' . $aIdx . '.jpg');
+          ?>
+            <div class="col-lg-4 mb-4">
+              <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                <div class="position-relative" style="height: 180px; background: #0c2e60; overflow: hidden;">
+                  <img src="../<?php echo htmlspecialchars($aImg); ?>?v=<?php echo time(); ?>" 
+                       alt="<?php echo htmlspecialchars($art['title']); ?>"
+                       id="preview_art_<?php echo $art['id']; ?>"
+                       style="width: 100%; height: 100%; object-fit: cover;">
+                  <div class="position-absolute" style="top: 10px; left: 10px;">
+                    <span class="badge badge-info px-2 py-1 shadow">
+                      <?php echo htmlspecialchars($art['category'] ?? 'Actualités'); ?>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="card-body p-3 d-flex flex-column justify-content-between">
+                  <h6 class="font-weight-bold text-dark mb-1" style="font-size: 13px; line-height: 1.4;">
+                    <?php echo htmlspecialchars($art['title']); ?>
+                  </h6>
+                  <p class="text-muted small mb-3" style="font-size: 11px;">
+                    <i class="fas fa-calendar mr-1"></i> <?php echo date('d M Y', strtotime($art['created_at'])); ?>
+                  </p>
+
+                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="update_article_visual" value="1">
+                    <input type="hidden" name="article_id" value="<?php echo (int)$art['id']; ?>">
+
+                    <div class="form-group mb-2">
+                      <label class="small font-weight-bold text-primary mb-1">
+                        <i class="fas fa-camera mr-1"></i> Remplacer la photo
+                      </label>
+                      <input type="file" name="article_file" class="form-control-file border p-1 rounded small" accept="image/*" required 
+                             onchange="previewVisual(this, 'preview_art_<?php echo $art['id']; ?>')">
+                    </div>
+
+                    <button type="submit" class="btn btn-info btn-sm btn-block font-weight-bold text-white mt-2">
+                      <i class="fas fa-save mr-1"></i> Enregistrer la Photo
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <?php 
+            $aIdx++;
+          endforeach; 
+          ?>
+        </div>
+      </div>
+    </div>
+
   <?php endif; ?>
 </div>
 
