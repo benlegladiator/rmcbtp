@@ -1,12 +1,13 @@
 <?php
 $currentPage = basename($_SERVER['PHP_SELF']);
+$siteLogo = getVisualInfo($identityVisuals ?? getPageVisuals($pdo, 'identity'), 'site_logo', 'images/logo.png', 'center center');
 ?>
 <nav class="navbar navbar-expand-lg navbar-light navbar-clean-white sticky-top" id="ftco-navbar">
 	<div class="container d-flex align-items-center justify-content-between">
 		
-		<!-- 1. Logo Officiel FEE BTP SARL (Variante Haute Visibilité) -->
-		<a class="navbar-brand d-flex align-items-center text-decoration-none py-1" href="index.php" title="<?= htmlspecialchars($companyName ?? 'FEE BTP SARL') ?>">
-			<img src="images/logo.png" alt="<?= htmlspecialchars($companyName ?? 'FEE BTP SARL') ?>" class="brand-logo-img" style="height: 100px; width: auto; max-height: 110px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(12, 46, 96, 0.12));">
+		<!-- 1. Logo Officiel RMC BTP SARL (Variante Haute Visibilité) -->
+		<a class="navbar-brand d-flex align-items-center text-decoration-none py-1" href="index.php" title="<?= htmlspecialchars($companyName ?? 'RMC BTP SARL') ?>">
+			<img src="<?= htmlspecialchars($siteLogo['url']) ?>" alt="<?= htmlspecialchars($companyName ?? 'RMC BTP SARL') ?>" class="brand-logo-img" style="height: 100px; width: auto; max-height: 110px; object-fit: contain; filter: drop-shadow(0 4px 10px rgba(12, 46, 96, 0.12));">
 		</a>
 
 		<!-- Bouton Toggler Mobile -->

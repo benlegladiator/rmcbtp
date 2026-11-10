@@ -7,6 +7,8 @@ $emailContact = getSetting('email_contact', 'info@rmcbtp.com');
 $address = getSetting('address', 'Yaoundé & Douala, Cameroun');
 $contractRef = getSetting('contract_ref', 'CT-WEB-RMCBTP-2026-01');
 $developerCredit = getSetting('developer_credit', 'M. NDONGMO TEJIONA BEN ARTHUR (+237 691 67 06 26)');
+
+$siteLogoWhite = getVisualInfo($identityVisuals ?? getPageVisuals($pdo, 'identity'), 'site_logo_white', 'images/logo-white.png', 'center center');
 ?>
 	<!-- Pied de Page Principal -->
 	<footer class="ftco-footer ftco-bg-dark ftco-section">
@@ -16,7 +18,7 @@ $developerCredit = getSetting('developer_credit', 'M. NDONGMO TEJIONA BEN ARTHUR
 				<div class="col-lg-4 col-md-6 mb-4 mb-md-0">
 					<div class="ftco-footer-widget">
 						<div class="d-flex align-items-center mb-3">
-							<img src="images/logo-white.png" alt="<?= htmlspecialchars($companyName) ?>" style="height: 60px; width: auto; object-fit: contain; margin-right: 14px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
+							<img src="<?= htmlspecialchars($siteLogoWhite['url']) ?>" alt="<?= htmlspecialchars($companyName) ?>" style="height: 60px; width: auto; object-fit: contain; margin-right: 14px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));">
 							<div>
 								<h2 class="ftco-heading-2 text-white font-weight-bold mb-0" style="font-size: 1.35rem; line-height: 1.1;">
 									<?= htmlspecialchars($companyName) ?>

@@ -31,6 +31,9 @@ $homeVisuals = getPageVisuals($pdo, 'home');
 $hero1 = getVisualInfo($homeVisuals, 'hero_slide_1', 'images/_JMP6225.jpg', 'center center');
 $hero2 = getVisualInfo($homeVisuals, 'hero_slide_2', 'images/IMG-20261029-WA0099.jpg', 'center center');
 $hero3 = getVisualInfo($homeVisuals, 'hero_slide_3', 'images/IMG-20261029-WA0098.jpg', 'center center');
+$ecoBtp = getVisualInfo($homeVisuals, 'ecosystem_btp', 'images/_JMP6225.jpg', 'center center');
+$ecoQuincaillerie = getVisualInfo($homeVisuals, 'ecosystem_quincaillerie', 'images/_JMP6308.jpg', 'center center');
+$ecoDecor = getVisualInfo($homeVisuals, 'ecosystem_decor', 'images/_JMP6286.jpg', 'center center');
 $dgPortrait = getVisualInfo($homeVisuals, 'dg_portrait', 'images/fondateurs/rodrigue-djomo.jpg', 'center top');
 $baBefore = getVisualInfo($homeVisuals, 'ba_before', 'images/_JMP6244.jpg', 'center center');
 $baAfter = getVisualInfo($homeVisuals, 'ba_after', 'images/_JMP6225.jpg', 'center center');
@@ -858,7 +861,7 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 			<!-- PÔLE 1 : RMC BTP -->
 			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
 				<div class="card h-100 border-0 shadow-lg position-relative overflow-hidden" data-3d-tilt style="border-radius: 18px; transition: transform 0.3s ease;">
-					<div style="height: 220px; background-image: url('images/_JMP6225.jpg'); background-size: cover; background-position: center; position: relative;">
+					<div style="height: 220px; background-image: url('<?= htmlspecialchars($ecoBtp['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($ecoBtp['focal']) ?>; position: relative;">
 						<div class="overlay" style="position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(to top, rgba(12,46,96,0.92) 0%, rgba(0,0,0,0.2) 100%);"></div>
 						<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; font-size: 13px; padding: 6px 14px; border-radius: 30px;">
 							<i class="fa fa-building mr-1"></i> Bâtiment & Travaux
@@ -882,7 +885,7 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 			<!-- PÔLE 2 : SIMS QUINCAILLERIE -->
 			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
 				<div class="card h-100 border-0 shadow-lg position-relative overflow-hidden" data-3d-tilt style="border-radius: 18px; transition: transform 0.3s ease;">
-					<div style="height: 220px; background-image: url('images/_JMP6308.jpg'); background-size: cover; background-position: center; position: relative;">
+					<div style="height: 220px; background-image: url('<?= htmlspecialchars($ecoQuincaillerie['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($ecoQuincaillerie['focal']) ?>; position: relative;">
 						<div class="overlay" style="position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(to top, rgba(0,56,141,0.92) 0%, rgba(0,0,0,0.2) 100%);"></div>
 						<span class="badge badge-info position-absolute" style="top: 15px; left: 15px; font-size: 13px; padding: 6px 14px; border-radius: 30px; background: #00d2ff; color: #041226;">
 							<i class="fa fa-wrench mr-1"></i> Matériaux & Outillage
@@ -906,7 +909,7 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 			<!-- PÔLE 3 : SIMS DECOR -->
 			<div class="col-lg-4 col-md-6 mb-4 ftco-animate">
 				<div class="card h-100 border-0 shadow-lg position-relative overflow-hidden" data-3d-tilt style="border-radius: 18px; transition: transform 0.3s ease;">
-					<div style="height: 220px; background-image: url('images/_JMP6286.jpg'); background-size: cover; background-position: center; position: relative;">
+					<div style="height: 220px; background-image: url('<?= htmlspecialchars($ecoDecor['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($ecoDecor['focal']) ?>; position: relative;">
 						<div class="overlay" style="position: absolute; top:0; left:0; right:0; bottom:0; background: linear-gradient(to top, rgba(15,23,42,0.92) 0%, rgba(0,0,0,0.2) 100%);"></div>
 						<span class="badge badge-light position-absolute" style="top: 15px; left: 15px; font-size: 13px; padding: 6px 14px; border-radius: 30px; color: #0c2e60;">
 							<i class="fa fa-paint-brush mr-1"></i> Finitions & Décoration

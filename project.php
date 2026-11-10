@@ -1,8 +1,12 @@
 <?php
-$pageTitle = "Nos Chantiers & Réalisations BTP | FEE BTP SARL";
-$pageDescription = "Découvrez le portfolio des chantiers et réalisations de FEE BTP SARL : galeries photos HD, comparatifs avant/après et vidéos immersives.";
+$pageTitle = "Nos Chantiers & Réalisations BTP | RMC BTP SARL";
+$pageDescription = "Découvrez le portfolio des chantiers et réalisations de RMC BTP SARL : galeries photos HD, comparatifs avant/après et vidéos immersives.";
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
+require_once __DIR__ . '/config/visuals_helper.php';
+
+$projectVisuals = getPageVisuals($pdo, 'projects');
+$projectsBanner = getVisualInfo($projectVisuals, 'projects_banner', 'images/IMG-20261029-WA0129.jpg', 'center center');
 
 $categoryFilter = $_GET['cat'] ?? 'all';
 
@@ -24,7 +28,7 @@ $categories = $catsStmt->fetchAll(PDO::FETCH_COLUMN);
 ?>
 
 <!-- BANNIÈRE EN-TÊTE -->
-<section class="hero-wrap hero-wrap-2" style="background-image: url('images/IMG-20261029-WA0129.jpg'); background-position: center;" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2" style="background-image: url('<?= htmlspecialchars($projectsBanner['url']) ?>'); background-position: <?= htmlspecialchars($projectsBanner['focal']) ?>;" data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-end justify-content-start">

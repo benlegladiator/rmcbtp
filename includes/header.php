@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/visuals_helper.php';
 
 $companyName = getSetting('company_name', 'RMC BTP SARL');
 $slogan = getSetting('slogan', 'Construire aujourd\'hui les solutions de demain');
@@ -9,6 +10,9 @@ $whatsappNumber = getSetting('whatsapp_number', '237697398455');
 $emailContact = getSetting('email_contact', 'info@rmcbtp.com');
 $address = getSetting('address', 'Yaoundé & Douala, Cameroun');
 $openingHours = getSetting('opening_hours', 'Lun - Ven : 07h30 - 18h00 | Sam : 08h00 - 13h00');
+
+$identityVisuals = getPageVisuals($pdo, 'identity');
+$siteFavicon = getVisualInfo($identityVisuals, 'site_favicon', 'images/favicon-32x32.png', 'center center');
 
 $currentFile = basename($_SERVER['PHP_SELF']);
 ?>
@@ -21,11 +25,11 @@ $currentFile = basename($_SERVER['PHP_SELF']);
 	<meta name="description" content="<?= htmlspecialchars($pageDescription ?? 'RMC BTP SARL - Entreprise de référence en BTP, Génie Civil, Clés en main et Rénovation au Cameroun et à l\'international. Devis express et suivi rigoureux.') ?>">
 	
 	<!-- Favicon Officiel RMC BTP SARL (Multi-résolutions Navigateur & Mobile) -->
-	<link rel="icon" type="image/x-icon" href="favicon.ico?v=<?= time() ?>">
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v=<?= time() ?>">
-	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png?v=<?= time() ?>">
-	<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192x192.png?v=<?= time() ?>">
-	<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=<?= time() ?>">
+	<link rel="icon" type="image/x-icon" href="<?= htmlspecialchars($siteFavicon['url']) ?>?v=<?= time() ?>">
+	<link rel="shortcut icon" type="image/x-icon" href="<?= htmlspecialchars($siteFavicon['url']) ?>?v=<?= time() ?>">
+	<link rel="icon" type="image/png" sizes="32x32" href="<?= htmlspecialchars($siteFavicon['url']) ?>?v=<?= time() ?>">
+	<link rel="icon" type="image/png" sizes="192x192" href="<?= htmlspecialchars($siteFavicon['url']) ?>?v=<?= time() ?>">
+	<link rel="apple-touch-icon" sizes="180x180" href="<?= htmlspecialchars($siteFavicon['url']) ?>?v=<?= time() ?>">
 	
 	<!-- Polices Google Architecturales & Modernes (Plus Jakarta Sans) -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">

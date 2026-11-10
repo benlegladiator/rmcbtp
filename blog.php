@@ -3,13 +3,17 @@ $pageTitle = "Actualités & Blog BTP | RMC BTP SARL";
 $pageDescription = "Suivi des chantiers en cours, innovations dans la construction et conseils pratiques d'ingénierie par RMC BTP SARL.";
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
+require_once __DIR__ . '/config/visuals_helper.php';
+
+$blogVisuals = getPageVisuals($pdo, 'blog');
+$blogBanner = getVisualInfo($blogVisuals, 'blog_banner', 'images/IMG-20261029-WA0103.jpg', 'center center');
 
 $stmt = $pdo->query("SELECT * FROM articles WHERE is_published = 1 ORDER BY id DESC");
 $articles = $stmt->fetchAll();
 ?>
 
 <!-- BANNIÈRE EN-TÊTE -->
-<section class="hero-wrap hero-wrap-2" style="background-image: url('images/IMG-20261029-WA0103.jpg'); background-position: center;" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2" style="background-image: url('<?= htmlspecialchars($blogBanner['url']) ?>'); background-position: <?= htmlspecialchars($blogBanner['focal']) ?>;" data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-end justify-content-start">

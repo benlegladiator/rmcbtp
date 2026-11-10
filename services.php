@@ -3,13 +3,17 @@ $pageTitle = "Nos Métiers & Services BTP | RMC BTP SARL";
 $pageDescription = "Catalogue des prestations de RMC BTP SARL : Gros œuvre, Clés en main, Second œuvre, Rénovation, Études techniques et Approvisionnement direct avec SIMS Quincaillerie et SIMS Décor.";
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
+require_once __DIR__ . '/config/visuals_helper.php';
+
+$servicesVisuals = getPageVisuals($pdo, 'services');
+$servicesBanner = getVisualInfo($servicesVisuals, 'services_banner', 'images/IMG-20261029-WA0101.jpg', 'center center');
 
 $stmt = $pdo->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sort_order ASC");
 $allServices = $stmt->fetchAll();
 ?>
 
 <!-- BANNIÈRE EN-TÊTE -->
-<section class="hero-wrap hero-wrap-2" style="background-image: url('images/IMG-20261029-WA0101.jpg'); background-position: center;" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2" style="background-image: url('<?= htmlspecialchars($servicesBanner['url']) ?>'); background-position: <?= htmlspecialchars($servicesBanner['focal']) ?>;" data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-end justify-content-start">

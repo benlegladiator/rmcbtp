@@ -1,6 +1,7 @@
 <?php
 /**
- * Gestionnaire de Visuels de Repère par Page & Section - RMC BTP SARL
+ * Gestionnaire Exhaustif de Visuels de Repère par Page & Section - RMC BTP SARL
+ * Permet d'administrer 100% des images, bannières, logos et portraits du site.
  */
 
 function initPageVisualsTable($pdo) {
@@ -23,9 +24,48 @@ function initPageVisualsTable($pdo) {
             UNIQUE KEY unique_page_sec (page_slug, section_key)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
-        // Liste des visuels de repère fondamentaux du site
+        // Liste exhaustive des visuels du site RMC BTP SARL
         $defaults = [
-            // --- PAGE D'ACCUEIL (index.php) ---
+            // ==========================================
+            // 0. IDENTITÉ VISUELLE & LOGOS (header / footer / favicon)
+            // ==========================================
+            [
+                'page_slug' => 'identity',
+                'section_key' => 'site_logo',
+                'section_name' => "Identité Visuelle & Navigation",
+                'title' => "Logo Principal du Site (En-tête & Barre de Navigation)",
+                'description' => "Logo affiché dans la barre de navigation sur fond clair (Format PNG avec transparence recommandé).",
+                'image_url' => 'images/logo.png',
+                'default_url' => 'images/logo.png',
+                'focal_point' => 'center center',
+                'sort_order' => 1
+            ],
+            [
+                'page_slug' => 'identity',
+                'section_key' => 'site_logo_white',
+                'section_name' => "Identité Visuelle & Navigation",
+                'title' => "Logo Pied de Page (Footer sur Fond Sombre)",
+                'description' => "Logo blanc ou clair contrastant pour le bas de page officiel.",
+                'image_url' => 'images/logo-white.png',
+                'default_url' => 'images/logo-white.png',
+                'focal_point' => 'center center',
+                'sort_order' => 2
+            ],
+            [
+                'page_slug' => 'identity',
+                'section_key' => 'site_favicon',
+                'section_name' => "Identité Visuelle & Navigation",
+                'title' => "Favicon du Site (Icône d'onglet de navigateur)",
+                'description' => "Petite icône carrée représentant la marque dans les onglets et favoris.",
+                'image_url' => 'images/favicon-32x32.png',
+                'default_url' => 'images/favicon-32x32.png',
+                'focal_point' => 'center center',
+                'sort_order' => 3
+            ],
+
+            // ==========================================
+            // 1. PAGE D'ACCUEIL (index.php)
+            // ==========================================
             [
                 'page_slug' => 'home',
                 'section_key' => 'hero_slide_1',
@@ -62,41 +102,40 @@ function initPageVisualsTable($pdo) {
             [
                 'page_slug' => 'home',
                 'section_key' => 'ecosystem_btp',
-                'section_name' => "Section B : Écosystème Intégré 360°",
-                'title' => "Pilier 1 : RMC BTP SARL (Génie Civil & Gros Œuvre)",
-                'description' => "Illustration de la filiale construction et structures en béton.",
-                'image_url' => 'images/IMG-20261029-WA0099.jpg',
-                'default_url' => 'images/IMG-20261029-WA0099.jpg',
-                'focal_point' => 'center top',
+                'section_name' => "Section B : Synergie en 3 Pôles d'Excellence",
+                'title' => "Pôle 1 : RMC BTP SARL (Génie Civil, Gros Œuvre & Clés en Main)",
+                'description' => "Illustration de la carte RMC BTP dans la section Synergie.",
+                'image_url' => 'images/_JMP6225.jpg',
+                'default_url' => 'images/_JMP6225.jpg',
+                'focal_point' => 'center center',
                 'sort_order' => 30
             ],
             [
                 'page_slug' => 'home',
                 'section_key' => 'ecosystem_quincaillerie',
-                'section_name' => "Section B : Écosystème Intégré 360°",
-                'title' => "Pilier 2 : SIMS Quincaillerie (Fourniture Directe Aciers & Ciments)",
-                'description' => "Illustration de la filiale matériaux et quincaillerie.",
-                'image_url' => 'images/IMG-20261029-WA0098.jpg',
-                'default_url' => 'images/IMG-20261029-WA0098.jpg',
-                'focal_point' => 'center top',
+                'section_name' => "Section B : Synergie en 3 Pôles d'Excellence",
+                'title' => "Pôle 2 : SIMS Quincaillerie (Fourniture Matériaux & Aciers)",
+                'description' => "Illustration de la carte SIMS Quincaillerie dans la section Synergie.",
+                'image_url' => 'images/_JMP6308.jpg',
+                'default_url' => 'images/_JMP6308.jpg',
+                'focal_point' => 'center center',
                 'sort_order' => 40
             ],
             [
                 'page_slug' => 'home',
                 'section_key' => 'ecosystem_decor',
-                'section_name' => "Section B : Écosystème Intégré 360°",
-                'title' => "Pilier 3 : SIMS Décor (Staff, Marbres & Finitions Haut Standing)",
-                'description' => "Illustration de la filiale décoration et aménagement intérieur.",
-                'image_url' => 'images/IMG-20261029-WA0097.jpg',
-                'default_url' => 'images/IMG-20261029-WA0097.jpg',
-                'focal_point' => 'center top',
+                'section_name' => "Section B : Synergie en 3 Pôles d'Excellence",
+                'title' => "Pôle 3 : SIMS Décor (Staff, Marbres & Finitions Haut Standing)",
+                'description' => "Illustration de la carte SIMS Décor dans la section Synergie.",
+                'image_url' => 'images/_JMP6286.jpg',
+                'default_url' => 'images/_JMP6286.jpg',
+                'focal_point' => 'center center',
                 'sort_order' => 50
             ],
-            // --- Section B.2 : Résultats Concrets Livrés (Showcase Diaspora) ---
             [
                 'page_slug' => 'home',
                 'section_key' => 'showcase_card_1',
-                'section_name' => "Section B.2 : Résultats Concrets Livrés (Clés en Main)",
+                'section_name' => "Section B.2 : Résultats Concrets Livrés (Showcase Diaspora)",
                 'title' => "Projet Livré 1 : Villa Duplex Contemporaine R+1 (Bastos/Odza)",
                 'description' => "Photo de la villa livrée clé en main en 7 mois avec finitions complètes.",
                 'image_url' => 'images/wa0062-framed-16x9.jpg',
@@ -107,7 +146,7 @@ function initPageVisualsTable($pdo) {
             [
                 'page_slug' => 'home',
                 'section_key' => 'showcase_card_2',
-                'section_name' => "Section B.2 : Résultats Concrets Livrés (Clés en Main)",
+                'section_name' => "Section B.2 : Résultats Concrets Livrés (Showcase Diaspora)",
                 'title' => "Projet Livré 2 : Immeuble Mixte Résidentiel & Commercial",
                 'description' => "Photo de l'immeuble d'appartements et commerces livré pour investisseur.",
                 'image_url' => 'images/IMG-20261015-WA0062.jpg',
@@ -118,7 +157,7 @@ function initPageVisualsTable($pdo) {
             [
                 'page_slug' => 'home',
                 'section_key' => 'showcase_card_3',
-                'section_name' => "Section B.2 : Résultats Concrets Livrés (Clés en Main)",
+                'section_name' => "Section B.2 : Résultats Concrets Livrés (Showcase Diaspora)",
                 'title' => "Projet Livré 3 : Murs de Soutènement & Sécurisation",
                 'description' => "Photo de l'ouvrage de soutènement banché garanti 10 ans sur terrain difficile.",
                 'image_url' => 'images/IMG-20261015-WA0073.jpg',
@@ -131,7 +170,7 @@ function initPageVisualsTable($pdo) {
                 'section_key' => 'about_photo',
                 'section_name' => "Section C : À Propos & Direction",
                 'title' => "Photo Institutionnelle Présentation & Équipe",
-                'description' => "Image de l'encart de présentation de l'entreprise.",
+                'description' => "Image de l'encart de présentation générale de l'entreprise sur l'accueil.",
                 'image_url' => 'images/about.jpg',
                 'default_url' => 'images/about.jpg',
                 'focal_point' => 'center top',
@@ -193,67 +232,134 @@ function initPageVisualsTable($pdo) {
                 'sort_order' => 80
             ],
 
-            // --- PAGE À PROPOS (about.php) ---
+            // ==========================================
+            // 2. PAGE À PROPOS (about.php)
+            // ==========================================
             [
                 'page_slug' => 'about',
                 'section_key' => 'about_banner',
                 'section_name' => "En-tête de la Page À Propos",
                 'title' => "Bannière Hero Page À Propos",
                 'description' => "Grande bannière en haut de la page À Propos.",
-                'image_url' => 'images/bg_1.jpg',
-                'default_url' => 'images/bg_1.jpg',
+                'image_url' => 'images/IMG-20261029-WA0110.jpg',
+                'default_url' => 'images/IMG-20261029-WA0110.jpg',
                 'focal_point' => 'center top',
                 'sort_order' => 110
             ],
             [
                 'page_slug' => 'about',
                 'section_key' => 'about_presentation',
-                'section_name' => "Présentation Historique",
-                'title' => "Photo principale de l'Entreprise",
-                'description' => "Photo illustrant l'histoire et les réalisations du groupe.",
-                'image_url' => 'images/about.jpg',
-                'default_url' => 'images/about.jpg',
+                'section_name' => "Présentation Historique & Vision 2017",
+                'title' => "Photo Institutionnelle de l'Entreprise",
+                'description' => "Grande photo illustrant l'histoire et l'ambition née en 2017.",
+                'image_url' => 'images/fondateurs/rodrigue-djomo.jpg',
+                'default_url' => 'images/fondateurs/rodrigue-djomo.jpg',
                 'focal_point' => 'center top',
                 'sort_order' => 120
             ],
+            [
+                'page_slug' => 'about',
+                'section_key' => 'founder_chirac',
+                'section_name' => "Gouvernance & Cofondateurs RMCBTP",
+                'title' => "Portrait Cofondateur : CHIRAC",
+                'description' => "Photo officielle de M. CHIRAC, cofondateur originel de 2017.",
+                'image_url' => 'images/fondateurs/chirac.jpg',
+                'default_url' => 'images/fondateurs/chirac.jpg',
+                'focal_point' => 'center top',
+                'sort_order' => 130
+            ],
+            [
+                'page_slug' => 'about',
+                'section_key' => 'founder_makair',
+                'section_name' => "Gouvernance & Cofondateurs RMCBTP",
+                'title' => "Portrait Cofondateur : MAKAIR",
+                'description' => "Photo officielle de M. MAKAIR, cofondateur originel de 2017.",
+                'image_url' => 'images/fondateurs/makair.jpg',
+                'default_url' => 'images/fondateurs/makair.jpg',
+                'focal_point' => 'center top',
+                'sort_order' => 140
+            ],
+            [
+                'page_slug' => 'about',
+                'section_key' => 'founder_rodrigue',
+                'section_name' => "Gouvernance & Cofondateurs RMCBTP",
+                'title' => "Portrait Cofondateur & Directeur Général : RODRIGUE DJOMO",
+                'description' => "Photo officielle de M. Rodrigue DJOMO, Directeur Général.",
+                'image_url' => 'images/fondateurs/rodrigue-djomo.jpg',
+                'default_url' => 'images/fondateurs/rodrigue-djomo.jpg',
+                'focal_point' => 'center top',
+                'sort_order' => 150
+            ],
+            [
+                'page_slug' => 'about',
+                'section_key' => 'direction_toukam',
+                'section_name' => "Direction Technique & Ingénierie",
+                'title' => "Portrait Directeur Technique : INGÉNIEUR TOUKAM PATRICK",
+                'description' => "Photo grand format de l'Ingénieur en Chef Toukam Patrick.",
+                'image_url' => 'images/_JMP6320.jpg',
+                'default_url' => 'images/_JMP6320.jpg',
+                'focal_point' => 'center top',
+                'sort_order' => 160
+            ],
 
-            // --- PAGE SERVICES (services.php) ---
+            // ==========================================
+            // 3. PAGE SERVICES (services.php)
+            // ==========================================
             [
                 'page_slug' => 'services',
                 'section_key' => 'services_banner',
                 'section_name' => "En-tête de la Page Services",
                 'title' => "Bannière Hero Page Services",
-                'description' => "Grande bannière en haut de la page Services.",
-                'image_url' => 'images/bg_1.jpg',
-                'default_url' => 'images/bg_1.jpg',
-                'focal_point' => 'center top',
+                'description' => "Grande bannière en haut de la page Catalogue des Prestations.",
+                'image_url' => 'images/IMG-20261029-WA0101.jpg',
+                'default_url' => 'images/IMG-20261029-WA0101.jpg',
+                'focal_point' => 'center center',
                 'sort_order' => 210
             ],
 
-            // --- PAGE PROJETS (project.php) ---
+            // ==========================================
+            // 4. PAGE PROJETS / PORTFOLIO (project.php)
+            // ==========================================
             [
                 'page_slug' => 'projects',
                 'section_key' => 'projects_banner',
                 'section_name' => "En-tête du Portfolio de Chantiers",
                 'title' => "Bannière Hero Page Projets & Réalisations",
-                'description' => "Grande bannière en haut de la page Projets.",
-                'image_url' => 'images/bg_1.jpg',
-                'default_url' => 'images/bg_1.jpg',
-                'focal_point' => 'center top',
+                'description' => "Grande bannière en haut de la galerie des réalisations BTP.",
+                'image_url' => 'images/IMG-20261029-WA0129.jpg',
+                'default_url' => 'images/IMG-20261029-WA0129.jpg',
+                'focal_point' => 'center center',
                 'sort_order' => 310
             ],
 
-            // --- PAGE CONTACT (contact.php) ---
+            // ==========================================
+            // 5. PAGE CONTACT (contact.php)
+            // ==========================================
             [
                 'page_slug' => 'contact',
                 'section_key' => 'contact_banner',
                 'section_name' => "En-tête de la Page Contact",
-                'title' => "Bannière Hero Page Contact & Devis",
-                'description' => "Grande bannière en haut de la page Contact.",
-                'image_url' => 'images/bg_1.jpg',
-                'default_url' => 'images/bg_1.jpg',
-                'focal_point' => 'center top',
+                'title' => "Bannière Hero Page Contact & Devis Express",
+                'description' => "Grande bannière en haut de la page de demande de devis.",
+                'image_url' => 'images/IMG-20261029-WA0099.jpg',
+                'default_url' => 'images/IMG-20261029-WA0099.jpg',
+                'focal_point' => 'center center',
                 'sort_order' => 410
+            ],
+
+            // ==========================================
+            // 6. PAGE BLOG & ACTUALITÉS (blog.php)
+            // ==========================================
+            [
+                'page_slug' => 'blog',
+                'section_key' => 'blog_banner',
+                'section_name' => "En-tête du Blog & Actualités",
+                'title' => "Bannière Hero Page Blog & Chantiers en Direct",
+                'description' => "Grande bannière en haut de la page des actualités et conseils d'ingénierie.",
+                'image_url' => 'images/IMG-20261029-WA0103.jpg',
+                'default_url' => 'images/IMG-20261029-WA0103.jpg',
+                'focal_point' => 'center center',
+                'sort_order' => 510
             ]
         ];
 
@@ -285,6 +391,7 @@ function initPageVisualsTable($pdo) {
  * Récupère tous les visuels d'une page donnée sous forme de tableau indexé par section_key
  */
 function getPageVisuals($pdo, $pageSlug) {
+    if (!$pdo) return [];
     initPageVisualsTable($pdo);
     static $cache = [];
     if (isset($cache[$pageSlug])) {

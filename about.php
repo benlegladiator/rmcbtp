@@ -3,6 +3,7 @@ $pageTitle = "À Propos de RMC BTP SARL | Notre Histoire, Vision & Réalisations
 $pageDescription = "Découvrez RMC BTP SARL : créée en 2017 par ses cofondateurs Chirac, Marcair et Rodrigue Djomo. Plus de 700 réalisations au Cameroun et à l'international.";
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
+require_once __DIR__ . '/config/visuals_helper.php';
 
 $expYears = getSetting('stats_experience', '9');
 $totalProjects = getSetting('stats_projects', '700');
@@ -10,10 +11,18 @@ $satisfaction = getSetting('stats_satisfaction', '99');
 $equipments = getSetting('stats_equipments', '52');
 $managerName = getSetting('manager_name', 'M. Rodrigue DJOMO');
 $managerRole = getSetting('manager_role', 'Fondateur & Directeur Général');
+
+$aboutVisuals = getPageVisuals($pdo, 'about');
+$aboutBanner = getVisualInfo($aboutVisuals, 'about_banner', 'images/IMG-20261029-WA0110.jpg', 'center top');
+$aboutPresentation = getVisualInfo($aboutVisuals, 'about_presentation', 'images/fondateurs/rodrigue-djomo.jpg', 'center top');
+$founderChirac = getVisualInfo($aboutVisuals, 'founder_chirac', 'images/fondateurs/chirac.jpg', 'center top');
+$founderMakair = getVisualInfo($aboutVisuals, 'founder_makair', 'images/fondateurs/makair.jpg', 'center top');
+$founderRodrigue = getVisualInfo($aboutVisuals, 'founder_rodrigue', 'images/fondateurs/rodrigue-djomo.jpg', 'center top');
+$directionToukam = getVisualInfo($aboutVisuals, 'direction_toukam', 'images/_JMP6320.jpg', 'center top');
 ?>
 
 <!-- BANNIÈRE EN-TÊTE -->
-<section class="hero-wrap hero-wrap-2" style="background-image: url('images/IMG-20261029-WA0110.jpg'); background-position: center top;" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2" style="background-image: url('<?= htmlspecialchars($aboutBanner['url']) ?>'); background-position: <?= htmlspecialchars($aboutBanner['focal']) ?>;" data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
 		<div class="row no-gutters slider-text align-items-end justify-content-start">
@@ -30,7 +39,7 @@ $managerRole = getSetting('manager_role', 'Fondateur & Directeur Général');
 	<div class="container">
 		<div class="row align-items-center">
 			<div class="col-md-6 ftco-animate">
-				<div class="img about-image rounded-xl shadow overflow-hidden position-relative" style="background-image: url('images/fondateurs/rodrigue-djomo.jpg'); min-height: 520px; background-size: cover; background-position: center top; border: 3px solid #fff; border-radius: 20px;">
+				<div class="img about-image rounded-xl shadow overflow-hidden position-relative" style="background-image: url('<?= htmlspecialchars($aboutPresentation['url']) ?>'); min-height: 520px; background-size: cover; background-position: <?= htmlspecialchars($aboutPresentation['focal']) ?>; border: 3px solid #fff; border-radius: 20px;">
 					<div class="badge-btp position-absolute" style="bottom: 20px; left: 20px; background: rgba(12, 46, 96, 0.9); backdrop-filter: blur(10px); color: #fff; padding: 10px 20px; border-radius: 50px; border: 1px solid rgba(217, 119, 6, 0.5);">
 						<i class="fa fa-calendar-check-o text-warning mr-1"></i> Fondée en 2017 • Yaoundé & International
 					</div>
@@ -94,7 +103,7 @@ $managerRole = getSetting('manager_role', 'Fondateur & Directeur Général');
 				<div class="staff bg-white rounded-xl shadow-sm overflow-hidden h-100 d-flex flex-column justify-content-between" style="border: 1.5px solid #e2e8f0; border-radius: 18px;">
 					<div>
 						<!-- Photo Réelle Cofondateur Chirac -->
-						<div class="fondateur-photo-slot position-relative" style="height: 340px; background-image: url('images/fondateurs/chirac.jpg'); background-size: cover; background-position: center top;">
+						<div class="fondateur-photo-slot position-relative" style="height: 340px; background-image: url('<?= htmlspecialchars($founderChirac['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($founderChirac['focal']) ?>;">
 							<div class="position-absolute" style="top:0; left:0; right:0; bottom:0; background: linear-gradient(to top, rgba(12,46,96,0.85) 0%, rgba(0,0,0,0) 50%);"></div>
 							<div class="position-absolute" style="bottom: 15px; left: 20px;">
 								<span class="badge badge-warning text-dark font-weight-bold px-3 py-1 shadow-sm">
@@ -121,7 +130,7 @@ $managerRole = getSetting('manager_role', 'Fondateur & Directeur Général');
 				<div class="staff bg-white rounded-xl shadow-sm overflow-hidden h-100 d-flex flex-column justify-content-between" style="border: 1.5px solid #e2e8f0; border-radius: 18px;">
 					<div>
 						<!-- Photo Réelle Cofondateur Makair -->
-						<div class="fondateur-photo-slot position-relative" style="height: 340px; background-image: url('images/fondateurs/makair.jpg'); background-size: cover; background-position: center top;">
+						<div class="fondateur-photo-slot position-relative" style="height: 340px; background-image: url('<?= htmlspecialchars($founderMakair['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($founderMakair['focal']) ?>;">
 							<div class="position-absolute" style="top:0; left:0; right:0; bottom:0; background: linear-gradient(to top, rgba(12,46,96,0.85) 0%, rgba(0,0,0,0) 50%);"></div>
 							<div class="position-absolute" style="bottom: 15px; left: 20px;">
 								<span class="badge badge-warning text-dark font-weight-bold px-3 py-1 shadow-sm">
@@ -148,7 +157,7 @@ $managerRole = getSetting('manager_role', 'Fondateur & Directeur Général');
 				<div class="staff bg-white rounded-xl shadow overflow-hidden h-100 d-flex flex-column justify-content-between" style="border: 2px solid #0c2e60; border-radius: 18px;">
 					<div>
 						<!-- Photo Officielle Rodrigue Djomo -->
-						<div class="fondateur-photo-slot position-relative" style="height: 340px; background-image: url('images/fondateurs/rodrigue-djomo.jpg'); background-size: cover; background-position: center top;">
+						<div class="fondateur-photo-slot position-relative" style="height: 340px; background-image: url('<?= htmlspecialchars($founderRodrigue['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($founderRodrigue['focal']) ?>;">
 							<div class="position-absolute" style="top:0; left:0; right:0; bottom:0; background: linear-gradient(to top, rgba(12,46,96,0.85) 0%, rgba(0,0,0,0) 50%);"></div>
 							<div class="position-absolute" style="bottom: 15px; left: 20px;">
 								<span class="badge badge-warning text-dark font-weight-bold px-3 py-1 shadow-sm">
@@ -177,7 +186,7 @@ $managerRole = getSetting('manager_role', 'Fondateur & Directeur Général');
 				<div class="staff bg-white rounded-xl shadow overflow-hidden d-flex flex-column flex-md-row align-items-stretch" style="border: 2px solid rgba(12, 46, 96, 0.15); border-radius: 20px;">
 					<!-- Photo Haute Définition Ingénieur Toukam Patrick (_JMP6320) -->
 					<div class="col-md-5 p-0 position-relative" style="min-height: 360px;">
-						<div class="w-100 h-100" style="background-image: url('images/_JMP6320.jpg'); background-size: cover; background-position: center top;"></div>
+						<div class="w-100 h-100" style="background-image: url('<?= htmlspecialchars($directionToukam['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($directionToukam['focal']) ?>;"></div>
 						<div class="position-absolute" style="bottom: 15px; left: 15px;">
 							<span class="badge badge-primary text-white font-weight-bold px-3 py-1 shadow-sm">
 								<i class="fa fa-hard-hat mr-1"></i> Direction Technique
