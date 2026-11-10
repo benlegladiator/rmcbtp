@@ -259,14 +259,6 @@
           z: z2
         };
       }
-        const scale = fov / Math.max(100, z2);
-        return {
-          px: cx + x1 * scale,
-          py: cy + y1 * scale,
-          scale: scale,
-          z: z2
-        };
-      }
 
       // --- A. RADIER GÉNÉRAL & GRILLE GÉOTECHNIQUE AU SOL (FONDATIONS CLAIRES ET VISIBLES) ---
       ctx.lineWidth = 1.6 * lineMultiplier;
