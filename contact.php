@@ -7,6 +7,7 @@ require_once __DIR__ . '/config/visuals_helper.php';
 
 $contactVisuals = getPageVisuals($pdo, 'contact');
 $contactBanner = getVisualInfo($contactVisuals, 'contact_banner', 'images/IMG-20261029-WA0099.jpg', 'center center');
+$contactOffice = getVisualInfo($contactVisuals, 'contact_office', 'images/about.jpg', 'center center');
 
 $defaultType = $_GET['type'] ?? 'contact';
 $prefilledService = $_GET['service'] ?? '';
@@ -147,7 +148,7 @@ $prefilledProject = $_GET['projet'] ?? '';
 						<div>
 							<h6 class="font-weight-bold mb-1">WhatsApp Direct</h6>
 							<p class="text-muted small mb-1">Échangez en direct avec un conseiller technique :</p>
-							<a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $whatsappNumber) ?>?text=Bonjour%20FEE%20BTP,%20je%20souhaite%20une%20cotation." class="btn btn-success btn-sm font-weight-bold" target="_blank">
+							<a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $whatsappNumber) ?>?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20une%20cotation." class="btn btn-success btn-sm font-weight-bold" target="_blank">
 								<i class="fab fa-whatsapp mr-1"></i> Ouvrir la discussion WhatsApp
 							</a>
 						</div>
@@ -160,7 +161,7 @@ $prefilledProject = $_GET['projet'] ?? '';
 						<div>
 							<h6 class="font-weight-bold mb-1">Emails Professionnels</h6>
 							<p class="text-muted small mb-0"><?= htmlspecialchars($emailContact) ?></p>
-							<p class="text-muted small mb-0"><?= htmlspecialchars(getSetting('email_direction', 'direction@feebtp-sarl.com')) ?></p>
+							<p class="text-muted small mb-0"><?= htmlspecialchars(getSetting('email_direction', 'direction@rmcbtpsarl.com')) ?></p>
 						</div>
 					</div>
 
@@ -175,10 +176,19 @@ $prefilledProject = $_GET['projet'] ?? '';
 					</div>
 				</div>
 
-				<!-- Localisation Interactive Yaoundé -->
+				<!-- Localisation Interactive Yaoundé & Siège -->
 				<div class="bg-white p-3 rounded shadow-sm">
-					<h5 class="font-weight-bold text-dark mb-2 px-2">Localisation à Yaoundé</h5>
-					<div class="rounded overflow-hidden" style="height: 250px;">
+					<h5 class="font-weight-bold text-dark mb-2 px-2">
+						<i class="fa fa-building text-primary mr-1"></i> Bureau & Direction Technique
+					</h5>
+					<div class="rounded overflow-hidden mb-3" style="height: 190px;">
+						<img src="<?= htmlspecialchars($contactOffice['url']) ?>" 
+						     alt="Siège Social RMC BTP SARL" 
+						     class="w-100 h-100" 
+						     style="object-fit: cover; object-position: <?= htmlspecialchars($contactOffice['focal']) ?>;">
+					</div>
+					<h6 class="font-weight-bold text-muted small px-2 mb-2"><i class="fa fa-map-marked-alt mr-1"></i> Plan d'accès :</h6>
+					<div class="rounded overflow-hidden" style="height: 230px;">
 						<iframe 
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127357.54637651817!2d11.454228966847253!3d3.8710344849310617!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x108bcf7a309a7977%3A0x7f54bad35e693c51!2sYaound%C3%A9%2C%20Cameroun!5e0!3m2!1sfr!2scm!4v1710000000000!5m2!1sfr!2scm" 
 							width="100%" 

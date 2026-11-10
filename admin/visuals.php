@@ -245,15 +245,19 @@ try {
     $error = "Impossible de charger les visuels : " . $e->getMessage();
 }
 
-// Récupérer les éléments dynamiques affichés sur l'accueil
-$homeServices = [];
-$homeProjects = [];
-$homeArticles = [];
+// Récupérer les éléments dynamiques (Services, Portfolio & Articles)
+$allServices = [];
+$allProjects = [];
+$allArticles = [];
 try {
-    $homeServices = $pdo->query("SELECT * FROM services WHERE is_active = 1 ORDER BY sort_order ASC, id ASC LIMIT 6")->fetchAll(PDO::FETCH_ASSOC);
-    $homeProjects = $pdo->query("SELECT * FROM projects WHERE is_featured = 1 ORDER BY id DESC LIMIT 6")->fetchAll(PDO::FETCH_ASSOC);
-    $homeArticles = $pdo->query("SELECT * FROM articles WHERE is_published = 1 ORDER BY id DESC LIMIT 3")->fetchAll(PDO::FETCH_ASSOC);
+    $allServices = $pdo->query("SELECT * FROM services ORDER BY sort_order ASC, id ASC")->fetchAll(PDO::FETCH_ASSOC);
+    $allProjects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+    $allArticles = $pdo->query("SELECT * FROM articles ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 } catch (Throwable $e) {}
+
+$srvCount = count($allServices);
+$projCount = count($allProjects);
+$artCount = count($allArticles);
 
 // Regrouper par page et par section pour l'affichage
 $grouped = [];
@@ -283,10 +287,14 @@ try {
     while ($r = $cStmt->fetch(PDO::FETCH_ASSOC)) {
         $counts[$r['page_slug']] = (int)$r['cnt'];
     }
-    // Ajouter les cartes dynamiques de l'accueil
-    $homeDynCount = count($homeServices) + count($homeProjects) + count($homeArticles);
-    $counts['home'] = ($counts['home'] ?? 0) + $homeDynCount;
-    $totalCount = array_sum($counts);
+    // Compteurs enrichis par onglet
+    $counts['services'] = ($counts['services'] ?? 0) + $srvCount;
+    $counts['projects'] = ($counts['projects'] ?? 0) + $projCount;
+    $counts['blog'] = ($counts['blog'] ?? 0) + $artCount;
+    $counts['home'] = ($counts['home'] ?? 0) + $srvCount + $projCount + $artCount;
+
+    $stmtTotalPv = $pdo->query("SELECT COUNT(*) FROM page_visuals")->fetchColumn();
+    $totalCount = (int)$stmtTotalPv + $srvCount + $projCount + $artCount;
 } catch (Throwable $e) {
     $totalCount = count($visuals);
 }
@@ -444,7 +452,10 @@ try {
             <?php 
               $count = 0;
               foreach ($sections as $sList) $count += count($sList);
-              if ($pSlug === 'home') $count += $homeDynCount;
+              if ($pSlug === 'home') $count += ($srvCount + $projCount + $artCount);
+              if ($pSlug === 'services') $count += $srvCount;
+              if ($pSlug === 'projects') $count += $projCount;
+              if ($pSlug === 'blog') $count += $artCount;
               echo $count . " visuel(s) configurable(s) au total sur cette page";
             ?>
           </span>
@@ -567,26 +578,29 @@ try {
     <?php endforeach; ?>
   <?php endif; ?>
 
-  <!-- 2. AFFICHAGE DES SECTIONS DYNAMIQUES DE L'ACCUEIL (Services, Portfolio & Actualités) -->
-  <?php if ($filterPage === 'home' || $filterPage === 'all'): ?>
-    
-    <!-- SECTION F : SERVICES & SPÉCIALISATIONS TECHNIQUES SUR L'ACCUEIL -->
+  <!-- 2. AFFICHAGE DES SECTIONS DE CONTENU DYNAMIQUE (Services, Projets & Articles) -->
+  
+  <!-- SECTION F : SERVICES DU CATALOGUE (Cartes Services & Accueil) -->
+  <?php if ($filterPage === 'services' || $filterPage === 'home' || $filterPage === 'all'): ?>
     <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ffffff;">
       <div class="card-header bg-light border-0 py-3 d-flex align-items-center justify-content-between" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
         <div>
           <h5 class="mb-0 font-weight-bold" style="font-size: 15px; color: #0c2e60;">
-            <i class="fas fa-cogs text-primary mr-2"></i> Section F : Services & Spécialisations Techniques (Cartes Accueil)
+            <i class="fas fa-cogs text-primary mr-2"></i> 
+            <?php echo ($filterPage === 'services') ? "Catalogue des Prestations BTP (Photos des Services)" : "Section F : Services & Spécialisations Techniques (Cartes Accueil & Services)"; ?>
           </h5>
-          <small class="text-muted">Modifiez directement la photo affichée sur la carte de chaque métier BTP sur la page d'accueil.</small>
+          <small class="text-muted">
+            <?php echo ($filterPage === 'services') ? "Modifiez directement la photo d'illustration de chaque prestation du catalogue de services." : "Modifiez directement la photo affichée sur la carte de chaque métier BTP sur la page d'accueil."; ?>
+          </small>
         </div>
-        <span class="badge badge-secondary badge-pill"><?php echo count($homeServices); ?> service(s)</span>
+        <span class="badge badge-secondary badge-pill"><?php echo count($allServices); ?> service(s)</span>
       </div>
 
       <div class="card-body p-3 p-md-4">
         <div class="row">
           <?php 
           $sIdx = 1;
-          foreach ($homeServices as $srv): 
+          foreach ($allServices as $srv): 
             $sImg = resolveImage($srv['image'] ?? '', 'images/services-' . $sIdx . '.jpg');
           ?>
             <div class="col-lg-6 col-xl-4 mb-4">
@@ -635,24 +649,29 @@ try {
         </div>
       </div>
     </div>
+  <?php endif; ?>
 
-    <!-- SECTION G : CHANTIERS & PORTFOLIO MIS EN AVANT SUR L'ACCUEIL -->
+  <!-- SECTION G : CHANTIERS & PORTFOLIO (Galerie & Accueil) -->
+  <?php if ($filterPage === 'projects' || $filterPage === 'home' || $filterPage === 'all'): ?>
     <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ffffff;">
       <div class="card-header bg-light border-0 py-3 d-flex align-items-center justify-content-between" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
         <div>
           <h5 class="mb-0 font-weight-bold" style="font-size: 15px; color: #0c2e60;">
-            <i class="fas fa-hard-hat text-warning mr-2"></i> Section G : Portfolio de Chantiers Mis en Avant (Galerie Accueil)
+            <i class="fas fa-hard-hat text-warning mr-2"></i> 
+            <?php echo ($filterPage === 'projects') ? "Portfolio & Réalisations de Chantiers (Photos Principales)" : "Section G : Portfolio de Chantiers Mis en Avant (Galerie Accueil & Projets)"; ?>
           </h5>
-          <small class="text-muted">Modifiez la photo principale des projets qui apparaissent dans la galerie de la page d'accueil.</small>
+          <small class="text-muted">
+            <?php echo ($filterPage === 'projects') ? "Modifiez la photo de couverture de chaque chantier de votre catalogue de réalisations." : "Modifiez la photo principale des projets qui apparaissent dans la galerie de la page d'accueil."; ?>
+          </small>
         </div>
-        <span class="badge badge-secondary badge-pill"><?php echo count($homeProjects); ?> projet(s)</span>
+        <span class="badge badge-secondary badge-pill"><?php echo count($allProjects); ?> projet(s)</span>
       </div>
 
       <div class="card-body p-3 p-md-4">
         <div class="row">
           <?php 
           $pIdx = 1;
-          foreach ($homeProjects as $proj): 
+          foreach ($allProjects as $proj): 
             $pImg = resolveImage($proj['main_image'] ?? '', 'images/project-' . $pIdx . '.jpg');
           ?>
             <div class="col-lg-6 col-xl-4 mb-4">
@@ -701,24 +720,29 @@ try {
         </div>
       </div>
     </div>
+  <?php endif; ?>
 
-    <!-- SECTION H : ACTUALITÉS & ARTICLES RÉCENTS SUR L'ACCUEIL -->
+  <!-- SECTION H : ACTUALITÉS & ARTICLES DU BLOG -->
+  <?php if ($filterPage === 'blog' || $filterPage === 'home' || $filterPage === 'all'): ?>
     <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; background: #ffffff;">
       <div class="card-header bg-light border-0 py-3 d-flex align-items-center justify-content-between" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
         <div>
           <h5 class="mb-0 font-weight-bold" style="font-size: 15px; color: #0c2e60;">
-            <i class="fas fa-newspaper text-info mr-2"></i> Section H : Actualités & Blog Récent (Cartes Accueil)
+            <i class="fas fa-newspaper text-info mr-2"></i> 
+            <?php echo ($filterPage === 'blog') ? "Actualités & Blog d'Ingénierie BTP (Couvertures d'Articles)" : "Section H : Actualités & Blog Récent (Cartes Accueil & Blog)"; ?>
           </h5>
-          <small class="text-muted">Modifiez la photo d'illustration des 3 derniers articles de veille technique affichés sur l'accueil.</small>
+          <small class="text-muted">
+            <?php echo ($filterPage === 'blog') ? "Modifiez la photo d'illustration principale de chacun des articles publiés sur le blog." : "Modifiez la photo d'illustration des 3 derniers articles de veille technique affichés sur l'accueil."; ?>
+          </small>
         </div>
-        <span class="badge badge-secondary badge-pill"><?php echo count($homeArticles); ?> article(s)</span>
+        <span class="badge badge-secondary badge-pill"><?php echo count($allArticles); ?> article(s)</span>
       </div>
 
       <div class="card-body p-3 p-md-4">
         <div class="row">
           <?php 
           $aIdx = 1;
-          foreach ($homeArticles as $art): 
+          foreach ($allArticles as $art): 
             $aImg = resolveImage($art['image'] ?? '', 'images/image_' . $aIdx . '.jpg');
           ?>
             <div class="col-lg-4 mb-4">
@@ -769,7 +793,6 @@ try {
         </div>
       </div>
     </div>
-
   <?php endif; ?>
 </div>
 

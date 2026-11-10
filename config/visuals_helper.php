@@ -346,6 +346,17 @@ function initPageVisualsTable($pdo) {
                 'focal_point' => 'center center',
                 'sort_order' => 410
             ],
+            [
+                'page_slug' => 'contact',
+                'section_key' => 'contact_office',
+                'section_name' => "Bureau Technique & Direction à Yaoundé",
+                'title' => "Photo du Bureau Technique / Siège Social",
+                'description' => "Photo officielle du siège social de Yaoundé (Fougerole) affichée au-dessus de la carte de localisation.",
+                'image_url' => 'images/about.jpg',
+                'default_url' => 'images/about.jpg',
+                'focal_point' => 'center center',
+                'sort_order' => 420
+            ],
 
             // ==========================================
             // 6. PAGE BLOG & ACTUALITÉS (blog.php)
