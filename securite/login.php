@@ -12,6 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
+        // Secours d'auto-création si base neuve
+        if (!$user) {
+            if ($username === 'gardien' && $password === 'gardien123') {
+                $pdo->prepare("INSERT INTO users (username, password, role, fullname) VALUES (?, ?, ?, ?)")
+                    ->execute(['gardien', password_hash('gardien123', PASSWORD_DEFAULT), 'gardien', 'Poste de Sécurité / Gardien']);
+                $stmt->execute([$username]);
+                $user = $stmt->fetch();
+            } elseif ($username === 'boss' && $password === 'admin123') {
+                $pdo->prepare("INSERT INTO users (username, password, role, fullname) VALUES (?, ?, ?, ?)")
+                    ->execute(['boss', password_hash('admin123', PASSWORD_DEFAULT), 'boss', 'M. Rodrigue DJOMO (Direction)']);
+                $stmt->execute([$username]);
+                $user = $stmt->fetch();
+            }
+        }
+
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['sec_user_id'] = $user['id'];
             $_SESSION['sec_username'] = $user['username'];
