@@ -222,27 +222,34 @@ function parseVideoEmbed($url) {
 }
 
 /**
- * Résolution des chemins d'images
+ * Résolution des chemins d'images avec cache-busting automatique
  */
 function resolveImage($path, $fallback = 'images/bg_1.jpg') {
     if (empty($path)) {
-        return $fallback;
-    }
-    if (preg_match('/^https?:\/\//i', $path)) {
+        $clean = $fallback;
+    } elseif (preg_match('/^https?:\/\//i', $path)) {
         return $path;
+    } else {
+        $cleaned = preg_replace('#^assets/images/#', 'images/', $path);
+        $cleaned = preg_replace('/\?.*$/', '', $cleaned);
+        if (file_exists(__DIR__ . '/../' . $cleaned)) {
+            $clean = $cleaned;
+        } elseif (file_exists(__DIR__ . '/../' . $path)) {
+            $clean = preg_replace('/\?.*$/', '', $path);
+        } else {
+            $base = basename($path);
+            if (file_exists(__DIR__ . '/../images/' . $base)) {
+                $clean = 'images/' . $base;
+            } else {
+                $clean = $fallback;
+            }
+        }
     }
-    $cleaned = preg_replace('#^assets/images/#', 'images/', $path);
-    if (file_exists(__DIR__ . '/../' . $cleaned)) {
-        return $cleaned;
-    }
-    if (file_exists(__DIR__ . '/../' . $path)) {
-        return $path;
-    }
-    $base = basename($path);
-    if (file_exists(__DIR__ . '/../images/' . $base)) {
-        return 'images/' . $base;
-    }
-    return $fallback;
+    
+    $cleanNoQ = preg_replace('/\?.*$/', '', $clean);
+    $full = __DIR__ . '/../' . ltrim($cleanNoQ, '/');
+    $ver = file_exists($full) ? filemtime($full) : 1;
+    return $cleanNoQ . '?v=' . $ver;
 }
 
 // Module Gestionnaire de Visuels de Repère par Page & Section si présent

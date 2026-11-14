@@ -34,6 +34,7 @@ $hero3 = getVisualInfo($homeVisuals, 'hero_slide_3', 'images/IMG-20261029-WA0098
 $ecoBtp = getVisualInfo($homeVisuals, 'ecosystem_btp', 'images/_JMP6225.jpg', 'center center');
 $ecoQuincaillerie = getVisualInfo($homeVisuals, 'ecosystem_quincaillerie', 'images/_JMP6308.jpg', 'center center');
 $ecoDecor = getVisualInfo($homeVisuals, 'ecosystem_decor', 'images/_JMP6286.jpg', 'center center');
+$aboutPhoto = getVisualInfo($homeVisuals, 'about_photo', 'images/about.jpg', 'center top');
 $dgPortrait = getVisualInfo($homeVisuals, 'dg_portrait', 'images/fondateurs/rodrigue-djomo.jpg', 'center top');
 $baBefore = getVisualInfo($homeVisuals, 'ba_before', 'images/_JMP6244.jpg', 'center center');
 $baAfter = getVisualInfo($homeVisuals, 'ba_after', 'images/_JMP6225.jpg', 'center center');
@@ -576,6 +577,12 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 				<p class="text-muted" style="line-height: 1.8;">
 					Fort de <strong>52 chantiers à l'international</strong> et d'un réseau actif dans plus de <strong>64 pays partenaires</strong>, nous offrons un accompagnement clés en main sécurisé aux particuliers, promoteurs et membres de la diaspora camerounaise.
 				</p>
+				<div class="mb-4 rounded overflow-hidden shadow-sm position-relative" style="height: 150px; border: 2px solid #e2e8f0;">
+					<img src="<?= htmlspecialchars($aboutPhoto['url']) ?>" alt="Présentation & Équipe BTP" style="width: 100%; height: 100%; object-fit: cover; object-position: <?= htmlspecialchars($aboutPhoto['focal']) ?>;">
+					<div style="position: absolute; bottom: 8px; left: 12px; background: rgba(12,46,96,0.88); backdrop-filter: blur(4px); color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 11px; font-weight: 700;">
+						<i class="fa fa-users mr-1"></i> RMC BTP SARL • Équipe d'Ingénierie & Siège Social
+					</div>
+				</div>
 				<ul class="list-unstyled mb-4">
 					<li class="mb-3 d-flex align-items-start">
 						<i class="fa fa-check-circle text-primary mt-1 mr-3" style="font-size: 18px;"></i>
@@ -1165,22 +1172,63 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 			$projIdx = 1;
 			foreach ($projects as $proj): 
 				$projImg = resolveImage($proj['main_image'] ?? '', 'images/project-' . $projIdx . '.jpg');
+				
+				// Récupération des photos multiples de la galerie pour carrousel défilant automatique
+				$projImages = [$projImg];
+				$stmtG = $pdo->prepare("SELECT image_url FROM project_gallery WHERE project_id = ? ORDER BY id ASC");
+				$stmtG->execute([$proj['id']]);
+				while ($grow = $stmtG->fetch(PDO::FETCH_ASSOC)) {
+					if (!empty($grow['image_url'])) {
+						$projImages[] = resolveImage($grow['image_url'], 'images/project-' . $projIdx . '.jpg');
+					}
+				}
+				$projImages = array_values(array_unique($projImages));
+				$hasMulti = count($projImages) > 1;
+				$carId = 'projCarIndex_' . $proj['id'];
 			?>
 				<div class="col-md-4 ftco-animate mb-4">
 					<div class="project-entry project-card-3d rounded shadow-sm overflow-hidden" style="position: relative; background: #fff;">
-						<div class="project-img position-relative" style="height: 275px; background-image: url('<?= htmlspecialchars($projImg) ?>'); background-size: cover; background-position: center top !important;">
-							<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; padding: 6px 10px; font-size: 11px;">
-								<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
-							</span>
-							<?php if (!empty($proj['video_url'])): ?>
-								<span class="badge badge-danger position-absolute" style="top: 15px; right: 15px; padding: 6px 10px; font-size: 11px;">
-									<i class="fa fa-video-camera mr-1"></i> Vidéo
+						
+						<?php if ($hasMulti): ?>
+							<!-- Carrousel Défilant Automatique (Multi-Photos) -->
+							<div id="<?= $carId ?>" class="carousel slide carousel-fade position-relative" data-ride="carousel" data-interval="3500" data-pause="false" style="height: 275px; overflow: hidden; background: #0c2e60;">
+								<ol class="carousel-indicators mb-1" style="z-index: 4;">
+									<?php foreach ($projImages as $i => $img): ?>
+										<li data-target="#<?= $carId ?>" data-slide-to="<?= $i ?>" class="<?= $i === 0 ? 'active' : '' ?>" style="width: 7px; height: 7px; border-radius: 50%;"></li>
+									<?php endforeach; ?>
+								</ol>
+								<div class="carousel-inner h-100">
+									<?php foreach ($projImages as $i => $img): ?>
+										<div class="carousel-item h-100 <?= $i === 0 ? 'active' : '' ?>">
+											<div style="width: 100%; height: 100%; background-image: url('<?= htmlspecialchars($img) ?>'); background-size: cover; background-position: center top !important;"></div>
+										</div>
+									<?php endforeach; ?>
+								</div>
+								<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; z-index: 5; padding: 6px 10px; font-size: 11px;">
+									<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
 								</span>
-							<?php endif; ?>
-							<a href="<?= htmlspecialchars($projImg) ?>" class="image-popup d-flex justify-content-center align-items-center" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(12,46,96,0.5); opacity:0; transition: all 0.3s ease;">
-								<span class="fa fa-expand text-white" style="font-size: 26px;"></span>
-							</a>
-						</div>
+								<span class="badge badge-dark position-absolute" style="bottom: 12px; right: 12px; z-index: 5; font-size: 10.5px; background: rgba(12,46,96,0.85); backdrop-filter: blur(4px); color: #fff; padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+									<i class="fa fa-play mr-1 text-warning"></i> <?= count($projImages) ?> photos
+								</span>
+								<a href="<?= htmlspecialchars($projImages[0]) ?>" class="image-popup d-flex justify-content-center align-items-center" style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 3; background: rgba(12,46,96,0.3); opacity:0; transition: all 0.3s ease;">
+									<span class="fa fa-expand text-white" style="font-size: 26px;"></span>
+								</a>
+							</div>
+						<?php else: ?>
+							<div class="project-img position-relative" style="height: 275px; background-image: url('<?= htmlspecialchars($projImg) ?>'); background-size: cover; background-position: center top !important;">
+								<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; padding: 6px 10px; font-size: 11px;">
+									<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
+								</span>
+								<?php if (!empty($proj['video_url'])): ?>
+									<span class="badge badge-danger position-absolute" style="top: 15px; right: 15px; padding: 6px 10px; font-size: 11px;">
+										<i class="fa fa-video-camera mr-1"></i> Vidéo
+									</span>
+								<?php endif; ?>
+								<a href="<?= htmlspecialchars($projImg) ?>" class="image-popup d-flex justify-content-center align-items-center" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(12,46,96,0.5); opacity:0; transition: all 0.3s ease;">
+									<span class="fa fa-expand text-white" style="font-size: 26px;"></span>
+								</a>
+							</div>
+						<?php endif; ?>
 						<div class="p-3">
 							<h5 class="font-weight-bold mb-1">
 								<a href="project-details.php?id=<?= $proj['id'] ?>" class="text-dark">
@@ -1405,7 +1453,7 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 <!-- ========================================================================
      12. CALL TO ACTION FINAL HAUTE VISIBILITÉ
      ======================================================================== -->
-<section class="ftco-intro py-5" style="background: linear-gradient(135deg, #071933 0%, #040e1e 100%); border-top: 1px solid rgba(255,153,0,0.3);">
+<section class="ftco-intro py-5 position-relative" style="background-image: linear-gradient(135deg, rgba(7, 25, 51, 0.92) 0%, rgba(4, 14, 30, 0.94) 100%), url('<?= htmlspecialchars($ctaBg['url']) ?>'); background-size: cover; background-position: <?= htmlspecialchars($ctaBg['focal']) ?>; border-top: 1px solid rgba(255,153,0,0.3);">
 	<div class="container">
 		<div class="row justify-content-between align-items-center">
 			<div class="col-md-8 text-white mb-3 mb-md-0">

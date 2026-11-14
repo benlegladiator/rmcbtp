@@ -24,6 +24,17 @@ $afterImg = resolveImage($project['after_image'] ?? $project['main_image'] ?? ''
 $galleryStmt = $pdo->prepare("SELECT * FROM project_gallery WHERE project_id = ?");
 $galleryStmt->execute([$projectId]);
 $gallery = $galleryStmt->fetchAll();
+
+// Regroupement de toutes les images pour le carrousel défilant automatique
+$allDetailImages = [$mainImg];
+if (!empty($gallery)) {
+	foreach ($gallery as $g) {
+		if (!empty($g['image_url'])) {
+			$allDetailImages[] = resolveImage($g['image_url'], 'images/project-1.jpg');
+		}
+	}
+}
+$allDetailImages = array_values(array_unique($allDetailImages));
 ?>
 
 <!-- BANNIÈRE EN-TÊTE -->
@@ -72,9 +83,40 @@ $gallery = $galleryStmt->fetchAll();
 						</div>
 					</div>
 				<?php else: ?>
-					<div class="mb-4">
-						<img src="<?= htmlspecialchars($mainImg) ?>" alt="<?= htmlspecialchars($project['title']) ?>" class="img-fluid rounded shadow-sm w-100" style="max-height: 480px; object-fit: cover;">
-					</div>
+					<?php if (count($allDetailImages) > 1): ?>
+						<!-- Carrousel Défilant Automatique du Chantier -->
+						<div id="projectHeroCarousel" class="carousel slide carousel-fade mb-4 shadow-sm rounded overflow-hidden position-relative" data-ride="carousel" data-interval="3500" data-pause="false" style="background: #0c2e60; border-radius: 14px;">
+							<ol class="carousel-indicators mb-2" style="z-index: 3;">
+								<?php foreach ($allDetailImages as $idx => $dImg): ?>
+									<li data-target="#projectHeroCarousel" data-slide-to="<?= $idx ?>" class="<?= $idx === 0 ? 'active' : '' ?>" style="width: 8px; height: 8px; border-radius: 50%;"></li>
+								<?php endforeach; ?>
+							</ol>
+							<div class="carousel-inner" style="height: 480px;">
+								<?php foreach ($allDetailImages as $idx => $dImg): ?>
+									<div class="carousel-item h-100 <?= $idx === 0 ? 'active' : '' ?>">
+										<a href="<?= htmlspecialchars($dImg) ?>" class="image-popup d-block h-100" title="<?= htmlspecialchars($project['title']) ?> - Vue <?= $idx + 1 ?>">
+											<img src="<?= htmlspecialchars($dImg) ?>" alt="<?= htmlspecialchars($project['title']) ?> - Photo <?= $idx + 1 ?>" class="d-block w-100 h-100" style="object-fit: cover; object-position: center top;">
+										</a>
+									</div>
+								<?php endforeach; ?>
+							</div>
+							<a class="carousel-control-prev" href="#projectHeroCarousel" role="button" data-slide="prev" style="width: 8%; opacity: 0.8;">
+								<span class="carousel-control-prev-icon" aria-hidden="true" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));"></span>
+								<span class="sr-only">Précédent</span>
+							</a>
+							<a class="carousel-control-next" href="#projectHeroCarousel" role="button" data-slide="next" style="width: 8%; opacity: 0.8;">
+								<span class="carousel-control-next-icon" aria-hidden="true" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));"></span>
+								<span class="sr-only">Suivant</span>
+							</a>
+							<span class="badge badge-dark position-absolute" style="bottom: 12px; right: 15px; z-index: 4; font-size: 11px; background: rgba(12,46,96,0.85); backdrop-filter: blur(4px); color: #fff; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+								<i class="fa fa-play mr-1 text-warning"></i> <?= count($allDetailImages) ?> photos • Défilement automatique
+							</span>
+						</div>
+					<?php else: ?>
+						<div class="mb-4">
+							<img src="<?= htmlspecialchars($mainImg) ?>" alt="<?= htmlspecialchars($project['title']) ?>" class="img-fluid rounded shadow-sm w-100" style="max-height: 480px; object-fit: cover;">
+						</div>
+					<?php endif; ?>
 				<?php endif; ?>
 
 				<!-- Description du Chantier -->

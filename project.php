@@ -70,23 +70,63 @@ $categories = $catsStmt->fetchAll(PDO::FETCH_COLUMN);
 				$projCount = 1;
 				foreach ($projects as $proj): 
 					$mainImg = resolveImage($proj['main_image'] ?? '', 'images/project-' . $projCount . '.jpg');
+					
+					// Galerie de photos multiples pour carrousel défilant automatique
+					$projImages = [$mainImg];
+					$stmtG = $pdo->prepare("SELECT image_url FROM project_gallery WHERE project_id = ? ORDER BY id ASC");
+					$stmtG->execute([$proj['id']]);
+					while ($grow = $stmtG->fetch(PDO::FETCH_ASSOC)) {
+						if (!empty($grow['image_url'])) {
+							$projImages[] = resolveImage($grow['image_url'], 'images/project-' . $projCount . '.jpg');
+						}
+					}
+					$projImages = array_values(array_unique($projImages));
+					$hasMulti = count($projImages) > 1;
+					$carId = 'projCarPage_' . $proj['id'];
 				?>
 					<div class="col-lg-4 col-md-6 ftco-animate mb-4">
 						<div class="project-entry project-card-3d rounded shadow-sm overflow-hidden bg-white h-100 d-flex flex-column justify-content-between">
 							<div>
-								<div class="project-img position-relative" style="height: 275px; background-image: url('<?= htmlspecialchars($mainImg) ?>'); background-size: cover; background-position: center top !important;">
-									<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; padding: 6px 10px; font-size: 11px;">
-										<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
-									</span>
-									<?php if (!empty($proj['before_image'])): ?>
-										<span class="badge badge-warning position-absolute text-dark font-weight-bold" style="top: 15px; right: 15px; padding: 6px 10px; font-size: 11px;">
-											<i class="fa fa-columns mr-1"></i> Avant / Après
+								<?php if ($hasMulti): ?>
+									<!-- Carrousel Défilant Automatique (Multi-Photos) -->
+									<div id="<?= $carId ?>" class="carousel slide carousel-fade position-relative" data-ride="carousel" data-interval="3500" data-pause="false" style="height: 275px; overflow: hidden; background: #0c2e60;">
+										<ol class="carousel-indicators mb-1" style="z-index: 4;">
+											<?php foreach ($projImages as $i => $img): ?>
+												<li data-target="#<?= $carId ?>" data-slide-to="<?= $i ?>" class="<?= $i === 0 ? 'active' : '' ?>" style="width: 7px; height: 7px; border-radius: 50%;"></li>
+											<?php endforeach; ?>
+										</ol>
+										<div class="carousel-inner h-100">
+											<?php foreach ($projImages as $i => $img): ?>
+												<div class="carousel-item h-100 <?= $i === 0 ? 'active' : '' ?>">
+													<div style="width: 100%; height: 100%; background-image: url('<?= htmlspecialchars($img) ?>'); background-size: cover; background-position: center top !important;"></div>
+												</div>
+											<?php endforeach; ?>
+										</div>
+										<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; z-index: 5; padding: 6px 10px; font-size: 11px;">
+											<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
 										</span>
-									<?php endif; ?>
-									<a href="<?= htmlspecialchars($mainImg) ?>" class="image-popup d-flex justify-content-center align-items-center" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(12,46,96,0.5); opacity:0; transition: all 0.3s ease;">
-										<span class="fa fa-expand text-white" style="font-size: 26px;"></span>
-									</a>
-								</div>
+										<span class="badge badge-dark position-absolute" style="bottom: 12px; right: 12px; z-index: 5; font-size: 10.5px; background: rgba(12,46,96,0.85); backdrop-filter: blur(4px); color: #fff; padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+											<i class="fa fa-play mr-1 text-warning"></i> <?= count($projImages) ?> photos
+										</span>
+										<a href="<?= htmlspecialchars($projImages[0]) ?>" class="image-popup d-flex justify-content-center align-items-center" style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 3; background: rgba(12,46,96,0.3); opacity:0; transition: all 0.3s ease;">
+											<span class="fa fa-expand text-white" style="font-size: 26px;"></span>
+										</a>
+									</div>
+								<?php else: ?>
+									<div class="project-img position-relative" style="height: 275px; background-image: url('<?= htmlspecialchars($mainImg) ?>'); background-size: cover; background-position: center top !important;">
+										<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; padding: 6px 10px; font-size: 11px;">
+											<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
+										</span>
+										<?php if (!empty($proj['before_image'])): ?>
+											<span class="badge badge-warning position-absolute text-dark font-weight-bold" style="top: 15px; right: 15px; padding: 6px 10px; font-size: 11px;">
+												<i class="fa fa-columns mr-1"></i> Avant / Après
+											</span>
+										<?php endif; ?>
+										<a href="<?= htmlspecialchars($mainImg) ?>" class="image-popup d-flex justify-content-center align-items-center" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(12,46,96,0.5); opacity:0; transition: all 0.3s ease;">
+											<span class="fa fa-expand text-white" style="font-size: 26px;"></span>
+										</a>
+									</div>
+								<?php endif; ?>
 								<div class="p-3">
 									<h5 class="font-weight-bold mb-1">
 										<a href="project-details.php?id=<?= $proj['id'] ?>" class="text-dark">

@@ -43,30 +43,83 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_project'
         if ($projectId > 0) {
             $stmt = $pdo->prepare("UPDATE projects SET title = ?, slug = ?, category = ?, client_name = ?, location = ?, duration = ?, surface = ?, budget = ?, status = ?, short_desc = ?, description = ?, main_image = ?, video_url = ?, is_featured = ? WHERE id = ?");
             $stmt->execute([$title, $slug, $category, $clientName, $location, $duration, $surface, $budget, $status, $shortDesc, $description, $mainImage, $videoUrl, $isFeatured, $projectId]);
+            $targetId = $projectId;
             $success = "Projet mis à jour avec succès.";
         } else {
             $stmt = $pdo->prepare("INSERT INTO projects (title, slug, category, client_name, location, duration, surface, budget, status, short_desc, description, main_image, video_url, is_featured) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$title, $slug, $category, $clientName, $location, $duration, $surface, $budget, $status, $shortDesc, $description, $mainImage, $videoUrl, $isFeatured]);
+            $targetId = (int)$pdo->lastInsertId();
             $success = "Nouveau chantier enregistré avec succès.";
+        }
+
+        // Traitement de l'envoi de photos multiples pour la galerie (défilement automatique)
+        if ($targetId > 0 && isset($_FILES['gallery_files']) && !empty($_FILES['gallery_files']['name'][0])) {
+            $upDir = __DIR__ . '/../uploads/projects/';
+            if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
+            $fileCount = count($_FILES['gallery_files']['name']);
+            $insStmt = $pdo->prepare("INSERT INTO project_gallery (project_id, image_url, caption, created_at) VALUES (?, ?, ?, NOW())");
+            $uploadedGalleryCount = 0;
+            for ($i = 0; $i < $fileCount; $i++) {
+                if ($_FILES['gallery_files']['error'][$i] === UPLOAD_ERR_OK) {
+                    $ext = strtolower(pathinfo($_FILES['gallery_files']['name'][$i], PATHINFO_EXTENSION));
+                    if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
+                        $galName = 'gal_' . $targetId . '_' . time() . '_' . rand(100, 999) . '.' . $ext;
+                        if (move_uploaded_file($_FILES['gallery_files']['tmp_name'][$i], $upDir . $galName)) {
+                            $insStmt->execute([$targetId, 'uploads/projects/' . $galName, '']);
+                            $uploadedGalleryCount++;
+                        }
+                    }
+                }
+            }
+            if ($uploadedGalleryCount > 0) {
+                $success .= " (" . $uploadedGalleryCount . " photo(s) ajoutée(s) à la galerie défilante)";
+            }
         }
     } else {
         $error = "Le titre du projet est requis.";
     }
 }
 
-// Suppression
+// Suppression d'une image spécifique de la galerie
+if (isset($_GET['action']) && $_GET['action'] === 'delete_gallery_image') {
+    $imgId = (int)($_GET['image_id'] ?? 0);
+    $pId = (int)($_GET['project_id'] ?? 0);
+    if ($imgId > 0) {
+        $stmtImg = $pdo->prepare("SELECT image_url FROM project_gallery WHERE id = ?");
+        $stmtImg->execute([$imgId]);
+        $rowImg = $stmtImg->fetch();
+        if ($rowImg && !empty($rowImg['image_url'])) {
+            $fPath = __DIR__ . '/../' . ltrim(preg_replace('/\?.*$/', '', $rowImg['image_url']), '/');
+            if (file_exists($fPath) && strpos($fPath, 'uploads/projects/') !== false) {
+                @unlink($fPath);
+            }
+        }
+        $pdo->prepare("DELETE FROM project_gallery WHERE id = ?")->execute([$imgId]);
+        header("Location: projects.php?edit=" . $pId . "&deleted_img=1");
+        exit;
+    }
+}
+
+// Suppression globale d'un projet
 if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     $id = (int)$_GET['id'];
+    $pdo->prepare("DELETE FROM project_gallery WHERE project_id = ?")->execute([$id]);
     $pdo->prepare("DELETE FROM projects WHERE id = ?")->execute([$id]);
-    $success = "Chantier supprimé avec succès.";
+    $success = "Chantier et sa galerie supprimés avec succès.";
 }
 
 // Mode édition
 $editProj = null;
+$galleryImages = [];
 if (isset($_GET['edit'])) {
     $stmt = $pdo->prepare("SELECT * FROM projects WHERE id = ?");
     $stmt->execute([(int)$_GET['edit']]);
     $editProj = $stmt->fetch();
+    if ($editProj) {
+        $stmtG = $pdo->prepare("SELECT * FROM project_gallery WHERE project_id = ? ORDER BY id DESC");
+        $stmtG->execute([$editProj['id']]);
+        $galleryImages = $stmtG->fetchAll();
+    }
 }
 
 $projects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll();
@@ -175,6 +228,37 @@ $projects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll();
         </div>
       </div>
 
+      <!-- Galerie Photos Multiples (Carrousel Défilant Automatique) -->
+      <div class="form-group" style="background: rgba(12, 46, 96, 0.04); border: 2px dashed #0c2e60; padding: 18px; border-radius: 10px; margin-bottom: 22px;">
+        <label style="font-weight: 800; color: #0c2e60; font-size: 1.05rem; display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-images text-primary"></i> Galerie de Photos Multiples (Défilement automatique sur le site)
+        </label>
+        <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 12px; line-height: 1.5;">
+          Sélectionnez plusieurs photos en une seule fois (maintenez Ctrl ou Shift pour en choisir plusieurs). Toutes ces photos <strong>défileront automatiquement</strong> dans le carrousel animé de la carte sur l'accueil, dans le catalogue et sur la fiche complète du chantier.
+        </p>
+        <input type="file" name="gallery_files[]" class="form-control" multiple accept="image/*">
+        
+        <?php if (!empty($galleryImages)): ?>
+          <div style="margin-top: 15px; border-top: 1px solid #cbd5e1; padding-top: 14px;">
+            <label style="font-weight: 700; font-size: 0.9rem; color: #0f172a;">
+              Photos déjà enregistrées dans la galerie défilante (<?= count($galleryImages) ?> photos) :
+            </label>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px;">
+              <?php foreach ($galleryImages as $gImg): ?>
+                <div style="position: relative; width: 110px; height: 85px; border-radius: 8px; overflow: hidden; border: 2px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+                  <img src="../<?= htmlspecialchars(resolveImage($gImg['image_url'])) ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                  <a href="projects.php?action=delete_gallery_image&image_id=<?= $gImg['id'] ?>&project_id=<?= $editProj['id'] ?>" 
+                     onclick="return confirm('Supprimer définitivement cette photo de la galerie ?');" 
+                     style="position: absolute; top: 4px; right: 4px; background: rgba(220, 38, 38, 0.95); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.3);" title="Supprimer">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        <?php endif; ?>
+      </div>
+
       <div style="margin-bottom: 20px;">
         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.92rem;">
           <input type="checkbox" name="is_featured" value="1" <?php echo (!isset($editProj) || $editProj['is_featured']) ? 'checked' : ''; ?>>
@@ -209,10 +293,19 @@ $projects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll();
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($projects as $p): ?>
+        <?php foreach ($projects as $p): 
+          $gCount = (int)$pdo->query("SELECT COUNT(*) FROM project_gallery WHERE project_id = " . (int)$p['id'])->fetchColumn();
+        ?>
           <tr>
             <td>
-              <img src="../<?php echo htmlspecialchars($p['main_image']); ?>" style="width: 48px; height: 48px; border-radius: 6px; object-fit: cover;">
+              <div style="position: relative; width: 50px; height: 50px;">
+                <img src="../<?php echo htmlspecialchars(resolveImage($p['main_image'])); ?>" style="width: 100%; height: 100%; border-radius: 6px; object-fit: cover;">
+                <?php if ($gCount > 0): ?>
+                  <span style="position: absolute; bottom: -4px; right: -4px; background: #10b981; color: #fff; font-size: 10px; font-weight: bold; padding: 1px 5px; border-radius: 10px; border: 1px solid #fff;" title="<?= $gCount ?> photo(s) dans le carrousel défilant">
+                    +<?= $gCount ?>
+                  </span>
+                <?php endif; ?>
+              </div>
             </td>
             <td>
               <strong><?php echo htmlspecialchars($p['title']); ?></strong>

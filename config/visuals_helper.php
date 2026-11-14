@@ -424,18 +424,30 @@ function getPageVisuals($pdo, $pageSlug) {
 }
 
 /**
- * Helper pratique pour récupérer l'URL et le cadrage d'un visuel
+ * Helper pratique pour récupérer l'URL et le cadrage d'un visuel avec cache-busting automatique
  */
 function getVisualInfo($pageVisuals, $sectionKey, $defaultUrl = '', $defaultFocal = 'center top') {
     if (isset($pageVisuals[$sectionKey]) && !empty($pageVisuals[$sectionKey]['image_url'])) {
+        $rawUrl = $pageVisuals[$sectionKey]['image_url'];
+        $cleanUrl = preg_replace('/\?.*$/', '', $rawUrl);
+        $fullPath = __DIR__ . '/../' . ltrim($cleanUrl, '/');
+        $ver = file_exists($fullPath) ? filemtime($fullPath) : (!empty($pageVisuals[$sectionKey]['updated_at']) ? strtotime($pageVisuals[$sectionKey]['updated_at']) : time());
+        
         return [
-            'url' => $pageVisuals[$sectionKey]['image_url'],
+            'url' => $cleanUrl . '?v=' . $ver,
+            'raw_url' => $cleanUrl,
             'focal' => $pageVisuals[$sectionKey]['focal_point'] ?: $defaultFocal,
             'title' => $pageVisuals[$sectionKey]['title'] ?? ''
         ];
     }
+    
+    $cleanDefault = preg_replace('/\?.*$/', '', $defaultUrl);
+    $fullPath = __DIR__ . '/../' . ltrim($cleanDefault, '/');
+    $ver = file_exists($fullPath) ? filemtime($fullPath) : 1;
+    
     return [
-        'url' => $defaultUrl,
+        'url' => $cleanDefault ? ($cleanDefault . '?v=' . $ver) : '',
+        'raw_url' => $cleanDefault,
         'focal' => $defaultFocal,
         'title' => ''
     ];

@@ -207,6 +207,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_visual
     }
 }
 
+// 5.1 Traitement de l'ajout de photos multiples à la galerie d'un projet (Section G)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_gallery'])) {
+    $projectId = (int)($_POST['project_id'] ?? 0);
+    if ($projectId > 0 && isset($_FILES['gallery_files']) && !empty($_FILES['gallery_files']['name'][0])) {
+        $upDir = __DIR__ . '/../uploads/projects/';
+        if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
+        $fileCount = count($_FILES['gallery_files']['name']);
+        $insStmt = $pdo->prepare("INSERT INTO project_gallery (project_id, image_url, caption, created_at) VALUES (?, ?, ?, NOW())");
+        $added = 0;
+        for ($i = 0; $i < $fileCount; $i++) {
+            if ($_FILES['gallery_files']['error'][$i] === UPLOAD_ERR_OK) {
+                $ext = strtolower(pathinfo($_FILES['gallery_files']['name'][$i], PATHINFO_EXTENSION));
+                if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
+                    $galName = 'gal_' . $projectId . '_' . time() . '_' . rand(100, 999) . '.' . $ext;
+                    if (move_uploaded_file($_FILES['gallery_files']['tmp_name'][$i], $upDir . $galName)) {
+                        $insStmt->execute([$projectId, 'uploads/projects/' . $galName, '']);
+                        $added++;
+                    }
+                }
+            }
+        }
+        if ($added > 0) {
+            header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+            exit;
+        }
+    }
+}
+
+// 5.2 Suppression d'une image de galerie depuis visuals.php
+if (isset($_GET['action']) && $_GET['action'] === 'delete_gal_img') {
+    $imgId = (int)($_GET['image_id'] ?? 0);
+    if ($imgId > 0) {
+        $stmtImg = $pdo->prepare("SELECT image_url FROM project_gallery WHERE id = ?");
+        $stmtImg->execute([$imgId]);
+        $rImg = $stmtImg->fetch();
+        if ($rImg && !empty($rImg['image_url'])) {
+            $fPath = __DIR__ . '/../' . ltrim(preg_replace('/\?.*$/', '', $rImg['image_url']), '/');
+            if (file_exists($fPath) && strpos($fPath, 'uploads/projects/') !== false) {
+                @unlink($fPath);
+            }
+        }
+        $pdo->prepare("DELETE FROM project_gallery WHERE id = ?")->execute([$imgId]);
+        header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&deleted=1");
+        exit;
+    }
+}
+
 // 6. Traitement de la mise à jour directe d'un Article du Blog (Section H)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_article_visual'])) {
     $articleId = (int)($_POST['article_id'] ?? 0);
@@ -707,9 +754,55 @@ try {
                     </div>
 
                     <button type="submit" class="btn btn-warning btn-sm btn-block font-weight-bold text-dark mt-2">
-                      <i class="fas fa-save mr-1"></i> Enregistrer la Photo
+                      <i class="fas fa-save mr-1"></i> Enregistrer la Photo Principale
                     </button>
                   </form>
+
+                  <?php 
+                    $stmtG = $pdo->prepare("SELECT * FROM project_gallery WHERE project_id = ? ORDER BY id DESC");
+                    $stmtG->execute([$proj['id']]);
+                    $pGallery = $stmtG->fetchAll();
+                  ?>
+                  
+                  <div class="mt-3 pt-3 border-top">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                      <span class="small font-weight-bold text-dark">
+                        <i class="fas fa-images text-primary mr-1"></i> Galerie Défilante (Carrousel Auto)
+                      </span>
+                      <span class="badge badge-<?php echo count($pGallery) > 0 ? 'success' : 'light text-muted'; ?> badge-pill font-weight-bold">
+                        <?php echo count($pGallery); ?> photo(s)
+                      </span>
+                    </div>
+
+                    <?php if (!empty($pGallery)): ?>
+                      <div class="d-flex flex-wrap gap-1 mb-2">
+                        <?php foreach ($pGallery as $g): ?>
+                          <div class="position-relative" style="width: 52px; height: 42px; border-radius: 4px; overflow: hidden; border: 1px solid #cbd5e1; margin-right: 4px; margin-bottom: 4px;">
+                            <img src="../<?php echo htmlspecialchars(resolveImage($g['image_url'])); ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                            <a href="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>&action=delete_gal_img&image_id=<?php echo $g['id']; ?>" 
+                               onclick="return confirm('Supprimer cette photo de la galerie ?');" 
+                               style="position: absolute; top: 1px; right: 1px; background: rgba(220,38,38,0.9); color: #fff; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; text-decoration: none;" title="Supprimer">
+                              <i class="fas fa-times"></i>
+                            </a>
+                          </div>
+                        <?php endforeach; ?>
+                      </div>
+                    <?php endif; ?>
+
+                    <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>" method="POST" enctype="multipart/form-data">
+                      <input type="hidden" name="update_project_gallery" value="1">
+                      <input type="hidden" name="project_id" value="<?php echo (int)$proj['id']; ?>">
+                      <div class="input-group input-group-sm mb-1">
+                        <input type="file" name="gallery_files[]" class="form-control" multiple accept="image/*" required style="font-size: 11px; height: auto;">
+                        <div class="input-group-append">
+                          <button type="submit" class="btn btn-primary btn-sm font-weight-bold" title="Ajouter ces photos à la galerie défilante">
+                            <i class="fas fa-plus"></i> Ajouter
+                          </button>
+                        </div>
+                      </div>
+                      <small class="text-muted d-block" style="font-size: 10.5px;">Sélectionnez plusieurs photos à faire défiler automatiquement.</small>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
