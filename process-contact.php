@@ -59,7 +59,33 @@ try {
         $attachmentPath
     ]);
 
-    $_SESSION['flash_success'] = "Votre demande a bien été transmise à la direction technique de FEE BTP SARL. Nous vous recontacterons dans les plus brefs délais !";
+    // Notification par email de la direction générale (si configurée)
+    try {
+        $siteSettings = getSiteSettings($pdo);
+        $adminEmail = !empty($siteSettings['contact_email']) ? $siteSettings['contact_email'] : ADMIN_EMAIL;
+        if (!empty($adminEmail) && filter_var($adminEmail, FILTER_VALIDATE_EMAIL)) {
+            $mailSubject = "[" . SITE_NAME . "] Nouveau message : " . $subject;
+            $mailBody = "Bonjour,\n\nUn nouveau message a été envoyé depuis le formulaire du site web " . SITE_NAME . " :\n\n";
+            $mailBody .= "• Expéditeur : " . $senderName . "\n";
+            $mailBody .= "• Téléphone (WhatsApp) : " . $senderPhone . "\n";
+            $mailBody .= "• Email : " . ($senderEmail ?: 'Non renseigné') . "\n";
+            $mailBody .= "• Prestation demandée : " . $service . "\n";
+            $mailBody .= "• Type de demande : " . $type . "\n\n";
+            $mailBody .= "--- CONTENU DU MESSAGE ---\n" . $message . "\n\n";
+            if ($attachmentPath) {
+                $mailBody .= "• Pièce jointe : " . SITE_URL . "/" . $attachmentPath . "\n\n";
+            }
+            $mailBody .= "Consultez et répondez directement au prospect depuis votre espace admin : " . SITE_URL . "/admin/messages.php\n";
+            $headers = "From: " . SITE_NAME . " <contact@" . ($_SERVER['HTTP_HOST'] ?? 'rmcbtpsarl.com') . ">\r\n";
+            if (!empty($senderEmail) && filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
+                $headers .= "Reply-To: " . $senderEmail . "\r\n";
+            }
+            $headers .= "X-Mailer: PHP/" . phpversion();
+            @mail($adminEmail, $mailSubject, $mailBody, $headers);
+        }
+    } catch (Exception $eMail) {}
+
+    $_SESSION['flash_success'] = "Votre demande a bien été transmise à la direction technique de " . SITE_NAME . ". Nous vous recontacterons dans les plus brefs délais !";
 } catch (Exception $e) {
     $_SESSION['flash_error'] = "Une erreur est survenue lors de l'enregistrement de votre message : " . $e->getMessage();
 }

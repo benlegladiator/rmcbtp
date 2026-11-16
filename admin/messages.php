@@ -132,7 +132,7 @@ if ($viewId > 0) {
           <div style="margin-top: 5px;">
             <i class="fas fa-phone-alt" style="color: var(--admin-accent); font-size: 0.85rem;"></i>
             <a href="tel:<?php echo htmlspecialchars($currentMsg['sender_phone']); ?>" style="font-weight: 600;"><?php echo htmlspecialchars($currentMsg['sender_phone']); ?></a>
-            <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $currentMsg['sender_phone']); ?>?text=Bonjour%20<?php echo urlencode($currentMsg['sender_name']); ?>,%20nous%20donnons%20suite%20à%20votre%20demande%20sur%20FREE%20BTP." target="_blank" class="btn btn-whatsapp btn-sm" style="margin-left: 10px; padding: 2px 8px; font-size: 0.75rem;">
+            <a href="https://wa.me/<?php echo preg_replace('/[^0-9]/', '', $currentMsg['sender_phone']); ?>?text=Bonjour%20<?php echo urlencode($currentMsg['sender_name']); ?>,%20nous%20donnons%20suite%20à%20votre%20demande%20sur%20<?php echo urlencode(SITE_NAME); ?>." target="_blank" class="btn btn-whatsapp btn-sm" style="margin-left: 10px; padding: 2px 8px; font-size: 0.75rem;">
               <i class="fab fa-whatsapp"></i> Répondre WhatsApp
             </a>
           </div>
