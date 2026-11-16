@@ -230,6 +230,13 @@
 	});
 	$('.appointment_time').timepicker();
 
+	// Démarrage automatique des carrousels de projets (défilement autonome 3.5s)
+	if (typeof $.fn.carousel !== 'undefined') {
+		$('.carousel.slide').carousel({
+			interval: 3500,
+			pause: false
+		});
+	}
 
 })(jQuery);
 

@@ -14,6 +14,11 @@ if (session_status() === PHP_SESSION_NONE) {
 // Définir le fuseau horaire du Cameroun (UTC+1)
 date_default_timezone_set('Africa/Douala');
 
+// Directives d'upload et mémoire pour photos haute résolution
+@ini_set('upload_max_filesize', '64M');
+@ini_set('post_max_size', '64M');
+@ini_set('memory_limit', '256M');
+
 define('SITE_NAME', 'RMC BTP SARL');
 define('SITE_SLOGAN', 'Construire aujourd\'hui les solutions de demain');
 define('ADMIN_EMAIL', 'info@rmcbtp.com');
@@ -230,12 +235,13 @@ function resolveImage($path, $fallback = 'images/bg_1.jpg') {
     } elseif (preg_match('/^https?:\/\//i', $path)) {
         return $path;
     } else {
-        $cleaned = preg_replace('#^assets/images/#', 'images/', $path);
+        $cleaned = preg_replace('#^assets/images/#', 'images/', (string)$path);
         $cleaned = preg_replace('/\?.*$/', '', $cleaned);
+        $cleaned = ltrim($cleaned, '/');
         if (file_exists(__DIR__ . '/../' . $cleaned)) {
             $clean = $cleaned;
-        } elseif (file_exists(__DIR__ . '/../' . $path)) {
-            $clean = preg_replace('/\?.*$/', '', $path);
+        } elseif (file_exists(__DIR__ . '/../' . ltrim($path, '/'))) {
+            $clean = preg_replace('/\?.*$/', '', ltrim($path, '/'));
         } else {
             $base = basename($path);
             if (file_exists(__DIR__ . '/../images/' . $base)) {
@@ -246,8 +252,8 @@ function resolveImage($path, $fallback = 'images/bg_1.jpg') {
         }
     }
     
-    $cleanNoQ = preg_replace('/\?.*$/', '', $clean);
-    $full = __DIR__ . '/../' . ltrim($cleanNoQ, '/');
+    $cleanNoQ = ltrim(preg_replace('/\?.*$/', '', $clean), '/');
+    $full = __DIR__ . '/../' . $cleanNoQ;
     $ver = file_exists($full) ? filemtime($full) : 1;
     return $cleanNoQ . '?v=' . $ver;
 }

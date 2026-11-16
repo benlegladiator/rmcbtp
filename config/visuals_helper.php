@@ -4,9 +4,9 @@
  * Permet d'administrer 100% des images, bannières, logos et portraits du site.
  */
 
-function initPageVisualsTable($pdo) {
+function initPageVisualsTable($pdo, $forceSync = false) {
     static $initialized = false;
-    if ($initialized) return;
+    if ($initialized && !$forceSync) return;
 
     try {
         $pdo->exec("CREATE TABLE IF NOT EXISTS page_visuals (
@@ -94,8 +94,8 @@ function initPageVisualsTable($pdo) {
                 'section_name' => "Section A : Hero Slider Principal",
                 'title' => "Slide 3 : Maîtrise des Budgets & Finitions",
                 'description' => "Troisième arrière-plan du carrousel de bienvenue.",
-                'image_url' => 'images/IMG-20261029-WA0098.jpg',
-                'default_url' => 'images/IMG-20261029-WA0098.jpg',
+                'image_url' => 'images/IMG-20261029-WA0101.jpg',
+                'default_url' => 'images/IMG-20261029-WA0101.jpg',
                 'focal_point' => 'center center',
                 'sort_order' => 25
             ],
@@ -105,8 +105,8 @@ function initPageVisualsTable($pdo) {
                 'section_name' => "Section B : Synergie en 3 Pôles d'Excellence",
                 'title' => "Pôle 1 : RMC BTP SARL (Génie Civil, Gros Œuvre & Clés en Main)",
                 'description' => "Illustration de la carte RMC BTP dans la section Synergie.",
-                'image_url' => 'images/_JMP6225.jpg',
-                'default_url' => 'images/_JMP6225.jpg',
+                'image_url' => 'images/IMG-20261015-WA0079.jpg',
+                'default_url' => 'images/IMG-20261015-WA0079.jpg',
                 'focal_point' => 'center center',
                 'sort_order' => 30
             ],
@@ -127,8 +127,8 @@ function initPageVisualsTable($pdo) {
                 'section_name' => "Section B : Synergie en 3 Pôles d'Excellence",
                 'title' => "Pôle 3 : SIMS Décor (Staff, Marbres & Finitions Haut Standing)",
                 'description' => "Illustration de la carte SIMS Décor dans la section Synergie.",
-                'image_url' => 'images/_JMP6286.jpg',
-                'default_url' => 'images/_JMP6286.jpg',
+                'image_url' => 'images/IMG-20261029-WA0097.jpg',
+                'default_url' => 'images/IMG-20261029-WA0097.jpg',
                 'focal_point' => 'center center',
                 'sort_order' => 50
             ],
@@ -138,8 +138,8 @@ function initPageVisualsTable($pdo) {
                 'section_name' => "Section B.2 : Résultats Concrets Livrés (Showcase Diaspora)",
                 'title' => "Projet Livré 1 : Villa Duplex Contemporaine R+1 (Bastos/Odza)",
                 'description' => "Photo de la villa livrée clé en main en 7 mois avec finitions complètes.",
-                'image_url' => 'images/wa0062-framed-16x9.jpg',
-                'default_url' => 'images/wa0062-framed-16x9.jpg',
+                'image_url' => 'images/IMG-20261029-WA0104.jpg',
+                'default_url' => 'images/IMG-20261029-WA0104.jpg',
                 'focal_point' => 'center center',
                 'sort_order' => 52
             ],
@@ -149,8 +149,8 @@ function initPageVisualsTable($pdo) {
                 'section_name' => "Section B.2 : Résultats Concrets Livrés (Showcase Diaspora)",
                 'title' => "Projet Livré 2 : Immeuble Mixte Résidentiel & Commercial",
                 'description' => "Photo de l'immeuble d'appartements et commerces livré pour investisseur.",
-                'image_url' => 'images/IMG-20261015-WA0062.jpg',
-                'default_url' => 'images/IMG-20261015-WA0062.jpg',
+                'image_url' => 'images/IMG-20261015-WA0129.jpg',
+                'default_url' => 'images/IMG-20261015-WA0129.jpg',
                 'focal_point' => 'center center',
                 'sort_order' => 54
             ],
@@ -160,8 +160,8 @@ function initPageVisualsTable($pdo) {
                 'section_name' => "Section B.2 : Résultats Concrets Livrés (Showcase Diaspora)",
                 'title' => "Projet Livré 3 : Murs de Soutènement & Sécurisation",
                 'description' => "Photo de l'ouvrage de soutènement banché garanti 10 ans sur terrain difficile.",
-                'image_url' => 'images/IMG-20261015-WA0073.jpg',
-                'default_url' => 'images/IMG-20261015-WA0073.jpg',
+                'image_url' => 'images/IMG-20261015-WA0070.jpg',
+                'default_url' => 'images/IMG-20261015-WA0070.jpg',
                 'focal_point' => 'center center',
                 'sort_order' => 56
             ],
@@ -171,8 +171,8 @@ function initPageVisualsTable($pdo) {
                 'section_name' => "Section C : À Propos & Direction",
                 'title' => "Photo Institutionnelle Présentation & Équipe",
                 'description' => "Image de l'encart de présentation générale de l'entreprise sur l'accueil.",
-                'image_url' => 'images/about.jpg',
-                'default_url' => 'images/about.jpg',
+                'image_url' => 'images/about-2.jpg',
+                'default_url' => 'images/about-2.jpg',
                 'focal_point' => 'center top',
                 'sort_order' => 60
             ],
@@ -378,6 +378,9 @@ function initPageVisualsTable($pdo) {
             (page_slug, section_key, section_name, title, description, image_url, default_url, focal_point, sort_order) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+        $stmtUpDef = $pdo->prepare("UPDATE page_visuals SET default_url = ?, section_name = ?, title = ? WHERE page_slug = ? AND section_key = ?");
+        $stmtUpImg = $pdo->prepare("UPDATE page_visuals SET image_url = ?, focal_point = ? WHERE page_slug = ? AND section_key = ?");
+
         foreach ($defaults as $d) {
             $stmt->execute([
                 $d['page_slug'],
@@ -390,6 +393,35 @@ function initPageVisualsTable($pdo) {
                 $d['focal_point'],
                 $d['sort_order']
             ]);
+
+            if ($forceSync) {
+                $stmtUpDef->execute([
+                    $d['default_url'],
+                    $d['section_name'],
+                    $d['title'],
+                    $d['page_slug'],
+                    $d['section_key']
+                ]);
+
+                // Vérifier si l'image actuelle est un doublon ou invalide
+                $chk = $pdo->prepare("SELECT image_url FROM page_visuals WHERE page_slug = ? AND section_key = ?");
+                $chk->execute([$d['page_slug'], $d['section_key']]);
+                $curr = $chk->fetch(PDO::FETCH_ASSOC);
+                if ($curr) {
+                    $currImg = ltrim(preg_replace('/\?.*$/', '', $curr['image_url']), '/');
+                    $fullP = __DIR__ . '/../' . $currImg;
+                    // Si l'image pointe sur un vieux doublon ou fichier manquant
+                    if (empty($currImg) || !file_exists($fullP) || 
+                        ($d['section_key'] === 'hero_slide_3' && strpos($currImg, 'WA0098') !== false) ||
+                        ($d['section_key'] === 'ecosystem_btp' && strpos($currImg, '_JMP6225') !== false) ||
+                        ($d['section_key'] === 'ecosystem_btp' && strpos($currImg, 'WA0099') !== false) ||
+                        ($d['section_key'] === 'ecosystem_quincaillerie' && strpos($currImg, 'WA0098') !== false) ||
+                        ($d['section_key'] === 'showcase_card_1' && strpos($currImg, 'wa0062-framed') !== false) ||
+                        ($d['section_key'] === 'about_photo' && $currImg === 'images/about.jpg')) {
+                        $stmtUpImg->execute([$d['default_url'], $d['focal_point'], $d['page_slug'], $d['section_key']]);
+                    }
+                }
+            }
         }
 
         $initialized = true;

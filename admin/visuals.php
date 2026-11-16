@@ -18,7 +18,7 @@ $filterPage = $_GET['page_slug'] ?? 'all';
 // Synchronisation des clés de visuels par défaut
 if (isset($_GET['sync']) && $_GET['sync'] == '1') {
     try {
-        initPageVisualsTable($pdo);
+        initPageVisualsTable($pdo, true);
         header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&synced=1");
         exit;
     } catch (Throwable $e) {
@@ -174,17 +174,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
 // 4. Traitement de la mise à jour directe d'un Service de l'Accueil (Section F)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_service_visual'])) {
     $serviceId = (int)($_POST['service_id'] ?? 0);
-    if ($serviceId > 0 && isset($_FILES['service_file']) && $_FILES['service_file']['error'] === UPLOAD_ERR_OK) {
-        $upDir = __DIR__ . '/../uploads/services/';
-        if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
-        $ext = strtolower(pathinfo($_FILES['service_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
-            $destName = 'srv_' . $serviceId . '_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['service_file']['tmp_name'], $upDir . $destName)) {
-                $pdo->prepare("UPDATE services SET image = ? WHERE id = ?")->execute(['uploads/services/' . $destName, $serviceId]);
-                header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
-                exit;
+    if ($serviceId > 0 && isset($_FILES['service_file'])) {
+        $fileError = $_FILES['service_file']['error'];
+        if ($fileError === UPLOAD_ERR_OK) {
+            $upDir = __DIR__ . '/../uploads/services/';
+            if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
+            $ext = strtolower(pathinfo($_FILES['service_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
+                $destName = 'srv_' . $serviceId . '_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['service_file']['tmp_name'], $upDir . $destName)) {
+                    $pdo->prepare("UPDATE services SET image = ? WHERE id = ?")->execute(['uploads/services/' . $destName, $serviceId]);
+                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                    exit;
+                } else {
+                    $error = "Échec du transfert vers uploads/services/. Vérifiez les permissions d'écriture.";
+                }
+            } else {
+                $error = "Format d'image non valide pour le service (JPG, PNG, WEBP acceptés).";
             }
+        } elseif ($fileError === UPLOAD_ERR_INI_SIZE || $fileError === UPLOAD_ERR_FORM_SIZE) {
+            $error = "La photo du service est trop lourde pour le serveur (dépasse la limite autorisée).";
+        } elseif ($fileError !== UPLOAD_ERR_NO_FILE) {
+            $error = "Erreur de téléversement du fichier (Code : " . $fileError . ").";
         }
     }
 }
@@ -192,17 +203,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_service_visual
 // 5. Traitement de la mise à jour directe d'un Projet du Portfolio (Section G)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_visual'])) {
     $projectId = (int)($_POST['project_id'] ?? 0);
-    if ($projectId > 0 && isset($_FILES['project_file']) && $_FILES['project_file']['error'] === UPLOAD_ERR_OK) {
-        $upDir = __DIR__ . '/../uploads/projects/';
-        if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
-        $ext = strtolower(pathinfo($_FILES['project_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
-            $destName = 'proj_' . $projectId . '_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['project_file']['tmp_name'], $upDir . $destName)) {
-                $pdo->prepare("UPDATE projects SET main_image = ? WHERE id = ?")->execute(['uploads/projects/' . $destName, $projectId]);
-                header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
-                exit;
+    if ($projectId > 0 && isset($_FILES['project_file'])) {
+        $fileError = $_FILES['project_file']['error'];
+        if ($fileError === UPLOAD_ERR_OK) {
+            $upDir = __DIR__ . '/../uploads/projects/';
+            if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
+            $ext = strtolower(pathinfo($_FILES['project_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
+                $destName = 'proj_' . $projectId . '_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['project_file']['tmp_name'], $upDir . $destName)) {
+                    $pdo->prepare("UPDATE projects SET main_image = ? WHERE id = ?")->execute(['uploads/projects/' . $destName, $projectId]);
+                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                    exit;
+                } else {
+                    $error = "Échec du transfert vers uploads/projects/. Vérifiez les permissions d'écriture.";
+                }
+            } else {
+                $error = "Format d'image non valide pour le projet (JPG, PNG, WEBP acceptés).";
             }
+        } elseif ($fileError === UPLOAD_ERR_INI_SIZE || $fileError === UPLOAD_ERR_FORM_SIZE) {
+            $error = "La photo principale du projet est trop volumineuse pour le serveur.";
+        } elseif ($fileError !== UPLOAD_ERR_NO_FILE) {
+            $error = "Erreur de téléversement du fichier (Code : " . $fileError . ").";
         }
     }
 }
@@ -216,6 +238,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_galler
         $fileCount = count($_FILES['gallery_files']['name']);
         $insStmt = $pdo->prepare("INSERT INTO project_gallery (project_id, image_url, caption, created_at) VALUES (?, ?, ?, NOW())");
         $added = 0;
+        $failed = 0;
         for ($i = 0; $i < $fileCount; $i++) {
             if ($_FILES['gallery_files']['error'][$i] === UPLOAD_ERR_OK) {
                 $ext = strtolower(pathinfo($_FILES['gallery_files']['name'][$i], PATHINFO_EXTENSION));
@@ -224,13 +247,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_galler
                     if (move_uploaded_file($_FILES['gallery_files']['tmp_name'][$i], $upDir . $galName)) {
                         $insStmt->execute([$projectId, 'uploads/projects/' . $galName, '']);
                         $added++;
+                    } else {
+                        $failed++;
                     }
                 }
+            } else {
+                $failed++;
             }
         }
         if ($added > 0) {
             header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
             exit;
+        } else {
+            $error = "Aucune photo n'a pu être ajoutée à la galerie ($failed fichier(s) rejeté(s)).";
         }
     }
 }
@@ -257,17 +286,28 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete_gal_img') {
 // 6. Traitement de la mise à jour directe d'un Article du Blog (Section H)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_article_visual'])) {
     $articleId = (int)($_POST['article_id'] ?? 0);
-    if ($articleId > 0 && isset($_FILES['article_file']) && $_FILES['article_file']['error'] === UPLOAD_ERR_OK) {
-        $upDir = __DIR__ . '/../uploads/articles/';
-        if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
-        $ext = strtolower(pathinfo($_FILES['article_file']['name'], PATHINFO_EXTENSION));
-        if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
-            $destName = 'art_' . $articleId . '_' . time() . '.' . $ext;
-            if (move_uploaded_file($_FILES['article_file']['tmp_name'], $upDir . $destName)) {
-                $pdo->prepare("UPDATE articles SET image = ? WHERE id = ?")->execute(['uploads/articles/' . $destName, $articleId]);
-                header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
-                exit;
+    if ($articleId > 0 && isset($_FILES['article_file'])) {
+        $fileError = $_FILES['article_file']['error'];
+        if ($fileError === UPLOAD_ERR_OK) {
+            $upDir = __DIR__ . '/../uploads/articles/';
+            if (!is_dir($upDir)) @mkdir($upDir, 0777, true);
+            $ext = strtolower(pathinfo($_FILES['article_file']['name'], PATHINFO_EXTENSION));
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'svg'])) {
+                $destName = 'art_' . $articleId . '_' . time() . '.' . $ext;
+                if (move_uploaded_file($_FILES['article_file']['tmp_name'], $upDir . $destName)) {
+                    $pdo->prepare("UPDATE articles SET image = ? WHERE id = ?")->execute(['uploads/articles/' . $destName, $articleId]);
+                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                    exit;
+                } else {
+                    $error = "Échec du transfert vers uploads/articles/. Vérifiez les permissions d'écriture.";
+                }
+            } else {
+                $error = "Format d'image non valide pour l'article (JPG, PNG, WEBP acceptés).";
             }
+        } elseif ($fileError === UPLOAD_ERR_INI_SIZE || $fileError === UPLOAD_ERR_FORM_SIZE) {
+            $error = "La photo de couverture de l'article est trop volumineuse pour le serveur.";
+        } elseif ($fileError !== UPLOAD_ERR_NO_FILE) {
+            $error = "Erreur de téléversement du fichier (Code : " . $fileError . ").";
         }
     }
 }
@@ -523,15 +563,21 @@ try {
                   <div class="col-lg-6 col-xl-4 mb-4">
                     <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;">
                       <!-- Prévisualisation de l'image avec son cadrage réel -->
-                      <div class="position-relative" style="height: 200px; background: #0c2e60; overflow: hidden;">
+                      <div class="position-relative" style="height: 200px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow: hidden;">
                         <?php 
-                          $imgRaw = (string)($item['image_url'] ?? '');
-                          $imgSrc = '../' . $imgRaw;
+                          $imgRaw = ltrim(preg_replace('/\?.*$/', '', (string)($item['image_url'] ?? '')), '/');
                           $fullPath = __DIR__ . '/../' . $imgRaw;
                           if (empty($imgRaw) || !file_exists($fullPath)) {
-                              $imgSrc = '../images/bg_1.jpg';
-                              $fullPath = __DIR__ . '/../images/bg_1.jpg';
+                              $defRaw = ltrim(preg_replace('/\?.*$/', '', (string)($item['default_url'] ?? '')), '/');
+                              if (!empty($defRaw) && file_exists(__DIR__ . '/../' . $defRaw)) {
+                                  $imgRaw = $defRaw;
+                                  $fullPath = __DIR__ . '/../' . $defRaw;
+                              } else {
+                                  $imgRaw = 'images/bg_1.jpg';
+                                  $fullPath = __DIR__ . '/../images/bg_1.jpg';
+                              }
                           }
+                          $imgSrc = '../' . $imgRaw;
                           $imgVersion = file_exists($fullPath) ? filemtime($fullPath) : (!empty($item['updated_at']) ? strtotime($item['updated_at']) : 1);
                           $focal = !empty($item['focal_point']) ? $item['focal_point'] : 'center top';
                         ?>
@@ -540,6 +586,7 @@ try {
                              id="preview_img_<?php echo $item['id']; ?>"
                              loading="lazy"
                              decoding="async"
+                             onerror="this.onerror=null; this.src='../images/logo.png';"
                              style="width: 100%; height: 100%; object-fit: cover; object-position: <?php echo htmlspecialchars((string)$focal); ?>;">
                         
                         <div class="position-absolute" style="top: 10px; left: 10px;">
@@ -652,10 +699,11 @@ try {
           ?>
             <div class="col-lg-6 col-xl-4 mb-4">
               <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
-                <div class="position-relative" style="height: 180px; background: #0c2e60; overflow: hidden;">
-                  <img src="../<?php echo htmlspecialchars($sImg); ?>?v=<?php echo time(); ?>" 
+                <div class="position-relative" style="height: 180px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow: hidden;">
+                  <img src="../<?php echo htmlspecialchars($sImg); ?>" 
                        alt="<?php echo htmlspecialchars($srv['title']); ?>"
                        id="preview_srv_<?php echo $srv['id']; ?>"
+                       onerror="this.onerror=null; this.src='../images/logo.png';"
                        style="width: 100%; height: 100%; object-fit: cover;">
                   <div class="position-absolute" style="top: 10px; left: 10px;">
                     <span class="badge badge-primary px-2 py-1 shadow">
@@ -723,10 +771,11 @@ try {
           ?>
             <div class="col-lg-6 col-xl-4 mb-4">
               <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
-                <div class="position-relative" style="height: 180px; background: #0c2e60; overflow: hidden;">
-                  <img src="../<?php echo htmlspecialchars($pImg); ?>?v=<?php echo time(); ?>" 
+                <div class="position-relative" style="height: 180px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow: hidden;">
+                  <img src="../<?php echo htmlspecialchars($pImg); ?>" 
                        alt="<?php echo htmlspecialchars($proj['title']); ?>"
                        id="preview_proj_<?php echo $proj['id']; ?>"
+                       onerror="this.onerror=null; this.src='../images/logo.png';"
                        style="width: 100%; height: 100%; object-fit: cover;">
                   <div class="position-absolute" style="top: 10px; left: 10px;">
                     <span class="badge badge-warning text-dark font-weight-bold px-2 py-1 shadow">
@@ -840,10 +889,11 @@ try {
           ?>
             <div class="col-lg-4 mb-4">
               <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
-                <div class="position-relative" style="height: 180px; background: #0c2e60; overflow: hidden;">
-                  <img src="../<?php echo htmlspecialchars($aImg); ?>?v=<?php echo time(); ?>" 
+                <div class="position-relative" style="height: 180px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow: hidden;">
+                  <img src="../<?php echo htmlspecialchars($aImg); ?>" 
                        alt="<?php echo htmlspecialchars($art['title']); ?>"
                        id="preview_art_<?php echo $art['id']; ?>"
+                       onerror="this.onerror=null; this.src='../images/logo.png';"
                        style="width: 100%; height: 100%; object-fit: cover;">
                   <div class="position-absolute" style="top: 10px; left: 10px;">
                     <span class="badge badge-info px-2 py-1 shadow">
@@ -890,8 +940,22 @@ try {
 </div>
 
 <script>
+// Validation de sécurité de la taille du fichier (Max 32 Mo)
+function checkFileSize(input, maxMb = 32) {
+  if (input.files && input.files[0]) {
+    const sizeMb = input.files[0].size / (1024 * 1024);
+    if (sizeMb > maxMb) {
+      alert("Attention : Le fichier sélectionné (" + sizeMb.toFixed(1) + " Mo) dépasse la limite de sécurité de " + maxMb + " Mo. Veuillez choisir une photo plus légère pour garantir son enregistrement.");
+      input.value = '';
+      return false;
+    }
+  }
+  return true;
+}
+
 // Prévisualisation instantanée de l'image sélectionnée
 function previewVisual(input, imgId) {
+  if (!checkFileSize(input, 32)) return;
   if (input.files && input.files[0]) {
     const reader = new FileReader();
     reader.onload = function(e) {

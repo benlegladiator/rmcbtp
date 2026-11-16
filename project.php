@@ -89,7 +89,7 @@ $categories = $catsStmt->fetchAll(PDO::FETCH_COLUMN);
 							<div>
 								<?php if ($hasMulti): ?>
 									<!-- Carrousel Défilant Automatique (Multi-Photos) -->
-									<div id="<?= $carId ?>" class="carousel slide carousel-fade position-relative" data-ride="carousel" data-interval="3500" data-pause="false" style="height: 275px; overflow: hidden; background: #0c2e60;">
+									<div id="<?= $carId ?>" class="carousel slide carousel-fade position-relative" data-ride="carousel" data-interval="3500" data-pause="false" style="height: 275px; overflow: hidden; background: #f8fafc;">
 										<ol class="carousel-indicators mb-1" style="z-index: 4;">
 											<?php foreach ($projImages as $i => $img): ?>
 												<li data-target="#<?= $carId ?>" data-slide-to="<?= $i ?>" class="<?= $i === 0 ? 'active' : '' ?>" style="width: 7px; height: 7px; border-radius: 50%;"></li>
