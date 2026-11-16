@@ -106,4 +106,18 @@
     const img = document.getElementById(imgId);
     if (img) img.style.objectPosition = focal;
   };
+
+  // 5. Accordéons & Collapse fluides natifs (sans dépendance externe)
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('[data-toggle="collapse"]');
+    if (!btn) return;
+    e.preventDefault();
+    const targetSelector = btn.getAttribute('data-target') || btn.getAttribute('href');
+    if (!targetSelector) return;
+    const target = document.querySelector(targetSelector);
+    if (!target) return;
+    target.classList.toggle('show');
+    const isExpanded = target.classList.contains('show');
+    btn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+  });
 })();

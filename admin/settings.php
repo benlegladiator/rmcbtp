@@ -37,7 +37,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
 
 <div class="admin-card">
   <div class="admin-card-header">
-    <h3><i class="fas fa-sliders-h" style="color: var(--admin-accent); margin-right: 8px;"></i> Configuration Générale de FEE BTP SARL</h3>
+    <h3><i class="fas fa-sliders-h" style="color: var(--admin-accent); margin-right: 8px;"></i> Configuration Générale de RMC BTP SARL</h3>
   </div>
 
   <div class="admin-card-body">
@@ -51,53 +51,55 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
       <div class="form-grid" style="margin-bottom: 25px;">
         <div class="form-group">
           <label>Raison Sociale</label>
-          <input type="text" name="company_name" class="form-control" value="<?php echo htmlspecialchars($siteSettings['company_name'] ?? 'FEE BTP SARL'); ?>" required>
+          <input type="text" name="company_name" class="form-control" value="<?php echo htmlspecialchars($siteSettings['company_name'] ?? 'RMC BTP SARL'); ?>" required>
         </div>
         <div class="form-group">
           <label>Slogan Officiel</label>
-          <input type="text" name="slogan" class="form-control" value="<?php echo htmlspecialchars($siteSettings['slogan'] ?? ''); ?>" required>
+          <input type="text" name="slogan" class="form-control" value="<?php echo htmlspecialchars($siteSettings['slogan'] ?? 'Construire aujourd\'hui les solutions de demain'); ?>" required>
         </div>
         <div class="form-group">
-          <label>Nom du Gérant / Directeur Général</label>
-          <input type="text" name="manager_name" class="form-control" value="<?php echo htmlspecialchars($siteSettings['manager_name'] ?? 'M. AGHOKENG TANGMO FABRICE'); ?>" required>
+          <label>Nom du Fondateur / Directeur Général</label>
+          <input type="text" name="manager_name" class="form-control" value="<?php echo htmlspecialchars($siteSettings['manager_name'] ?? 'M. Rodrigue DJOMO'); ?>" required>
         </div>
         <div class="form-group">
           <label>Titre / Fonction de la Direction</label>
-          <input type="text" name="manager_role" class="form-control" value="<?php echo htmlspecialchars($siteSettings['manager_role'] ?? 'Gérant / Directeur Général'); ?>" required>
+          <input type="text" name="manager_role" class="form-control" value="<?php echo htmlspecialchars($siteSettings['manager_role'] ?? 'Fondateur & Directeur Général'); ?>" required>
         </div>
         <div class="form-group">
           <label>Référence Contrat</label>
-          <input type="text" name="contract_ref" class="form-control" value="<?php echo htmlspecialchars($siteSettings['contract_ref'] ?? 'CT-WEB-FREEBTP-2026-01'); ?>">
+          <input type="text" name="contract_ref" class="form-control" value="<?php echo htmlspecialchars($siteSettings['contract_ref'] ?? 'CT-WEB-RMCBTP-2026-01'); ?>">
         </div>
       </div>
 
       <!-- Section 2 : Coordonnées Officielles -->
       <h4 style="font-size: 1.05rem; color: var(--admin-primary); margin-bottom: 15px; border-bottom: 1px solid var(--admin-border); padding-bottom: 8px;">
-        2. Coordonnées de Contact & Localisation (Dschang)
+        2. Coordonnées de Contact & Localisation (Yaoundé & Douala)
       </h4>
       <div class="form-grid" style="margin-bottom: 25px;">
         <div class="form-group">
           <label>Adresse du Siège Social</label>
-          <input type="text" name="address" class="form-control" value="<?php echo htmlspecialchars($siteSettings['address'] ?? 'Dschang, Région de l\'Ouest, Cameroun'); ?>" required>
+          <input type="text" name="address" class="form-control" value="<?php echo htmlspecialchars($siteSettings['address'] ?? 'Yaoundé & Douala, Cameroun'); ?>" required>
         </div>
         <div class="form-group">
           <label>Téléphone Principal (Standard)</label>
-          <input type="text" name="phone_primary" class="form-control" value="<?php echo htmlspecialchars($siteSettings['phone_primary'] ?? '(+237) 691 00 64 31'); ?>" required>
+          <input type="text" name="phone_primary" class="form-control" value="<?php echo htmlspecialchars($siteSettings['phone_primary'] ?? '(+237) 697 39 84 55'); ?>" required>
         </div>
         <div class="form-group">
           <label>Téléphone Secondaire (Direction)</label>
-          <input type="text" name="phone_secondary" class="form-control" value="<?php echo htmlspecialchars($siteSettings['phone_secondary'] ?? '(+237) 671 06 34 41'); ?>" required>
+          <input type="text" name="phone_secondary" class="form-control" value="<?php echo htmlspecialchars($siteSettings['phone_secondary'] ?? '(+237) 693 90 91 59'); ?>" required>
         </div>
         <div class="form-group">
           <label>Numéro WhatsApp (Format international sans +)</label>
-          <input type="text" name="whatsapp_number" class="form-control" value="<?php echo htmlspecialchars($siteSettings['whatsapp_number'] ?? '237691006431'); ?>" required>
+          <input type="text" name="whatsapp_number" class="form-control" value="<?php echo htmlspecialchars($siteSettings['whatsapp_number'] ?? '237697398455'); ?>" required>
         </div>
         <div class="form-group">
           <label>Email Commercial & Devis</label>
-          <input type="email" name="email_contact" class="form-control" value="<?php echo htmlspecialchars($siteSettings['email_contact'] ?? 'contact@freebtp-sarl.com'); ?>" required>
+          <input type="email" name="email_contact" class="form-control" value="<?php echo htmlspecialchars($siteSettings['email_contact'] ?? 'info@rmcbtp.com'); ?>" required>
         </div>
         <div class="form-group">
           <label>Email Direction</label>
+          <input type="email" name="email_direction" class="form-control" value="<?php echo htmlspecialchars($siteSettings['email_direction'] ?? 'direction@rmcbtp.com'); ?>">
+        </div>
           <input type="email" name="email_direction" class="form-control" value="<?php echo htmlspecialchars($siteSettings['email_direction'] ?? 'direction@freebtp-sarl.com'); ?>" required>
         </div>
         <div class="form-group">

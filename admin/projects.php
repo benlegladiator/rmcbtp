@@ -173,7 +173,7 @@ $projects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll();
 
         <div class="form-group">
           <label>Localisation</label>
-          <input type="text" name="location" class="form-control" value="<?php echo htmlspecialchars($editProj['location'] ?? 'Dschang, Cameroun'); ?>" placeholder="Ex: Dschang, Quartier Foto">
+          <input type="text" name="location" class="form-control" value="<?php echo htmlspecialchars($editProj['location'] ?? 'Yaoundé, Cameroun'); ?>" placeholder="Ex: Yaoundé, Bastos / Odza">
         </div>
 
         <div class="form-group">

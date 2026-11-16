@@ -22,6 +22,10 @@ $adminCurrentPage = basename($_SERVER['PHP_SELF'], '.php');
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico?v=<?= time() ?>">
   <link rel="apple-touch-icon" href="../images/apple-touch-icon.png?v=<?= time() ?>">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../css/admin.css?v=<?php echo filemtime(__DIR__ . '/../css/admin.css'); ?>">
 </head>
@@ -131,6 +135,7 @@ $adminCurrentPage = basename($_SERVER['PHP_SELF'], '.php');
       <div class="user-badge">
         <div class="user-avatar">
           <i class="fas fa-user-tie"></i>
+          <span class="status-dot" title="Session active"></span>
         </div>
         <div class="user-info">
           <h5><?php echo htmlspecialchars($_SESSION['admin_fullname'] ?? 'M. Rodrigue DJOMO'); ?></h5>
