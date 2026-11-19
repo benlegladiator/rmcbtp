@@ -95,7 +95,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete_gallery_image') {
             }
         }
         $pdo->prepare("DELETE FROM project_gallery WHERE id = ?")->execute([$imgId]);
-        header("Location: projects.php?edit=" . $pId . "&deleted_img=1");
+        header("Location: projects.php?edit=" . $pId . "&deleted_img=1#gallery-section");
         exit;
     }
 }
@@ -239,7 +239,7 @@ $projects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll();
       </div>
 
       <!-- Galerie Photos Multiples (Carrousel Défilant Automatique) -->
-      <div class="form-group" style="background: rgba(12, 46, 96, 0.04); border: 2px dashed #0284c7; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+      <div class="form-group" id="gallery-section" style="background: rgba(12, 46, 96, 0.04); border: 2px dashed #0284c7; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
           <label style="font-weight: 800; color: #0c2e60; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; margin: 0;">
             <i class="fas fa-images text-primary"></i> Galerie Multi-Photos (Défilement Carrousel Automatique sur le site)
@@ -260,7 +260,7 @@ $projects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll();
               <?php foreach ($galleryImages as $gImg): ?>
                 <div style="position: relative; width: 110px; height: 85px; border-radius: 8px; overflow: hidden; border: 2px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
                   <img src="../<?= htmlspecialchars(resolveImage($gImg['image_url'])) ?>" style="width: 100%; height: 100%; object-fit: cover;">
-                  <a href="projects.php?action=delete_gallery_image&image_id=<?= $gImg['id'] ?>&project_id=<?= $editProj['id'] ?>" 
+                  <a href="projects.php?action=delete_gallery_image&image_id=<?= $gImg['id'] ?>&project_id=<?= $editProj['id'] ?>#gallery-section" 
                      onclick="return confirm('Supprimer définitivement cette photo de la galerie ?');" 
                      style="position: absolute; top: 4px; right: 4px; background: rgba(220, 38, 38, 0.95); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.3);" title="Supprimer">
                     <i class="fas fa-trash"></i>
@@ -364,5 +364,23 @@ $projects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll();
     </table>
   </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  if (window.location.hash) {
+    var targetEl = document.querySelector(window.location.hash);
+    if (targetEl) {
+      setTimeout(function() {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetEl.style.transition = 'all 0.4s ease';
+        targetEl.style.boxShadow = '0 0 0 4px #0284c7, 0 10px 25px rgba(2, 132, 199, 0.35)';
+        setTimeout(function() {
+          targetEl.style.boxShadow = '';
+        }, 3000);
+      }, 150);
+    }
+  }
+});
+</script>
 
 <?php require_once __DIR__ . '/footer.php'; ?>

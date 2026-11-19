@@ -76,7 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_visual'])) {
                 (page_slug, section_key, section_name, title, description, image_url, default_url, focal_point, sort_order) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 999)");
             $stmt->execute([$newPageSlug, $newSectionKey, $newSectionName, $newTitle, $newDesc, $imageUrl, $imageUrl, $newFocal]);
-            header("Location: visuals.php?page_slug=" . urlencode($newPageSlug) . "&created=1");
+            $newVisId = (int)$pdo->lastInsertId();
+            header("Location: visuals.php?page_slug=" . urlencode($newPageSlug) . "&created=1" . ($newVisId > 0 ? "#vis_card_" . $newVisId : ""));
             exit;
         } catch (Throwable $e) {
             $error = "Impossible d'ajouter le visuel (l'identifiant existe peut-être déjà) : " . $e->getMessage();
@@ -120,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
                     $focalPoint = 'center top';
                     $stmtUp = $pdo->prepare("UPDATE page_visuals SET image_url = ?, focal_point = ? WHERE id = ?");
                     $stmtUp->execute([$newImageUrl, $focalPoint, $visualId]);
-                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&reset=1");
+                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&reset=1#vis_card_" . $visualId);
                     exit;
                 } else {
                     // Si téléversement d'un nouveau fichier image
@@ -158,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_visual'])) {
                         $finalTitle = !empty($title) ? $title : $current['title'];
                         $stmtUp = $pdo->prepare("UPDATE page_visuals SET image_url = ?, focal_point = ?, title = ? WHERE id = ?");
                         $stmtUp->execute([$newImageUrl, $focalPoint, $finalTitle, $visualId]);
-                        header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                        header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1#vis_card_" . $visualId);
                         exit;
                     }
                 }
@@ -184,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_service_visual
                 $destName = 'srv_' . $serviceId . '_' . time() . '.' . $ext;
                 if (move_uploaded_file($_FILES['service_file']['tmp_name'], $upDir . $destName)) {
                     $pdo->prepare("UPDATE services SET image = ? WHERE id = ?")->execute(['uploads/services/' . $destName, $serviceId]);
-                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1#srv_card_" . $serviceId);
                     exit;
                 } else {
                     $error = "Échec du transfert vers uploads/services/. Vérifiez les permissions d'écriture.";
@@ -213,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_visual
                 $destName = 'proj_' . $projectId . '_' . time() . '.' . $ext;
                 if (move_uploaded_file($_FILES['project_file']['tmp_name'], $upDir . $destName)) {
                     $pdo->prepare("UPDATE projects SET main_image = ? WHERE id = ?")->execute(['uploads/projects/' . $destName, $projectId]);
-                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1#proj_card_" . $projectId);
                     exit;
                 } else {
                     $error = "Échec du transfert vers uploads/projects/. Vérifiez les permissions d'écriture.";
@@ -256,7 +257,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_galler
             }
         }
         if ($added > 0) {
-            header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+            header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1#proj_card_" . $projectId);
             exit;
         } else {
             $error = "Aucune photo n'a pu être ajoutée à la galerie ($failed fichier(s) rejeté(s)).";
@@ -268,9 +269,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_project_galler
 if (isset($_GET['action']) && $_GET['action'] === 'delete_gal_img') {
     $imgId = (int)($_GET['image_id'] ?? 0);
     if ($imgId > 0) {
-        $stmtImg = $pdo->prepare("SELECT image_url FROM project_gallery WHERE id = ?");
+        $stmtImg = $pdo->prepare("SELECT image_url, project_id FROM project_gallery WHERE id = ?");
         $stmtImg->execute([$imgId]);
         $rImg = $stmtImg->fetch();
+        $targetProjId = $rImg ? (int)$rImg['project_id'] : 0;
         if ($rImg && !empty($rImg['image_url'])) {
             $fPath = __DIR__ . '/../' . ltrim(preg_replace('/\?.*$/', '', $rImg['image_url']), '/');
             if (file_exists($fPath) && strpos($fPath, 'uploads/projects/') !== false) {
@@ -278,7 +280,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete_gal_img') {
             }
         }
         $pdo->prepare("DELETE FROM project_gallery WHERE id = ?")->execute([$imgId]);
-        header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&deleted=1");
+        header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&deleted=1" . ($targetProjId > 0 ? "#proj_card_" . $targetProjId : ""));
         exit;
     }
 }
@@ -296,7 +298,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_article_visual
                 $destName = 'art_' . $articleId . '_' . time() . '.' . $ext;
                 if (move_uploaded_file($_FILES['article_file']['tmp_name'], $upDir . $destName)) {
                     $pdo->prepare("UPDATE articles SET image = ? WHERE id = ?")->execute(['uploads/articles/' . $destName, $articleId]);
-                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1");
+                    header("Location: visuals.php?page_slug=" . urlencode((string)$filterPage) . "&saved=1#art_card_" . $articleId);
                     exit;
                 } else {
                     $error = "Échec du transfert vers uploads/articles/. Vérifiez les permissions d'écriture.";
@@ -561,7 +563,7 @@ try {
               <div class="row">
                 <?php foreach ($items as $item): ?>
                   <div class="col-lg-6 col-xl-4 mb-4">
-                    <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;">
+                    <div class="card h-100 border shadow-sm" id="vis_card_<?php echo $item['id']; ?>" style="border-radius: 10px; overflow: hidden; transition: all 0.3s ease;">
                       <!-- Prévisualisation de l'image avec son cadrage réel -->
                       <div class="position-relative" style="height: 200px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow: hidden;">
                         <?php 
@@ -604,7 +606,7 @@ try {
 
                       <!-- Formulaire de modification directe -->
                       <div class="card-body p-3 d-flex flex-column justify-content-between">
-                        <form action="visuals.php?page_slug=<?php echo urlencode((string)$filterPage); ?>" method="POST" enctype="multipart/form-data">
+                        <form action="visuals.php?page_slug=<?php echo urlencode((string)$filterPage); ?>#vis_card_<?php echo $item['id']; ?>" method="POST" enctype="multipart/form-data">
                           <input type="hidden" name="update_visual" value="1">
                           <input type="hidden" name="visual_id" value="<?php echo (int)$item['id']; ?>">
 
@@ -698,7 +700,7 @@ try {
             $sImg = resolveImage($srv['image'] ?? '', 'images/services-' . $sIdx . '.jpg');
           ?>
             <div class="col-lg-6 col-xl-4 mb-4">
-              <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
+              <div class="card h-100 border shadow-sm" id="srv_card_<?php echo $srv['id']; ?>" style="border-radius: 10px; overflow: hidden; transition: all 0.3s ease;">
                 <div class="position-relative" style="height: 180px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow: hidden;">
                   <img src="../<?php echo htmlspecialchars($sImg); ?>" 
                        alt="<?php echo htmlspecialchars($srv['title']); ?>"
@@ -718,7 +720,7 @@ try {
                     <?php echo htmlspecialchars($srv['short_desc'] ?? ''); ?>
                   </p>
 
-                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>" method="POST" enctype="multipart/form-data">
+                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>#srv_card_<?php echo $srv['id']; ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="update_service_visual" value="1">
                     <input type="hidden" name="service_id" value="<?php echo (int)$srv['id']; ?>">
 
@@ -770,7 +772,7 @@ try {
             $pImg = resolveImage($proj['main_image'] ?? '', 'images/project-' . $pIdx . '.jpg');
           ?>
             <div class="col-lg-6 col-xl-4 mb-4">
-              <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
+              <div class="card h-100 border shadow-sm" id="proj_card_<?php echo $proj['id']; ?>" style="border-radius: 10px; overflow: hidden; transition: all 0.3s ease;">
                 <div class="position-relative" style="height: 180px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow: hidden;">
                   <img src="../<?php echo htmlspecialchars($pImg); ?>" 
                        alt="<?php echo htmlspecialchars($proj['title']); ?>"
@@ -790,7 +792,7 @@ try {
                     <i class="fas fa-map-marker-alt text-danger mr-1"></i> <?php echo htmlspecialchars($proj['location'] ?? 'Yaoundé'); ?>
                   </p>
 
-                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>" method="POST" enctype="multipart/form-data">
+                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>#proj_card_<?php echo $proj['id']; ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="update_project_visual" value="1">
                     <input type="hidden" name="project_id" value="<?php echo (int)$proj['id']; ?>">
 
@@ -828,7 +830,7 @@ try {
                         <?php foreach ($pGallery as $g): ?>
                           <div class="position-relative" style="width: 52px; height: 42px; border-radius: 4px; overflow: hidden; border: 1px solid #cbd5e1; margin-right: 4px; margin-bottom: 4px;">
                             <img src="../<?php echo htmlspecialchars(resolveImage($g['image_url'])); ?>" style="width: 100%; height: 100%; object-fit: cover;">
-                            <a href="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>&action=delete_gal_img&image_id=<?php echo $g['id']; ?>" 
+                            <a href="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>&action=delete_gal_img&image_id=<?php echo $g['id']; ?>#proj_card_<?php echo $proj['id']; ?>" 
                                onclick="return confirm('Supprimer cette photo de la galerie ?');" 
                                style="position: absolute; top: 1px; right: 1px; background: rgba(220,38,38,0.9); color: #fff; width: 15px; height: 15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; text-decoration: none;" title="Supprimer">
                               <i class="fas fa-times"></i>
@@ -838,7 +840,7 @@ try {
                       </div>
                     <?php endif; ?>
 
-                    <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>" method="POST" enctype="multipart/form-data">
+                    <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>#proj_card_<?php echo $proj['id']; ?>" method="POST" enctype="multipart/form-data">
                       <input type="hidden" name="update_project_gallery" value="1">
                       <input type="hidden" name="project_id" value="<?php echo (int)$proj['id']; ?>">
                       <div class="input-group input-group-sm mb-1">
@@ -888,7 +890,7 @@ try {
             $aImg = resolveImage($art['image'] ?? '', 'images/image_' . $aIdx . '.jpg');
           ?>
             <div class="col-lg-4 mb-4">
-              <div class="card h-100 border shadow-sm" style="border-radius: 10px; overflow: hidden;">
+              <div class="card h-100 border shadow-sm" id="art_card_<?php echo $art['id']; ?>" style="border-radius: 10px; overflow: hidden; transition: all 0.3s ease;">
                 <div class="position-relative" style="height: 180px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; overflow: hidden;">
                   <img src="../<?php echo htmlspecialchars($aImg); ?>" 
                        alt="<?php echo htmlspecialchars($art['title']); ?>"
@@ -910,7 +912,7 @@ try {
                     <i class="fas fa-calendar mr-1"></i> <?php echo date('d M Y', strtotime($art['created_at'])); ?>
                   </p>
 
-                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>" method="POST" enctype="multipart/form-data">
+                  <form action="visuals.php?page_slug=<?php echo urlencode($filterPage); ?>#art_card_<?php echo $art['id']; ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="update_article_visual" value="1">
                     <input type="hidden" name="article_id" value="<?php echo (int)$art['id']; ?>">
 
@@ -940,6 +942,25 @@ try {
 </div>
 
 <script>
+// Maintien automatique du scroll et mise en évidence de la carte modifiée
+document.addEventListener("DOMContentLoaded", function() {
+  if (window.location.hash) {
+    var targetEl = document.querySelector(window.location.hash);
+    if (targetEl) {
+      setTimeout(function() {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetEl.style.transition = 'all 0.4s ease';
+        targetEl.style.boxShadow = '0 0 0 4px #0284c7, 0 12px 30px rgba(2, 132, 199, 0.4)';
+        targetEl.style.borderColor = '#0284c7';
+        setTimeout(function() {
+          targetEl.style.boxShadow = '';
+          targetEl.style.borderColor = '';
+        }, 3200);
+      }, 150);
+    }
+  }
+});
+
 // Validation de sécurité de la taille du fichier (Max 32 Mo)
 function checkFileSize(input, maxMb = 32) {
   if (input.files && input.files[0]) {
