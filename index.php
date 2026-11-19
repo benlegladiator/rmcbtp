@@ -1305,13 +1305,13 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 				$imgP = resolveImage($item['url']);
 			?>
 				<div class="col-lg-3 col-md-4 col-sm-6 p-1">
-					<div class="rmc-gallery-item position-relative" style="height: 220px; overflow: hidden; border-radius: 10px; cursor: pointer;">
+					<div class="rmc-gallery-item position-relative" style="height: 250px; overflow: hidden; border-radius: 12px; cursor: pointer;">
 						<img src="<?= htmlspecialchars($imgP) ?>" 
 						     alt="<?= htmlspecialchars($item['title']) ?>" 
 						     loading="lazy"
-						     style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
+						     style="width: 100%; height: 100%; object-fit: cover; object-position: center top !important; transition: transform 0.5s ease;">
 						<div class="rmc-gallery-overlay d-flex flex-column justify-content-between p-3" 
-						     style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(12,46,96,0.92) 100%); opacity: 0; transition: opacity 0.3s ease;">
+						     style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(12,46,96,0.92) 100%); opacity: 0; transition: opacity 0.3s ease;">
 							<div class="d-flex justify-content-between align-items-center">
 								<span class="badge badge-warning text-dark font-weight-bold px-2 py-1" style="font-size: 10.5px; border-radius: 6px;">
 									<?= htmlspecialchars($item['cat']) ?>
@@ -1342,8 +1342,13 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 	</div>
 </section>
 <style>
+.rmc-gallery-item img {
+	object-fit: cover !important;
+	object-position: center top !important;
+}
 .rmc-gallery-item:hover img {
 	transform: scale(1.08);
+	object-position: center top !important;
 }
 .rmc-gallery-item:hover .rmc-gallery-overlay {
 	opacity: 1 !important;
