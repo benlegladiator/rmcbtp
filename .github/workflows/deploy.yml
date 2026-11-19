@@ -31,5 +31,10 @@ jobs:
             *.sqlite
             **/*.sqlite
             *.log
+            **/*.log
+            *.csv
+            **/*.csv
             scratch/**
             uploads/**
+            secretaire/backups/**
+            securite/backups/**
