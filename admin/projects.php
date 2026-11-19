@@ -212,31 +212,44 @@ $projects = $pdo->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll();
 
       <div class="form-grid">
         <div class="form-group">
-          <label>Photo Principale (Téléverser un nouveau fichier)</label>
+          <label>Photo Principale de Couverture</label>
           <input type="file" name="main_image_file" class="form-control" accept="image/*">
+          <small class="text-muted d-block mt-1">Enregistrée sur le serveur dans : <code>/uploads/projects/</code></small>
           <?php if (!empty($editProj['main_image'])): ?>
-            <div style="margin-top: 8px;">
-              <small style="color: var(--admin-muted);">Photo actuelle :</small><br>
-              <img src="../<?php echo htmlspecialchars($editProj['main_image']); ?>" style="height: 60px; border-radius: 4px; border: 1px solid var(--admin-border); margin-top: 4px;">
+            <div style="margin-top: 8px; display: flex; align-items: center; gap: 10px;">
+              <img src="../<?php echo htmlspecialchars(resolveImage($editProj['main_image'])); ?>" style="height: 60px; width: 90px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);">
+              <small style="color: var(--admin-muted); font-size: 0.8rem;">
+                Chemin serveur :<br><code><?php echo htmlspecialchars($editProj['main_image']); ?></code>
+              </small>
             </div>
           <?php endif; ?>
         </div>
 
         <div class="form-group">
           <label>Lien Vidéo YouTube / Visite Drone (Optionnel)</label>
-          <input type="text" name="video_url" class="form-control" value="<?php echo htmlspecialchars($editProj['video_url'] ?? ''); ?>" placeholder="https://www.youtube.com/watch?v=...">
+          <input type="text" name="video_url" class="form-control" value="<?php echo htmlspecialchars($editProj['video_url'] ?? ''); ?>" placeholder="https://www.youtube.com/watch?v=... ou https://youtu.be/... ou MP4">
+          <small class="text-muted d-block mt-1">Formats acceptés : YouTube standard, YouTube Shorts, Vimeo ou vidéo directe MP4.</small>
+          <?php if (!empty($editProj['video_url'])): ?>
+            <div style="margin-top: 8px;">
+              <span class="badge badge-info"><i class="fas fa-play-circle mr-1"></i> Vidéo active</span>
+              <a href="<?php echo htmlspecialchars($editProj['video_url']); ?>" target="_blank" style="margin-left: 8px; font-size: 0.85rem;"><i class="fas fa-external-link-alt"></i> Tester le lien vidéo</a>
+            </div>
+          <?php endif; ?>
         </div>
       </div>
 
       <!-- Galerie Photos Multiples (Carrousel Défilant Automatique) -->
-      <div class="form-group" style="background: rgba(12, 46, 96, 0.04); border: 2px dashed #0c2e60; padding: 18px; border-radius: 10px; margin-bottom: 22px;">
-        <label style="font-weight: 800; color: #0c2e60; font-size: 1.05rem; display: flex; align-items: center; gap: 8px;">
-          <i class="fas fa-images text-primary"></i> Galerie de Photos Multiples (Défilement automatique sur le site)
-        </label>
-        <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 12px; line-height: 1.5;">
-          Sélectionnez plusieurs photos en une seule fois (maintenez Ctrl ou Shift pour en choisir plusieurs). Toutes ces photos <strong>défileront automatiquement</strong> dans le carrousel animé de la carte sur l'accueil, dans le catalogue et sur la fiche complète du chantier.
+      <div class="form-group" style="background: rgba(12, 46, 96, 0.04); border: 2px dashed #0284c7; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <label style="font-weight: 800; color: #0c2e60; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; margin: 0;">
+            <i class="fas fa-images text-primary"></i> Galerie Multi-Photos (Défilement Carrousel Automatique sur le site)
+          </label>
+          <span class="badge badge-primary" style="font-size: 0.75rem;">Dossier : /uploads/projects/</span>
+        </div>
+        <p style="font-size: 0.88rem; color: #475569; margin-bottom: 12px; line-height: 1.5;">
+          <strong>Comment ça marche ?</strong> Cliquez ci-dessous et sélectionnez <strong>plusieurs photos à la fois</strong> (maintenez la touche <kbd>Ctrl</kbd> sous Windows pour en cocher plusieurs). Ces photos s'enregistrent dans <code>/uploads/projects/</code> et défilent toutes seules toutes les 3,5 secondes dans le carrousel sur le site.
         </p>
-        <input type="file" name="gallery_files[]" class="form-control" multiple accept="image/*">
+        <input type="file" name="gallery_files[]" class="form-control" multiple accept="image/*" style="padding: 10px; height: auto;">
         
         <?php if (!empty($galleryImages)): ?>
           <div style="margin-top: 15px; border-top: 1px solid #cbd5e1; padding-top: 14px;">

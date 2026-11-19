@@ -651,7 +651,7 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 							<li><i class="fa fa-check text-success mr-2"></i> <strong>Budget maîtrisé :</strong> 0 surcoût imprévu</li>
 							<li><i class="fa fa-check text-success mr-2"></i> <strong>Suivi à distance :</strong> Rapports vidéo hebdomadaires WhatsApp</li>
 						</ul>
-						<a href="https://wa.me/237697398455?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20voir%20les%20vid%C3%A9os%20de%20la%20Villa%20Duplex." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
+						<a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $whatsappNumber) ?>?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20voir%20les%20vid%C3%A9os%20de%20la%20Villa%20Duplex." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
 							<i class="fab fa-whatsapp text-success mr-1"></i> Voir la Vidéo du Résultat
 						</a>
 					</div>
@@ -678,7 +678,7 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 							<li><i class="fa fa-check text-success mr-2"></i> <strong>Gros œuvre certifié :</strong> Béton armé 350 kg/m³ vibré</li>
 							<li><i class="fa fa-check text-success mr-2"></i> <strong>Finitions :</strong> Grès cérame poli et menuiserie alu</li>
 						</ul>
-						<a href="https://wa.me/237697398455?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20des%20infos%20sur%20vos%20immeubles%20locatifs." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
+						<a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $whatsappNumber) ?>?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20des%20infos%20sur%20vos%20immeubles%20locatifs." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
 							<i class="fab fa-whatsapp text-success mr-1"></i> Voir la Fiche Chantier
 						</a>
 					</div>
@@ -705,7 +705,7 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 							<li><i class="fa fa-check text-success mr-2"></i> <strong>Technique :</strong> Murs banchés et drainage anti-glissement</li>
 							<li><i class="fa fa-check text-success mr-2"></i> <strong>Flotte :</strong> Terrassement par nos propres engins lourds</li>
 						</ul>
-						<a href="https://wa.me/237697398455?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20s%C3%A9curiser%20un%20terrain%20en%20pente." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
+						<a href="https://wa.me/<?= preg_replace('/[^0-9]/', '', $whatsappNumber) ?>?text=Bonjour%20RMC%20BTP,%20je%20souhaite%20s%C3%A9curiser%20un%20terrain%20en%20pente." target="_blank" rel="noopener" class="btn btn-outline-primary btn-block font-weight-bold py-2" style="border-radius: 12px; font-size: 13px;">
 							<i class="fab fa-whatsapp text-success mr-1"></i> Demander une Expertise Sol
 						</a>
 					</div>
@@ -1207,6 +1207,11 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 								<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; z-index: 5; padding: 6px 10px; font-size: 11px;">
 									<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
 								</span>
+								<?php if (!empty($proj['video_url'])): ?>
+									<a href="project-details.php?id=<?= $proj['id'] ?>#sectionVideo" class="badge badge-danger position-absolute" style="top: 15px; right: 15px; z-index: 6; padding: 6px 10px; font-size: 11px; text-decoration: none;" title="Voir la vidéo de ce chantier">
+										<i class="fa fa-video-camera mr-1"></i> Vidéo 4K
+									</a>
+								<?php endif; ?>
 								<span class="badge badge-dark position-absolute" style="bottom: 12px; right: 12px; z-index: 5; font-size: 10.5px; background: rgba(12,46,96,0.85); backdrop-filter: blur(4px); color: #fff; padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
 									<i class="fa fa-play mr-1 text-warning"></i> <?= count($projImages) ?> photos
 								</span>

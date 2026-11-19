@@ -126,21 +126,19 @@ $allDetailImages = array_values(array_unique($allDetailImages));
 				</div>
 
 				<!-- Vidéo Immersive / Drone si renseignée -->
-				<?php if (!empty($project['video_url'])): ?>
-					<div class="mb-5 mt-4">
+				<?php if (!empty($project['video_url'])): 
+					$vEmbed = parseVideoEmbed($project['video_url']);
+				?>
+					<div class="mb-5 mt-4" id="sectionVideo">
 						<h4 class="font-weight-bold text-dark mb-3">
 							<i class="fa fa-video-camera text-danger mr-2"></i> Immersion Vidéo & Vue Drone du Chantier
 						</h4>
-						<div class="embed-responsive embed-responsive-16by9 rounded shadow overflow-hidden">
-							<?php 
-							$videoUrl = $project['video_url'];
-							if (strpos($videoUrl, 'youtube.com/watch') !== false) {
-								parse_str(parse_url($videoUrl, PHP_URL_QUERY), $query);
-								$videoId = $query['v'] ?? '';
-								$videoUrl = "https://www.youtube.com/embed/" . $videoId;
-							}
-							?>
-							<iframe class="embed-responsive-item" src="<?= htmlspecialchars($videoUrl) ?>" allowfullscreen></iframe>
+						<div class="embed-responsive embed-responsive-16by9 rounded shadow overflow-hidden" style="background: #000; position: relative;">
+							<?php if ($vEmbed && !empty($vEmbed['embed_html'])): ?>
+								<?= $vEmbed['embed_html'] ?>
+							<?php else: ?>
+								<iframe class="embed-responsive-item" src="<?= htmlspecialchars($project['video_url']) ?>" allowfullscreen></iframe>
+							<?php endif; ?>
 						</div>
 					</div>
 				<?php endif; ?>

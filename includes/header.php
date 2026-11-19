@@ -23,6 +23,7 @@ $currentFile = basename($_SERVER['PHP_SELF']);
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title><?= htmlspecialchars($pageTitle ?? ($companyName . ' | Bâtiment, Travaux Publics & Génie Civil au Cameroun & International')) ?></title>
 	<meta name="description" content="<?= htmlspecialchars($pageDescription ?? 'RMC BTP SARL - Entreprise de référence en BTP, Génie Civil, Clés en main et Rénovation au Cameroun et à l\'international. Devis express et suivi rigoureux.') ?>">
+	<script>window.SITE_WHATSAPP = "<?= preg_replace('/[^0-9]/', '', $whatsappNumber) ?>";</script>
 	
 	<!-- Favicon Officiel RMC BTP SARL (Multi-résolutions Navigateur & Mobile) -->
 	<link rel="icon" type="image/x-icon" href="<?= htmlspecialchars($siteFavicon['url']) ?>?v=<?= time() ?>">

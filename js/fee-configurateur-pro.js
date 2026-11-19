@@ -130,7 +130,8 @@
 • Terrain : ${result.terrainName}
 • Estimation : ${result.totalMin.toLocaleString('fr-FR')} à ${result.totalMax.toLocaleString('fr-FR')} FCFA (~${result.totalMinEUR.toLocaleString('fr-FR')} €)
 Je souhaite affiner ce devis avec un ingénieur ou conducteur de travaux RMC BTP.`;
-      btnWhatsapp.href = `https://wa.me/237697398455?text=${encodeURIComponent(msg)}`;
+      const waNum = window.SITE_WHATSAPP || '237697398455';
+      btnWhatsapp.href = `https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`;
     }
   }
 
@@ -370,7 +371,8 @@ Je souhaite affiner ce devis avec un ingénieur ou conducteur de travaux RMC BTP
 
 Pouvez-vous me transmettre la fiche de cotation détaillée complète en PDF par WhatsApp ? Merci d'avance !`;
 
-        window.open(`https://wa.me/237697398455?text=${encodeURIComponent(msg)}`, '_blank');
+        const waNum = window.SITE_WHATSAPP || '237697398455';
+        window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, '_blank');
       });
     }
 

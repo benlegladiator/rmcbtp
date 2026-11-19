@@ -105,6 +105,11 @@ $categories = $catsStmt->fetchAll(PDO::FETCH_COLUMN);
 										<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; z-index: 5; padding: 6px 10px; font-size: 11px;">
 											<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
 										</span>
+										<?php if (!empty($proj['video_url'])): ?>
+											<a href="project-details.php?id=<?= $proj['id'] ?>#sectionVideo" class="badge badge-danger position-absolute" style="top: 15px; right: 15px; z-index: 6; padding: 6px 10px; font-size: 11px; text-decoration: none;" title="Voir la vidéo de ce chantier">
+												<i class="fa fa-video-camera mr-1"></i> Vidéo 4K
+											</a>
+										<?php endif; ?>
 										<span class="badge badge-dark position-absolute" style="bottom: 12px; right: 12px; z-index: 5; font-size: 10.5px; background: rgba(12,46,96,0.85); backdrop-filter: blur(4px); color: #fff; padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
 											<i class="fa fa-play mr-1 text-warning"></i> <?= count($projImages) ?> photos
 										</span>
@@ -117,7 +122,11 @@ $categories = $catsStmt->fetchAll(PDO::FETCH_COLUMN);
 										<span class="badge badge-primary position-absolute" style="top: 15px; left: 15px; padding: 6px 10px; font-size: 11px;">
 											<?= htmlspecialchars($proj['category'] ?? 'BTP') ?>
 										</span>
-										<?php if (!empty($proj['before_image'])): ?>
+										<?php if (!empty($proj['video_url'])): ?>
+											<a href="project-details.php?id=<?= $proj['id'] ?>#sectionVideo" class="badge badge-danger position-absolute" style="top: 15px; right: 15px; z-index: 6; padding: 6px 10px; font-size: 11px; text-decoration: none;" title="Voir la vidéo de ce chantier">
+												<i class="fa fa-video-camera mr-1"></i> Vidéo 4K
+											</a>
+										<?php elseif (!empty($proj['before_image'])): ?>
 											<span class="badge badge-warning position-absolute text-dark font-weight-bold" style="top: 15px; right: 15px; padding: 6px 10px; font-size: 11px;">
 												<i class="fa fa-columns mr-1"></i> Avant / Après
 											</span>

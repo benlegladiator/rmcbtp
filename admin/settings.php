@@ -13,16 +13,17 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['save_settings
         'about_summary', 'gemini_api_key', 'ai_provider', 'ai_system_prompt'
     ];
 
-    $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON CONFLICT(setting_key) DO UPDATE SET setting_value = excluded.setting_value");
-    // Fallback pour MySQL syntax
-    $stmtMysql = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+    $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+    if ($driver === 'sqlite') {
+        $stmtSave = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON CONFLICT(setting_key) DO UPDATE SET setting_value = excluded.setting_value");
+    } else {
+        $stmtSave = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+    }
 
     foreach ($fields as $field) {
-        $val = trim($_POST[$field] ?? '');
-        try {
-            $stmt->execute([$field, $val]);
-        } catch (Exception $e) {
-            $stmtMysql->execute([$field, $val]);
+        if (isset($_POST[$field])) {
+            $val = trim($_POST[$field]);
+            $stmtSave->execute([$field, $val]);
         }
     }
     $success = "Les paramètres du site ont été mis à jour avec succès.";

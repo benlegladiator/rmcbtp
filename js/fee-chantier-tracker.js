@@ -272,7 +272,8 @@
 • Avancement actuel : ${data.progress}%
 Pouvez-vous me transmettre ce rapport PDF officiel avec le visa de la Direction Générale ? Merci !`;
 
-        window.open(`https://wa.me/237697398455?text=${encodeURIComponent(msg)}`, '_blank');
+        const waNum = window.SITE_WHATSAPP || '237697398455';
+        window.open(`https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`, '_blank');
       });
     }
   }
