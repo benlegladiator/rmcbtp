@@ -132,6 +132,75 @@ function initPageVisualsTable($pdo, $forceSync = false) {
                 'focal_point' => 'center center',
                 'sort_order' => 50
             ],
+            // ==========================================
+            // PARTENAIRES & FILIALES STRATÉGIQUES DU GROUPE
+            // ==========================================
+            [
+                'page_slug' => 'home',
+                'section_key' => 'partner_rmcbtp',
+                'section_name' => "Section Partenaires & Filiales du Groupe",
+                'title' => "Logo Partenaire 1 : RMC BTP SARL",
+                'description' => "BTP, Génie civil, gros œuvre, construction et rénovation.",
+                'image_url' => 'images/partenaires/rmc.png',
+                'default_url' => 'images/partenaires/rmc.png',
+                'focal_point' => 'center center',
+                'sort_order' => 51
+            ],
+            [
+                'page_slug' => 'home',
+                'section_key' => 'partner_security',
+                'section_name' => "Section Partenaires & Filiales du Groupe",
+                'title' => "Logo Partenaire 2 : RMCsecurity",
+                'description' => "Sécurité privée, gardiennage de chantiers et contrôle d'accès 24/7.",
+                'image_url' => 'images/partenaires/security.png',
+                'default_url' => 'images/partenaires/security.png',
+                'focal_point' => 'center center',
+                'sort_order' => 52
+            ],
+            [
+                'page_slug' => 'home',
+                'section_key' => 'partner_edm',
+                'section_name' => "Section Partenaires & Filiales du Groupe",
+                'title' => "Logo Partenaire 3 : EDM",
+                'description' => "Entreprise EDM Services (Maintenance technique, électricité, sous-traitance et multi-services).",
+                'image_url' => 'images/partenaires/edm.png',
+                'default_url' => 'images/partenaires/edm.png',
+                'focal_point' => 'center center',
+                'sort_order' => 53
+            ],
+            [
+                'page_slug' => 'home',
+                'section_key' => 'partner_djomo_design',
+                'section_name' => "Section Partenaires & Filiales du Groupe",
+                'title' => "Logo Partenaire 4 : DjomoDesign",
+                'description' => "Architecture d'intérieur, design graphique, modélisation 2D/3D.",
+                'image_url' => 'images/partenaires/design.png',
+                'default_url' => 'images/partenaires/design.png',
+                'focal_point' => 'center center',
+                'sort_order' => 54
+            ],
+            [
+                'page_slug' => 'home',
+                'section_key' => 'partner_smart3f_auto',
+                'section_name' => "Section Partenaires & Filiales du Groupe",
+                'title' => "Logo Partenaire 5 : SMART 3F AUTO",
+                'description' => "Parc automobile, vente, location et entretien de véhicules/engins.",
+                'image_url' => 'images/partenaires/auto.png',
+                'default_url' => 'images/partenaires/auto.png',
+                'focal_point' => 'center center',
+                'sort_order' => 55
+            ],
+            [
+                'page_slug' => 'home',
+                'section_key' => 'partner_oasis',
+                'section_name' => "Section Partenaires & Filiales du Groupe",
+                'title' => "Logo Partenaire 6 : OASIS",
+                'description' => "Services de conciergerie et prestations événementielles.",
+                'image_url' => 'images/partenaires/oasis.png',
+                'default_url' => 'images/partenaires/oasis.png',
+                'focal_point' => 'center center',
+                'sort_order' => 56
+            ],
             [
                 'page_slug' => 'home',
                 'section_key' => 'showcase_card_1',

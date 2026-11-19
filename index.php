@@ -43,6 +43,14 @@ $ctaBg = getVisualInfo($homeVisuals, 'cta_bg', 'images/bg_1.jpg', 'center center
 $showcase1 = getVisualInfo($homeVisuals, 'showcase_card_1', 'images/wa0062-framed-16x9.jpg', 'center center');
 $showcase2 = getVisualInfo($homeVisuals, 'showcase_card_2', 'images/IMG-20261015-WA0062.jpg', 'center center');
 $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015-WA0073.jpg', 'center center');
+$partnerRmcbtp = getVisualInfo($homeVisuals, 'partner_rmcbtp', 'images/partenaires/rmc.png', 'center center');
+$partnerSecurity = getVisualInfo($homeVisuals, 'partner_security', 'images/partenaires/security.png', 'center center');
+$partnerEdm = getVisualInfo($homeVisuals, 'partner_edm', 'images/partenaires/edm.png', 'center center');
+$partnerDjomoDesign = getVisualInfo($homeVisuals, 'partner_djomo_design', 'images/partenaires/design.png', 'center center');
+$partnerSmart3fAuto = getVisualInfo($homeVisuals, 'partner_smart3f_auto', 'images/partenaires/auto.png', 'center center');
+$partnerOasis = getVisualInfo($homeVisuals, 'partner_oasis', 'images/partenaires/oasis.png', 'center center');
+$siteWhatsApp = preg_replace('/[^0-9]/', '', (string)getSetting('whatsapp_number', '237697398455'));
+if (empty($siteWhatsApp)) $siteWhatsApp = '237697398455';
 ?>
 
 <!-- Alertes Flash -->
@@ -385,6 +393,305 @@ $showcase3 = getVisualInfo($homeVisuals, 'showcase_card_3', 'images/IMG-20261015
 		<div class="text-center mt-4">
 			<span class="small" style="color: #64748b;">
 				<i class="fa fa-mouse-pointer mr-1 text-primary"></i> <strong>360° Interactif</strong> : Cliquez-glissez pour tourner &bull; Molette pour zoomer &bull; Testez la <strong>Vue Écorchée</strong>, l'ambiance <strong>Jour/Nuit</strong> et cliquez sur les <strong>Pastilles BTP</strong> pour inspecter chaque lot technique.
+			</span>
+		</div>
+	</div>
+</section>
+
+<!-- ========================================================================
+     2.2 ÉCOSYSTÈME, FILIALES & PARTENAIRES STRATÉGIQUES DU GROUPE RMC BTP
+     ======================================================================== -->
+<style>
+.rmc-partner-card {
+	transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+	background: #ffffff;
+	border-radius: 16px;
+	border: 1px solid rgba(226, 232, 240, 0.9);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+.rmc-partner-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 20px 38px rgba(0, 0, 0, 0.28) !important;
+	border-color: #f97316 !important;
+}
+.rmc-partner-card:hover .rmc-partner-logo-wrap img {
+	transform: scale(1.06);
+	transition: transform 0.35s ease;
+}
+.rmc-partner-logo-wrap {
+	height: 150px;
+	background: #ffffff;
+	border-bottom: 2px solid #f1f5f9;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 18px 24px;
+	position: relative;
+}
+</style>
+<section class="rmc-partners-section py-5 position-relative" id="partenaires-groupe" style="background: linear-gradient(180deg, #07172f 0%, #0c2e60 50%, #07172f 100%); border-top: 1px solid rgba(249, 115, 22, 0.35); border-bottom: 1px solid rgba(255,255,255,0.08);">
+	<div class="container position-relative py-3" style="z-index: 2;">
+		<!-- En-tête Prestigieux de Section -->
+		<div class="row justify-content-center text-center mb-5">
+			<div class="col-lg-10 ftco-animate">
+				<span class="badge px-3 py-2 mb-2 font-weight-bold text-white shadow-sm" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); letter-spacing: 1.5px; border-radius: 30px; font-size: 12px;">
+					<i class="fa fa-handshake mr-1"></i> CONSORTIUM, FILIALES & PARTENAIRES
+				</span>
+				<h2 class="font-weight-bold text-white mt-2 mb-3" style="font-size: 2.35rem; line-height: 1.25;">
+					L'Écosystème Intégré & Partenaires Stratégiques RMC BTP
+				</h2>
+				<p class="text-light lead mx-auto" style="max-width: 860px; font-size: 1.05rem; opacity: 0.9;">
+					Pour garantir la livraison complète de vos projets sans rupture de chaîne logistique, <strong>RMC BTP SARL</strong> s'appuie sur une synergie puissante de filiales et de partenaires d'excellence opérant sous la même charte de rigueur.
+				</p>
+			</div>
+		</div>
+
+		<!-- Grille des 6 Partenaires / Filiales -->
+		<div class="row align-items-stretch">
+			
+			<!-- 1. RMCBTP sarl -->
+			<div class="col-lg-4 col-md-6 d-flex ftco-animate mb-4">
+				<div class="rmc-partner-card w-100">
+					<div class="rmc-partner-logo-wrap">
+						<span class="badge px-3 py-1 shadow-sm font-weight-bold text-white" style="position: absolute; top: 12px; right: 12px; font-size: 11px; background: #ea580c; border-radius: 6px;">
+							<i class="fa fa-building mr-1"></i> BTP & Gros Œuvre
+						</span>
+						<img src="<?= htmlspecialchars($partnerRmcbtp['url']) ?>" 
+						     alt="Logo Officiel RMC BTP SARL" 
+						     style="max-height: 105px; max-width: 85%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.06));"
+						     onerror="this.onerror=null; this.src='images/logo.png';">
+					</div>
+					<div class="p-4 d-flex flex-column justify-content-between flex-grow-1" style="background: #ffffff;">
+						<div>
+							<div class="d-flex align-items-center mb-1">
+								<h3 class="font-weight-bold mb-0 text-dark" style="font-size: 1.3rem; color: #0c2e60;">RMCBTP sarl</h3>
+								<span class="badge badge-light border ml-2 text-muted" style="font-size: 11px;">RMCBTP</span>
+							</div>
+							<p class="font-weight-bold mb-2 text-warning" style="font-size: 0.88rem;">
+								BTP, Génie Civil, Gros Œuvre, Construction & Rénovation
+							</p>
+							<p class="text-muted small mb-3" style="line-height: 1.55;">
+								Cœur d'expertise du groupe : études de structure, élévation de dalles, génie civil lourd, rénovation architecturale et constructions clés en main avec garantie décennale.
+							</p>
+							<ul class="list-unstyled small mb-3 text-secondary">
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Calculs de structures certifiés & béton armé 350 kg/m³</li>
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Villas contemporaines, immeubles R+ et hangars industriels</li>
+								<li><i class="fa fa-check-circle text-success mr-2"></i> Suivi photo/vidéo haute fidélité pour la diaspora</li>
+							</ul>
+						</div>
+						<div class="pt-3 border-top mt-2">
+							<a href="https://wa.me/<?= $siteWhatsApp ?>?text=<?= urlencode('Bonjour RMC BTP, je souhaite des informations sur vos projets de Construction & Génie Civil.') ?>" target="_blank" class="btn btn-outline-primary btn-sm btn-block font-weight-bold py-2" style="border-radius: 8px;">
+								<i class="fab fa-whatsapp mr-1 text-success"></i> Consulter l'Ingénieur BTP
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 2. RMCsecurity -->
+			<div class="col-lg-4 col-md-6 d-flex ftco-animate mb-4">
+				<div class="rmc-partner-card w-100">
+					<div class="rmc-partner-logo-wrap">
+						<span class="badge px-3 py-1 shadow-sm font-weight-bold text-white" style="position: absolute; top: 12px; right: 12px; font-size: 11px; background: #0c2e60; border-radius: 6px;">
+							<i class="fa fa-shield-alt mr-1 text-warning"></i> Sécurité 24/7
+						</span>
+						<img src="<?= htmlspecialchars($partnerSecurity['url']) ?>" 
+						     alt="Logo Officiel RMCsecurity" 
+						     style="max-height: 105px; max-width: 85%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.06));"
+						     onerror="this.onerror=null; this.src='images/logo.png';">
+					</div>
+					<div class="p-4 d-flex flex-column justify-content-between flex-grow-1" style="background: #ffffff;">
+						<div>
+							<div class="d-flex align-items-center mb-1">
+								<h3 class="font-weight-bold mb-0 text-dark" style="font-size: 1.3rem; color: #0c2e60;">RMCsecurity</h3>
+								<span class="badge badge-light border ml-2 text-muted" style="font-size: 11px;">RMCSEC</span>
+							</div>
+							<p class="font-weight-bold mb-2 text-primary" style="font-size: 0.88rem;">
+								Sécurité Privée, Gardiennage de Chantiers & Contrôle d'Accès
+							</p>
+							<p class="text-muted small mb-3" style="line-height: 1.55;">
+								Protection intégrale des chantiers et résidences : contrôle d'accès numérique, prévention des pertes de matériaux, gardiennage jour & nuit et surveillance rapprochée.
+							</p>
+							<ul class="list-unstyled small mb-3 text-secondary">
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Vigiles formés, assermentés et équipés d'uniformes</li>
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Pointage digitalisé des entrées/sorties et ouvriers</li>
+								<li><i class="fa fa-check-circle text-success mr-2"></i> Sécurisation périmétrique et rondes de nuit continues</li>
+							</ul>
+						</div>
+						<div class="pt-3 border-top mt-2">
+							<a href="https://wa.me/<?= $siteWhatsApp ?>?text=<?= urlencode('Bonjour RMC BTP, je souhaite des informations sur les prestations de Sécurité & Gardiennage RMCsecurity.') ?>" target="_blank" class="btn btn-outline-primary btn-sm btn-block font-weight-bold py-2" style="border-radius: 8px;">
+								<i class="fab fa-whatsapp mr-1 text-success"></i> Solliciter un Dispositif Sécurité
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 3. EDM -->
+			<div class="col-lg-4 col-md-6 d-flex ftco-animate mb-4">
+				<div class="rmc-partner-card w-100">
+					<div class="rmc-partner-logo-wrap">
+						<span class="badge px-3 py-1 shadow-sm font-weight-bold text-white" style="position: absolute; top: 12px; right: 12px; font-size: 11px; background: #0284c7; border-radius: 6px;">
+							<i class="fa fa-tools mr-1"></i> Multi-Services
+						</span>
+						<img src="<?= htmlspecialchars($partnerEdm['url']) ?>" 
+						     alt="Logo Officiel EDM Services" 
+						     style="max-height: 105px; max-width: 85%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.06));"
+						     onerror="this.onerror=null; this.src='images/logo.png';">
+					</div>
+					<div class="p-4 d-flex flex-column justify-content-between flex-grow-1" style="background: #ffffff;">
+						<div>
+							<div class="d-flex align-items-center mb-1">
+								<h3 class="font-weight-bold mb-0 text-dark" style="font-size: 1.3rem; color: #0c2e60;">EDM</h3>
+								<span class="badge badge-light border ml-2 text-muted" style="font-size: 11px;">EDM</span>
+							</div>
+							<p class="font-weight-bold mb-2 text-info" style="font-size: 0.88rem;">
+								Entreprise EDM Services (Maintenance, Électricité & Sous-Traitance)
+							</p>
+							<p class="text-muted small mb-3" style="line-height: 1.55;">
+								Pôle technique spécialisé dans l'électricité générale, la climatisation, la plomberie industrielle, la maintenance multitechnique et les prestations de second œuvre coordonnées.
+							</p>
+							<ul class="list-unstyled small mb-3 text-secondary">
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Installations électriques MT/BT, domotique et solaire</li>
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Réseaux d'assainissement, plomberie et climatisation</li>
+								<li><i class="fa fa-check-circle text-success mr-2"></i> Contrats de maintenance technique préventive et curative</li>
+							</ul>
+						</div>
+						<div class="pt-3 border-top mt-2">
+							<a href="https://wa.me/<?= $siteWhatsApp ?>?text=<?= urlencode('Bonjour RMC BTP, je souhaite des informations sur les prestations techniques d\'EDM Services.') ?>" target="_blank" class="btn btn-outline-primary btn-sm btn-block font-weight-bold py-2" style="border-radius: 8px;">
+								<i class="fab fa-whatsapp mr-1 text-success"></i> Contacter EDM Services
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 4. DjomoDesign -->
+			<div class="col-lg-4 col-md-6 d-flex ftco-animate mb-4">
+				<div class="rmc-partner-card w-100">
+					<div class="rmc-partner-logo-wrap">
+						<span class="badge px-3 py-1 shadow-sm font-weight-bold text-white" style="position: absolute; top: 12px; right: 12px; font-size: 11px; background: #8b5cf6; border-radius: 6px;">
+							<i class="fa fa-palette mr-1"></i> Design & 3D
+						</span>
+						<img src="<?= htmlspecialchars($partnerDjomoDesign['url']) ?>" 
+						     alt="Logo Officiel DjomoDesign" 
+						     style="max-height: 105px; max-width: 85%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.06));"
+						     onerror="this.onerror=null; this.src='images/logo.png';">
+					</div>
+					<div class="p-4 d-flex flex-column justify-content-between flex-grow-1" style="background: #ffffff;">
+						<div>
+							<div class="d-flex align-items-center mb-1">
+								<h3 class="font-weight-bold mb-0 text-dark" style="font-size: 1.3rem; color: #0c2e60;">DjomoDesign</h3>
+								<span class="badge badge-light border ml-2 text-muted" style="font-size: 11px;">DJOMODESIGN</span>
+							</div>
+							<p class="font-weight-bold mb-2 text-purple" style="font-size: 0.88rem; color: #7c3aed;">
+								Architecture d'Intérieur, Design Graphique, Modélisation 2D/3D
+							</p>
+							<p class="text-muted small mb-3" style="line-height: 1.55;">
+								L'art de sublimer vos espaces : plans d'agencement 2D/3D photoréalistes, rendus immersifs, sélection de matériaux nobles, éclairagisme et finitions architecturales personnalisées.
+							</p>
+							<ul class="list-unstyled small mb-3 text-secondary">
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Rendus 3D photoréalistes & visites virtuelles d'espaces</li>
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Mobilier sur-mesure, staff, faux plafonds et luminaires LED</li>
+								<li><i class="fa fa-check-circle text-success mr-2"></i> Harmonisation des volumes pour villas, bureaux et réceptifs</li>
+							</ul>
+						</div>
+						<div class="pt-3 border-top mt-2">
+							<a href="https://wa.me/<?= $siteWhatsApp ?>?text=<?= urlencode('Bonjour RMC BTP, je souhaite des informations sur la conception 3D et décoration DjomoDesign.') ?>" target="_blank" class="btn btn-outline-primary btn-sm btn-block font-weight-bold py-2" style="border-radius: 8px;">
+								<i class="fab fa-whatsapp mr-1 text-success"></i> Découvrir DjomoDesign
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 5. SMART 3F AUTO -->
+			<div class="col-lg-4 col-md-6 d-flex ftco-animate mb-4">
+				<div class="rmc-partner-card w-100">
+					<div class="rmc-partner-logo-wrap">
+						<span class="badge px-3 py-1 shadow-sm font-weight-bold text-dark" style="position: absolute; top: 12px; right: 12px; font-size: 11px; background: #facc15; border-radius: 6px;">
+							<i class="fa fa-truck-pickup mr-1"></i> Flotte & Engins
+						</span>
+						<img src="<?= htmlspecialchars($partnerSmart3fAuto['url']) ?>" 
+						     alt="Logo Officiel SMART 3F AUTO" 
+						     style="max-height: 105px; max-width: 85%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.06));"
+						     onerror="this.onerror=null; this.src='images/logo.png';">
+					</div>
+					<div class="p-4 d-flex flex-column justify-content-between flex-grow-1" style="background: #ffffff;">
+						<div>
+							<div class="d-flex align-items-center mb-1">
+								<h3 class="font-weight-bold mb-0 text-dark" style="font-size: 1.3rem; color: #0c2e60;">SMART 3F AUTO</h3>
+								<span class="badge badge-light border ml-2 text-muted" style="font-size: 11px;">SMART3F</span>
+							</div>
+							<p class="font-weight-bold mb-2 text-warning" style="font-size: 0.88rem; color: #b45309 !important;">
+								Parc Automobile, Vente, Location & Entretien Véhicules/Engins
+							</p>
+							<p class="text-muted small mb-3" style="line-height: 1.55;">
+								Logistique et mobilité tout-terrain : mise à disposition de pick-up 4x4, camions-bennes, engins de terrassement et véhicules de supervision avec maintenance mécanique assurée.
+							</p>
+							<ul class="list-unstyled small mb-3 text-secondary">
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Flotte de 4x4 robustes pour l'accès aux chantiers enclavés</li>
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Location d'engins lourds : pelles, chargeuses, camions</li>
+								<li><i class="fa fa-check-circle text-success mr-2"></i> Atelier mécanique mobile et dépannage rapide sur site</li>
+							</ul>
+						</div>
+						<div class="pt-3 border-top mt-2">
+							<a href="https://wa.me/<?= $siteWhatsApp ?>?text=<?= urlencode('Bonjour RMC BTP, je souhaite des informations sur la location/achat de véhicules et engins SMART 3F AUTO.') ?>" target="_blank" class="btn btn-outline-primary btn-sm btn-block font-weight-bold py-2" style="border-radius: 8px;">
+								<i class="fab fa-whatsapp mr-1 text-success"></i> Réserver un Véhicule / Engin
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 6. OASIS -->
+			<div class="col-lg-4 col-md-6 d-flex ftco-animate mb-4">
+				<div class="rmc-partner-card w-100">
+					<div class="rmc-partner-logo-wrap">
+						<span class="badge px-3 py-1 shadow-sm font-weight-bold text-white" style="position: absolute; top: 12px; right: 12px; font-size: 11px; background: #0891b2; border-radius: 6px;">
+							<i class="fa fa-concierge-bell mr-1"></i> Conciergerie VIP
+						</span>
+						<img src="<?= htmlspecialchars($partnerOasis['url']) ?>" 
+						     alt="Logo Officiel Groupe OASIS" 
+						     style="max-height: 105px; max-width: 85%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.06));"
+						     onerror="this.onerror=null; this.src='images/logo.png';">
+					</div>
+					<div class="p-4 d-flex flex-column justify-content-between flex-grow-1" style="background: #ffffff;">
+						<div>
+							<div class="d-flex align-items-center mb-1">
+								<h3 class="font-weight-bold mb-0 text-dark" style="font-size: 1.3rem; color: #0c2e60;">OASIS</h3>
+								<span class="badge badge-light border ml-2 text-muted" style="font-size: 11px;">OASIS</span>
+							</div>
+							<p class="font-weight-bold mb-2 text-info" style="font-size: 0.88rem; color: #0e7490 !important;">
+								Services de Conciergerie & Prestations Événementielles
+							</p>
+							<p class="text-muted small mb-3" style="line-height: 1.55;">
+								Accompagnement post-livraison haut de gamme : gestion locative, intendance de propriétés pour la diaspora, entretien paysager, accueil VIP et organisation d'inaugurations d'édifices.
+							</p>
+							<ul class="list-unstyled small mb-3 text-secondary">
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Intendance et gardiennage de résidences privées vacantes</li>
+								<li class="mb-1"><i class="fa fa-check-circle text-success mr-2"></i> Nettoyage de fin de chantier & mise en exploitation</li>
+								<li><i class="fa fa-check-circle text-success mr-2"></i> Réceptions d'inauguration et événementiel d'entreprise</li>
+							</ul>
+						</div>
+						<div class="pt-3 border-top mt-2">
+							<a href="https://wa.me/<?= $siteWhatsApp ?>?text=<?= urlencode('Bonjour RMC BTP, je souhaite des informations sur les services de conciergerie et intendance OASIS.') ?>" target="_blank" class="btn btn-outline-primary btn-sm btn-block font-weight-bold py-2" style="border-radius: 8px;">
+								<i class="fab fa-whatsapp mr-1 text-success"></i> Contacter OASIS Conciergerie
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Note de bas de section -->
+		<div class="text-center mt-4 pt-3" style="border-top: 1px solid rgba(255,255,255,0.08);">
+			<span class="small text-light" style="opacity: 0.85;">
+				<i class="fa fa-check-circle text-warning mr-1"></i> Des filiales unies et synchronisées sous la gouvernance globale de <strong>RMC BTP SARL</strong> pour bâtir l'avenir avec sérénité.
 			</span>
 		</div>
 	</div>

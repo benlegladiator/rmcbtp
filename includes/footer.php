@@ -58,6 +58,7 @@ $siteLogoWhite = getVisualInfo($identityVisuals ?? getPageVisuals($pdo, 'identit
 						<ul class="list-unstyled">
 							<li><a href="index.php" class="py-1 d-block"><span class="fa fa-angle-right mr-2 text-primary"></span>Accueil</a></li>
 							<li><a href="about.php" class="py-1 d-block"><span class="fa fa-angle-right mr-2 text-primary"></span>À Propos & Équipe</a></li>
+							<li><a href="index.php#partenaires-groupe" class="py-1 d-block"><span class="fa fa-angle-right mr-2 text-primary"></span>Consortium & Partenaires</a></li>
 							<li><a href="project.php" class="py-1 d-block"><span class="fa fa-angle-right mr-2 text-primary"></span>Galerie Chantiers</a></li>
 							<li><a href="contact.php?type=devis" class="py-1 d-block"><span class="fa fa-angle-right mr-2 text-primary"></span>Demande de Devis</a></li>
 							<li><a href="admin/login.php" class="py-1 d-block text-warning"><span class="fa fa-lock mr-2"></span>Espace Admin</a></li>
